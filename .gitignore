@@ -1,5 +1,6 @@
 target/
 pom.xml.tag
+pom.xml
 pom.xml.releaseBackup
 pom.xml.versionsBackup
 pom.xml.next
@@ -86,3 +87,4 @@ local.properties
 .sts4-cache/
 
 # End of https://www.toptal.com/developers/gitignore/api/eclipse
+
