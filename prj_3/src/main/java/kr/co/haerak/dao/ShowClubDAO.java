@@ -1,4 +1,4 @@
-package kr.co.haerak.service;
+package kr.co.haerak.dao;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -7,13 +7,11 @@ import kr.co.haerak.domain.ClubDetailDomain;
 import kr.co.haerak.domain.SetReviewDomain;
 
 /**
- * 모임 상세페이지 service
+ * 모임상세페이지 DAO
  * @author user
  */
-public class ShowClubService {
+public class ShowClubDAO {
 
-	
-	
 	
 	/**
 	 * 모임의 정보를 띄우는 service
@@ -73,5 +71,4 @@ public class ShowClubService {
 	}//clubapprovalInsert
 	
 	
-	
-}//ShowClubService
+}//ShowClubDAO
