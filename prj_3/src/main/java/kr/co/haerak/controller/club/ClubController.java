@@ -1,4 +1,4 @@
-package kr.co.haerak.controller;
+package kr.co.haerak.controller.club;
 
 import javax.servlet.http.HttpServletRequest;
 

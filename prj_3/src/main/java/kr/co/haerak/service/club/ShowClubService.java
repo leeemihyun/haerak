@@ -1,10 +1,10 @@
-package kr.co.haerak.service;
+package kr.co.haerak.service.club;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import kr.co.haerak.domain.ClubDetailDomain;
-import kr.co.haerak.domain.SetReviewDomain;
+import kr.co.haerak.domain.club.ClubDetailDomain;
+import kr.co.haerak.domain.club.SetReviewDomain;
 
 /**
  * 모임 상세페이지 service

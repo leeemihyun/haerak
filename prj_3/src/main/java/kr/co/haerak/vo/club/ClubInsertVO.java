@@ -1,4 +1,4 @@
-package kr.co.haerak.vo;
+package kr.co.haerak.vo.club;
 
 import java.sql.Date;
 import java.util.List;

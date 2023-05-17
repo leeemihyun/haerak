@@ -1,7 +1,7 @@
-package kr.co.haerak.service;
+package kr.co.haerak.service.club;
 
-import kr.co.haerak.vo.ReplyVO;
-import kr.co.haerak.vo.ReviewVO;
+import kr.co.haerak.vo.club.ReplyVO;
+import kr.co.haerak.vo.club.ReviewVO;
 
 /**
  * ´ñ±Û °ü·Ã service

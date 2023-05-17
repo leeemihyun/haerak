@@ -1,4 +1,4 @@
-package kr.co.haerak.domain;
+package kr.co.haerak.domain.club;
 
 import java.sql.Date;
 

@@ -1,4 +1,4 @@
-package kr.co.haerak.vo;
+package kr.co.haerak.vo.club;
 
 public class ReviewVO {
 

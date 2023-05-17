@@ -1,7 +1,7 @@
-package kr.co.haerak.service;
+package kr.co.haerak.service.club;
 
-import kr.co.haerak.domain.ClubInsertDomain;
-import kr.co.haerak.vo.ClubInsertVO;
+import kr.co.haerak.domain.club.ClubInsertDomain;
+import kr.co.haerak.vo.club.ClubInsertVO;
 
 /**
  * 모임 등록 수정 Service

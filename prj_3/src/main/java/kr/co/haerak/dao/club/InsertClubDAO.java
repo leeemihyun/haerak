@@ -1,7 +1,7 @@
-package kr.co.haerak.dao;
+package kr.co.haerak.dao.club;
 
-import kr.co.haerak.domain.ClubInsertDomain;
-import kr.co.haerak.vo.ClubInsertVO;
+import kr.co.haerak.domain.club.ClubInsertDomain;
+import kr.co.haerak.vo.club.ClubInsertVO;
 
 /**
  * 모임관련 DAO
