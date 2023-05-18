@@ -3,6 +3,9 @@ package kr.co.haerak.dao.club;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.ibatis.session.SqlSession;
+
+import kr.co.haerak.dao.MyBatisHandler;
 import kr.co.haerak.domain.club.ClubDetailDomain;
 import kr.co.haerak.domain.club.SetReviewDomain;
 
@@ -68,7 +71,9 @@ public class ShowClubDAO {
 	 */
 	public void clubApprovalInsert(String userId,int clubNum) {
 		
+		
 	}//clubapprovalInsert
+	
 	
 	
 }//ShowClubDAO

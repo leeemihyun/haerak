@@ -2,8 +2,41 @@
 <!DOCTYPE mapper
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="kr.co.haerak.club_Mapper">
-  <select id="selectEmp" resultType="String">
-    select ename from emp
+<mapper namespace="kr.co.haerak.club_mapper">
+	
+	<!-- 모임 상세페이지 정보를 가져오는 SQL  -->
+  <select id="selectClubInfoDetail" resultType="String" parameterType="Integer">	
+	select club_name,input_date,view_cnt,
+				(	select count(*)
+					from INTEREST_LIST il
+					where il.club_num=p.club_num) as interest_cnt,
+
+					AREA_NAME, price,USER_IMG, detail_txt, club_addr, CATEGORY_NAME, u.USER_ID, PERSONAL_INTRO,
+					LONGITUDE, LATITUDE,CLUB_DATE,NUMBER_PEOPLE,
+
+				(	select count(*)
+					from club_review cc
+					where p.club_num=cc.club_num) as review_cnt
+	from 	club p, users u, ACTIVITY_AREA aa, club_CATEGORY pc
+	where	u.user_id=p.user_id and p.CATEGORY_NUM=pc.CATEGORY_NUM and p.ACTI_AREA_NUM=aa.ACTI_AREA_NUM and club_num=#{club_Num}
   </select>
+  
+  <!-- 모임 이미지를 리스트로 가져오는 SQL  -->
+  <select id="selectClubImg" resultType="String" parameterType="int">
+  	select		club_IMG
+	from		club_IMG
+	where		club_num=#{club_num}
+  </select>
+  
+  <!-- 모임 리뷰 글을 가져오는 SQL  -->
+
+  
+   <!-- 해당 유저가 관심목록에 추가했었는지 확인하는 SQL  -->
+
+  
+  <!-- 하트 클릭 시 관심목록을 추가/삭제하는 SQL  -->
+
+  
+
+  
 </mapper>
