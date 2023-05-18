@@ -1,7 +1,7 @@
 package kr.co.haerak.vo.user;
 
 public class ModifyInfoVO {
-	private String eMail, addr, detailAddr, tel, zipcode;
+	private String eMail, addr, detailAddr, tel, zipcode, userId;
 	private int actAreaNum;
 	public String geteMail() {
 		return eMail;
@@ -39,24 +39,33 @@ public class ModifyInfoVO {
 	public void setActAreaNum(int actAreaNum) {
 		this.actAreaNum = actAreaNum;
 	}
+
+	
 	@Override
 	public String toString() {
 		return "ModifyInfoVO [eMail=" + eMail + ", addr=" + addr + ", detailAddr=" + detailAddr + ", tel=" + tel
-				+ ", zipcode=" + zipcode + ", actAreaNum=" + actAreaNum + "]";
+				+ ", zipcode=" + zipcode + ", userId=" + userId + ", actAreaNum=" + actAreaNum + "]";
 	}
-	
-	public ModifyInfoVO() {
-		// TODO Auto-generated constructor stub
+	public String getUserId() {
+		return userId;
 	}
-	
-	public ModifyInfoVO(String eMail, String addr, String detailAddr, String tel, String zipcode, int actAreaNum) {
+	public void setUserId(String userId) {
+		this.userId = userId;
+	}
+	public ModifyInfoVO(String eMail, String addr, String detailAddr, String tel, String zipcode, String userId,
+			int actAreaNum) {
 		super();
 		this.eMail = eMail;
 		this.addr = addr;
 		this.detailAddr = detailAddr;
 		this.tel = tel;
 		this.zipcode = zipcode;
+		this.userId = userId;
 		this.actAreaNum = actAreaNum;
 	}
+	public ModifyInfoVO() {
+		// TODO Auto-generated constructor stub
+	}
 	
+
 }

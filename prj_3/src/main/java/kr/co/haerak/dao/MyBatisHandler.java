@@ -31,7 +31,6 @@ public class MyBatisHandler {
 				Reader reader = Resources.getResourceAsReader("kr/co/haerak/dao/mybatis-config.xml");
 				//2.Mybatis Framework »ý¼º
 				ssf = new SqlSessionFactoryBuilder().build(reader);
-				System.out.println(ssf);
 				if(reader!=null)reader.close();
 			} catch (IOException e) {
 				e.printStackTrace();

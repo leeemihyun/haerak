@@ -2,8 +2,115 @@
 <!DOCTYPE mapper
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="kr.co.haerak.user_Mapper">
-  <select id="selectEmp" resultType="String">
-    select ename from emp
+<mapper namespace="kr.co.haerak.user_mapper">
+  <select id="insertMember" parameterType="kr.co.haerak.vo.user.UserVO">
+    insert into emp ( user_id , user_password , user_name , birthdate ,
+    				  email , nickname , gender , addr , detailed_addr ,
+    				  personal_intro , user_img ,create_date, tel, ip,
+    				  zipcode , acti_area_num )
+    values( #{userId},#{userPassword},#{userName},#{birthDate},
+    		#{email},#{nickName},#{gender},#{addr},#{detailAddr},
+    		#{personalIntro},#{userImg},sysdate,#{tel1},#{ip}, 
+    		#{zipcode},#{actAreaNum})
   </select>
+  
+  
+  <select id="idDup" resultType="String" parameterType="String">
+	  select user_id	
+	  from users	
+	  where user_id=#{userId}	
+  </select>
+  
+  <select id="nickDup" resultType="String" parameterType="String">
+	  select nickname
+	  from users
+	  where nickname=#{nickname}
+  </select>
+  
+  <select id="userDup" resultType="String" parameterType="kr.co.haerak.vo.user.UserDupVO">
+	  select user_id
+	  from users
+	  where user_name=#{userName} and email=#{eMail} 
+  </select>
+  
+  <select id="selectLogin" resultType="kr.co.haerak.domain.user.LoginSessionDomain" parameterType="kr.co.haerak.vo.user.LoginVO">
+	  select nickname, personal_intro personalIntro , user_img userImg, user_id userId, ip, acti_area_num actAreaNum
+	  from users
+	  where user_id=#{userId} and user_password=#{userPassword} 
+  </select>
+  
+  <update id="loginDateUpdate" parameterType="String">
+  	update  users
+  	set 	login_date = sysdate
+  	where   user_id=#{userId}
+  </update>
+  
+  <select id="selectFindId" resultType="String" parameterType="kr.co.haerak.vo.user.FindIdVO">
+  	select user_id	
+  	from users	
+  	where user_name=#{userName} and email=#{eMail} 	
+  </select>
+  
+  <select id="selectFindPass" resultType="String" parameterType="kr.co.haerak.vo.user.FindPassVO">
+  	select user_id	
+  	from users	
+  	where user_name=#{userName} and email=#{eMail} and user_id=#{userId}
+  </select>
+  
+  <!-- 탈퇴한 회원인지 확인 -->
+  <select id="selectChkUser" resultType="String" parameterType="String">
+  	select delete_date	
+  	from users	
+  	where user_id=#{userId}
+  </select>
+  
+  <!-- 정보 수정 전 비번확인하기 -->
+  <select id="selectChkUserInfo" resultType="String" parameterType="kr.co.haerak.vo.user.ChkIdPassVO">
+  	select user_id	
+  	from users	
+  	where user_id=#{userId} and user_password=#{userPassword}
+  </select>
+  
+  <update id ="updatePass" parameterType="kr.co.haerak.vo.user.ModifyPassVO">
+  	update  users
+  	set 	user_password=#{newPass}
+  	where 	user_id=#{userId}
+  </update>
+  
+  <select id="selectInfo" resultType="kr.co.haerak.domain.user.ModifyInfoDomain" parameterType="String">
+  	select email, addr, detailed_addr detailAddr, tel, zipcode , acti_area_num actAreaNum 
+  	from users	
+  	where user_id=#{userId}
+  </select>
+  
+   <update id ="updateInfo" parameterType="kr.co.haerak.vo.user.ModifyInfoVO">
+  	update  users
+  	set 	email=#{eMail},
+  			addr=#{addr},
+  			detailed_Addr=#{detailAddr},
+  			tel=#{tel},
+  			zipcode=#{zipcode},
+  			acti_area_num=#{actAreaNum}
+  	where 	user_id=#{userId}
+  </update>
+  
+  <select id="selectProfile" resultType="kr.co.haerak.domain.user.ModifyProfileDomain" parameterType="String">
+  	select nickname nickName, user_img userImg, personal_intro personalIntro
+  	from users	
+  	where user_id=#{userId}
+  </select>
+  
+   <update id ="updateProfile" parameterType="kr.co.haerak.vo.user.ModifyProfileVO">
+  	update  users
+  	set 	nickName=#{nickName},
+  			user_Img=#{userImg},
+  			personal_Intro=#{personalIntro},
+  	where 	user_id=#{userId}
+  </update>
+  
+  <delete id="deleteUser" parameterType="String">
+  	insert into users(delete_date) values(sysdate)
+  
+  </delete>
+  
 </mapper>

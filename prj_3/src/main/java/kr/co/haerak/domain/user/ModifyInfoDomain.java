@@ -1,13 +1,19 @@
 package kr.co.haerak.domain.user;
 
 public class ModifyInfoDomain {
-	private String eMail, addr, detailAddr, tel, zipcode;
+	private String email, email2, addr, detailAddr, tel, zipcode;
 	private int actAreaNum;
-	public String geteMail() {
-		return eMail;
+	public String getEmail() {
+		return email;
 	}
-	public void seteMail(String eMail) {
-		this.eMail = eMail;
+	public void setEmail(String email) {
+		this.email = email;
+	}
+	public String getEmail2() {
+		return email2;
+	}
+	public void setEmail2(String email2) {
+		this.email2 = email2;
 	}
 	public String getAddr() {
 		return addr;
@@ -39,19 +45,20 @@ public class ModifyInfoDomain {
 	public void setActAreaNum(int actAreaNum) {
 		this.actAreaNum = actAreaNum;
 	}
-	@Override
-	public String toString() {
-		return "ModifyInfoVO [eMail=" + eMail + ", addr=" + addr + ", detailAddr=" + detailAddr + ", tel=" + tel
-				+ ", zipcode=" + zipcode + ", actAreaNum=" + actAreaNum + "]";
-	}
 	
 	public ModifyInfoDomain() {
 		// TODO Auto-generated constructor stub
 	}
-	
-	public ModifyInfoDomain(String eMail, String addr, String detailAddr, String tel, String zipcode, int actAreaNum) {
+	@Override
+	public String toString() {
+		return "ModifyInfoDomain [email=" + email + ", email2=" + email2 + ", addr=" + addr + ", detailAddr="
+				+ detailAddr + ", tel=" + tel + ", zipcode=" + zipcode + ", actAreaNum=" + actAreaNum + "]";
+	}
+	public ModifyInfoDomain(String email, String email2, String addr, String detailAddr, String tel, String zipcode,
+			int actAreaNum) {
 		super();
-		this.eMail = eMail;
+		this.email = email;
+		this.email2 = email2;
 		this.addr = addr;
 		this.detailAddr = detailAddr;
 		this.tel = tel;

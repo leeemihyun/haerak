@@ -1,7 +1,10 @@
 package kr.co.haerak.vo.user;
 
 public class UserDupVO {
-	private String userName, eMail;
+	private String userName, email, email2;
+
+	public UserDupVO() {
+	}
 
 	public String getUserName() {
 		return userName;
@@ -11,28 +14,32 @@ public class UserDupVO {
 		this.userName = userName;
 	}
 
-	public String geteMail() {
-		return eMail;
+	public String getEmail() {
+		return email;
 	}
 
-	public void seteMail(String eMail) {
-		this.eMail = eMail;
-	}
-	
-	public UserDupVO() {
-		// TODO Auto-generated constructor stub
+	public void setEmail(String email) {
+		this.email = email;
 	}
 
-	public UserDupVO(String userName, String eMail) {
+	public String getEmail2() {
+		return email2;
+	}
+
+	public void setEmail2(String email2) {
+		this.email2 = email2;
+	}
+
+	public UserDupVO(String userName, String email, String email2) {
 		super();
 		this.userName = userName;
-		this.eMail = eMail;
+		this.email = email;
+		this.email2 = email2;
 	}
 
 	@Override
 	public String toString() {
-		return "UserDupVO [userName=" + userName + ", eMail=" + eMail + "]";
+		return "UserDupVO [userName=" + userName + ", email=" + email + ", email2=" + email2 + "]";
 	}
-	
-	
+
 }

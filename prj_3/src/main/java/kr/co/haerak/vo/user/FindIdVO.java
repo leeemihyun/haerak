@@ -1,7 +1,11 @@
 package kr.co.haerak.vo.user;
 
 public class FindIdVO {
-	private String userName, eMail;
+	private String userName, email, email2;
+
+	public FindIdVO() {
+		// TODO Auto-generated constructor stub
+	}
 
 	public String getUserName() {
 		return userName;
@@ -11,26 +15,34 @@ public class FindIdVO {
 		this.userName = userName;
 	}
 
-	public String geteMail() {
-		return eMail;
+	public String getEmail() {
+		return email;
 	}
 
-	public void seteMail(String eMail) {
-		this.eMail = eMail;
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public String getEmail2() {
+		return email2;
+	}
+
+	public void setEmail2(String email2) {
+		this.email2 = email2;
 	}
 
 	@Override
 	public String toString() {
-		return "FindIdVO [userName=" + userName + ", eMail=" + eMail + "]";
-	}
-	
-	public FindIdVO() {
-		// TODO Auto-generated constructor stub
+		return "FindIdVO [userName=" + userName + ", email=" + email + ", email2=" + email2 + "]";
 	}
 
-	public FindIdVO(String userName, String eMail) {
+	public FindIdVO(String userName, String email, String email2) {
 		super();
 		this.userName = userName;
-		this.eMail = eMail;
+		this.email = email;
+		this.email2 = email2;
 	}
+	
+	
+	
 }

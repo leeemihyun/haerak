@@ -1,46 +1,11 @@
 package kr.co.haerak.vo.user;
 
 public class UserVO {
-	private String userId, userPassword, userName, birthDate, email, email2, nickName, gender, addr, detailAddr, personalIntro, userImg, createDate, tel1, tel2, deleteDate, loginDate;
+	private String userId, userPassword, userName, birthDate, email, email2, nickName, gender, addr, detailAddr, personalIntro, userImg, createDate, tel1, tel2, deleteDate, ip, loginDate;
 	private int zipcode, actAreaNum;
 	
 	public UserVO() {
 
-	}
-	
-	@Override
-	public String toString() {
-		return "UserVO [userId=" + userId + ", userPassword=" + userPassword + ", userName=" + userName + ", birthDate="
-				+ birthDate + ", email=" + email + ", email2=" + email2 + ", nickName=" + nickName + ", gender="
-				+ gender + ", addr=" + addr + ", detailAddr=" + detailAddr + ", personalIntro=" + personalIntro
-				+ ", userImg=" + userImg + ", createDate=" + createDate + ", tel1=" + tel1 + ", tel2=" + tel2
-				+ ", deleteDate=" + deleteDate + ", loginDate=" + loginDate + ", zipcode=" + zipcode + ", actAreaNum="
-				+ actAreaNum + "]";
-	}
-
-	public UserVO(String userId, String userPassword, String userName, String birthDate, String email, String email2,
-			String nickName, String gender, String addr, String detailAddr, String personalIntro, String userImg,
-			String createDate, String tel1, String tel2, String deleteDate, String loginDate, int zipcode,
-			int actAreaNum) {
-		this.userId = userId;
-		this.userPassword = userPassword;
-		this.userName = userName;
-		this.birthDate = birthDate;
-		this.email = email;
-		this.email2 = email2;
-		this.nickName = nickName;
-		this.gender = gender;
-		this.addr = addr;
-		this.detailAddr = detailAddr;
-		this.personalIntro = personalIntro;
-		this.userImg = userImg;
-		this.createDate = createDate;
-		this.tel1 = tel1;
-		this.tel2 = tel2;
-		this.deleteDate = deleteDate;
-		this.loginDate = loginDate;
-		this.zipcode = zipcode;
-		this.actAreaNum = actAreaNum;
 	}
 
 	public String getUserId() {
@@ -171,6 +136,14 @@ public class UserVO {
 		this.deleteDate = deleteDate;
 	}
 
+	public String getIp() {
+		return ip;
+	}
+
+	public void setIp(String ip) {
+		this.ip = ip;
+	}
+
 	public String getLoginDate() {
 		return loginDate;
 	}
@@ -194,7 +167,42 @@ public class UserVO {
 	public void setActAreaNum(int actAreaNum) {
 		this.actAreaNum = actAreaNum;
 	}
-	
+
+	public UserVO(String userId, String userPassword, String userName, String birthDate, String email, String email2,
+			String nickName, String gender, String addr, String detailAddr, String personalIntro, String userImg,
+			String createDate, String tel1, String tel2, String deleteDate, String ip, String loginDate, int zipcode,
+			int actAreaNum) {
+		this.userId = userId;
+		this.userPassword = userPassword;
+		this.userName = userName;
+		this.birthDate = birthDate;
+		this.email = email;
+		this.email2 = email2;
+		this.nickName = nickName;
+		this.gender = gender;
+		this.addr = addr;
+		this.detailAddr = detailAddr;
+		this.personalIntro = personalIntro;
+		this.userImg = userImg;
+		this.createDate = createDate;
+		this.tel1 = tel1;
+		this.tel2 = tel2;
+		this.deleteDate = deleteDate;
+		this.ip = ip;
+		this.loginDate = loginDate;
+		this.zipcode = zipcode;
+		this.actAreaNum = actAreaNum;
+	}
+
+	@Override
+	public String toString() {
+		return "UserVO [userId=" + userId + ", userPassword=" + userPassword + ", userName=" + userName + ", birthDate="
+				+ birthDate + ", email=" + email + ", email2=" + email2 + ", nickName=" + nickName + ", gender="
+				+ gender + ", addr=" + addr + ", detailAddr=" + detailAddr + ", personalIntro=" + personalIntro
+				+ ", userImg=" + userImg + ", createDate=" + createDate + ", tel1=" + tel1 + ", tel2=" + tel2
+				+ ", deleteDate=" + deleteDate + ", ip=" + ip + ", loginDate=" + loginDate + ", zipcode=" + zipcode
+				+ ", actAreaNum=" + actAreaNum + "]";
+	}
 	
 	
 	
