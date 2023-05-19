@@ -19,8 +19,8 @@
 <meta charset="UTF-8">
 <title>HAERAK</title>
 
-<link rel="stylesheet" type="text/css" href="http://localhost/prj_test/lmh/main.css">
-<link rel="stylesheet" type="text/css" href="http://localhost/prj_test/lmh/headerFooter.css">
+<link rel="stylesheet" type="text/css" href="http://localhost/prj_3/css/main.css">
+<link rel="stylesheet" type="text/css" href="http://localhost/prj_3/css/headerFooter.css">
 
 <!-- jQuery CDN 시작 -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
@@ -41,7 +41,7 @@
    
  <div class="container1">
       <div class="mainImg">
-         <img src="http://localhost/prj_test/images/munto_main.PNG">
+         <img src="http://localhost/prj_3/images/munto_main.PNG">
       </div><!--mainImg-->
         
  </div><!-- container1 메인사진-->

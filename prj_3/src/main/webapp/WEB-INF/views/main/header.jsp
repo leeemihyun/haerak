@@ -4,8 +4,8 @@
     session="true"
 %>
 
-<a href="http://localhost/prj_test/lmh/main.jsp">
-<img class="logo" src="http://localhost/prj_test/images/logo.png"></a>
+<a href="http://localhost/prj_3/lmh/main.jsp">
+<img class="logo" src="http://localhost/prj_3/images/logo.png"></a>
 
    
    

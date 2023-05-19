@@ -48,10 +48,10 @@ public class ClubSearchService {
 	//카테고리별 더보기 클릭했을 때 리스트 조회
 	public List<ClubSalesDomain> selectMoreClub(SeeMoreVO smVO){
 		
-		List<ClubSalesDomain> clubMore = cDAO.selectMoreClub(smVO);
+	List<ClubSalesDomain> clubMore = cDAO.selectMoreClub(smVO);
 		
-		return selectMoreClub(smVO);
+	return selectMoreClub(smVO);
 	}
 	
 	
-}
+}//ClubSearchService

@@ -49,9 +49,32 @@
          <font size="5px">소셜링으로 가볍고 즐겁게 만나보세요!</font>
     </div><!--category_socialring_text-->
     
-    </div><!--category_container1  -->
+<!--    
+    <div class="category_socialring_text">
+         <font color="#1C8A6A" size="5px"><strong>◆클럽</strong></font><br><br>
+         <font size="6px"><strong>지속형 모임으로 <br> 계속해서 친하게 지내요</strong></font><br><br>
+         <font size="5px">나와 같은 관심사를 가진 친구들과<br></font>
+         <font size="5px">매일 함께하고 싶다면 클럽에서 만나요!</font>
+    </div>
+    
+    
+    
+    <div class="category_socialring_text">
+         <font color="#3498D0" size="5px"><strong>◆챌린지</strong></font><br><br>
+         <font size="6px"><strong>같은 목표를 가진 <br> 멤버들과 함께 도전해요</strong></font><br><br>
+         <font size="5px">혼자 하기 어려운 큰 목표부터 작은 목표까지<br></font>
+         <font size="5px">멤버들과 함께 즐기면서 쉽게 달성해요!</font>
+    </div>
+    -->
+
+
+
+
+    </div><!--category_container1-->  
    
-   
+  
+
+
    
   
  <div class="category_container2">
@@ -86,7 +109,7 @@
 
 
         
-<form action="clubmore.do" method="get">
+<form action="clubmore.do" method="post">
 
 <div class="category_container4">
 
