@@ -3,15 +3,10 @@
     info="header import"
     session="true"
 %>
-<script type="text/javascript">
-</script>
 
+<a href="http://localhost/prj_test/lmh/main.jsp">
+<img class="logo" src="http://localhost/prj_test/images/logo.png"></a>
 
-
-<a href="http://localhost/prj_3/lmh/main.jsp">
-<img class="logo" src="http://localhost/test_mvc/images/logo.png"></a>
-
-   
    
    
 <div class="navi_socialring">
@@ -39,7 +34,7 @@
 
    <form class="d-flex" role="search">
         <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-        <button class="btn btn-outline-success" type="submit" style="background-color: #E6E1E1">Search</button>
+        <button class="btn btn-outline-warning" type="submit">Search</button>
    </form><!-- 검색창 -->
 
 
@@ -48,8 +43,7 @@
 
 
 <%--           
-
-<!-- <a href="http://localhost/prj_3/lmh/main.jsp"><img class="logo" src="http://localhost/prj_3/images/logo.png"></a>  -->
+<!-- <a href="http://localhost/prj_test/lmh/main.jsp"><img class="logo" src="http://localhost/prj_test/images/logo.png"></a>  -->
 
    
    
@@ -72,19 +66,20 @@
 
 <div class="navi_mypage">
    <font size="4px"><strong>마이페이지</strong></font><br><br>
-</div><!-- navi_mypage  --> 만들어야됨
+</div><!-- navi_mypage  --> 
 
 
 <div class="navi_logout">
    <font size="4px"><strong>로그아웃</strong></font><br><br>
-</div><!-- navi_logout  --> 만들어야됨
+</div><!-- navi_logout  --> 
 
 
 
    <form class="d-flex" role="search">
         <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-        <button class="btn btn-outline-success" type="submit" style="background-color: #E6E1E1">Search</button>
+        <button class="btn btn-outline-danger" type="submit" style="background-color: #E6E1E1">Search</button>
    </form><!-- 검색창 -->
+
        
    
  <% } %>  

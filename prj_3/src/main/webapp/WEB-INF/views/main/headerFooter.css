@@ -1,5 +1,9 @@
 @charset "UTF-8";
 
+.wrap{width: 1900px; height : auto; margin: 0px auto; background-color: #F4F4F4;} 
+
+
+
 /************** 헤더 *********************/
 .header{                     
 height: 70px; 
@@ -107,7 +111,7 @@ position: relative;
 
 
 .hr_footer{
-border: 1px solid #EAEBEE;
+border: 1px solid #000;
 }
 
 

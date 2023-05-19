@@ -1,0 +1,122 @@
+@charset "UTF-8";
+
+
+.area_login{
+position: relative; 
+height: 670px; 
+width: 1200px;
+}
+
+.loginTitle{
+position: absolute;
+top : 130px;
+left : 900px;
+font-weight: bold;
+font-size: 25px;	
+}
+
+
+
+
+.login_frm{
+position: absolute; 
+top: 150px;
+height: 900px; 
+width: 1200px;
+left:0; right:0; margin-left:auto; margin-right:auto; 	
+}
+
+
+
+
+.input_login{
+width: 350px;
+height : 60px;
+}
+
+.text_input_login{
+width: 350px;
+height : 60px;
+position: absolute;
+top : 200px;
+left: 415px;
+font-size: 16px;
+border-radius: 5px;
+border-color: #dcdcde;
+}
+
+.input_password{
+width: 350px;
+height : 60px;
+}
+
+.text_input_password{
+width: 350px;
+height : 60px;
+position: absolute;
+top : 280px;
+left: 415px;
+font-size: 16px;
+border-radius: 5px;
+border-color: #dcdcde;
+}
+
+.find_id{
+position: absolute;
+font-size: 16px;
+top : 365px;
+left: 570px; 
+}
+
+.find_password{
+position: absolute;
+font-size: 16px;
+top : 365px;
+left: 670px; 
+}
+
+.a_find{
+text-decoration: underline;
+color: #000
+}
+
+.div_btn_login{
+width: 350px;
+height : 60px;
+}
+
+.btn_login{
+width: 355px;
+height : 65px;
+position: absolute;
+top : 435px;
+left: 415px;
+
+border: none;
+border-radius: 5px;
+background-color: #F7A144;
+color: white;
+font-size: 22px;
+font-weight: bold;
+}
+
+.div_btn_join_member{
+width: 350px;
+height : 60px;
+}
+
+
+.btn_join_member{
+width: 355px;
+height : 65px;
+position: absolute;
+top : 515px;
+left: 415px;
+
+border: none;
+border-radius: 5px;
+background-color: #E0E0E0;
+color: #F7A144;
+font-size: 22px;
+font-weight: bold;
+}
