@@ -19,13 +19,41 @@
 <meta charset="UTF-8">
 <title>HAERAK</title>
 
-<link rel="stylesheet" type="text/css" href="http://localhost/prj_test/lmh/main.css">
-<link rel="stylesheet" type="text/css" href="http://localhost/prj_test/lmh/login.css">
-<link rel="stylesheet" type="text/css" href="http://localhost/prj_test/lmh/headerFooter.css">
+<link rel="stylesheet" type="text/css" href="http://localhost/prj_3/css/main.css">
+<link rel="stylesheet" type="text/css" href="http://localhost/prj_3/css/headerFooter.css">
+<link rel="stylesheet" type="text/css" href="http://localhost/prj_3/css/login.css">
 
 <!-- jQuery CDN 시작 -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
 <!-- jQuery CDN 시작 -->
+
+
+
+<script type="text/javascript">
+
+	if(<%=request.getParameter("flag")%>==false){
+		alert("아이디나 비밀번호를 다시 확인해주세요");
+	}//end if
+	
+
+    function chkNull(){
+    	if($("#id").val() == ""){
+    		alert("아이디를 입력해 주세요");
+    		$("#id").focus();
+    		return;
+    	}//end if
+    	if($("#pass").val() == ""){
+    		alert("비밀번호를 입력해 주세요");
+    		$("#pass").focus();
+    		return;
+    	}//end if
+    	
+    	
+    	$("#postFrm").submit();
+   
+}//chkNull
+
+</script>
 
 </head>
 
