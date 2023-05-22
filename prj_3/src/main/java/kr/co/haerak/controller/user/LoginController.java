@@ -35,7 +35,7 @@ public class LoginController {
 			return "main/login";
 		}//end if
 		model.addAttribute("lsDomain", lsDomain);
-		return "main/main";
+		return "forward:main.do";
 	}//loginForm
 	
 	@GetMapping("logout_process.do")

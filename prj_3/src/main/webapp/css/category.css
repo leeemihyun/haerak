@@ -23,12 +23,91 @@ height: 100px;
 }
 
 
+
 .form-select{
 position: absolute;
 width: 250px;
 top : 30px;
 left : 200px;
 }
+
+
+
+
+
+
+
+
+
+
+
+.socialring_text{
+top : 85px;
+position: relative; 
+text-align: center;
+}
+
+
+
+
+.socialring_popular_table{  /* 소셜링 4개 테이블*/
+position: absolute; 
+top : 300px; 
+left: 400px;
+border-collapse: collapse;
+background-color: white;
+border-radius: 50px;
+}  
+
+
+ .prod_div{
+text-align : center;
+display: inline-block;
+max-width: 100%;
+width: 130px;
+height: 130px;
+} 
+
+
+
+
+.prod_img{    /*소셜링인기매물사진사이즈  */
+position: absolute;
+width: 160px;
+height: 160px;
+object-fit: cover;
+border-radius: 10px;
+left : 15px;
+border-radius: 50px;
+}
+
+.prdCol1{  /* 테이블에 td    */  
+ width: 180px; 
+ height: 70px; 
+ padding-bottom: 40px;
+ }
+ 
+ .prdCol2{  /* 테이블에 td    */  
+ width: 350px; 
+ height: 70px;
+ padding-bottom: 40px;
+ }
+ 
+ 
+ 
+ .user_profile{
+width: 30px;
+height: 30px;
+object-fit: cover;
+border-radius: 10px;
+}
+
+
+
+
+
+
+
 
 
 

@@ -19,12 +19,100 @@
 <meta charset="UTF-8">
 <title>HAERAK</title>
 
-<link rel="stylesheet" type="text/css" href="http://localhost/prj_test/lmh/headerFooter.css">
-<link rel="stylesheet" type="text/css" href="http://localhost/prj_test/lmh/category.css">
+<link rel="stylesheet" type="text/css" href="http://localhost/prj_3/css/main.css">
+<link rel="stylesheet" type="text/css" href="http://localhost/prj_3/css/headerFooter.css">
+<link rel="stylesheet" type="text/css" href="http://localhost/prj_3/css/category.css">
 
 <!-- jQuery CDN 시작 -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
 <!-- jQuery CDN 시작 -->
+
+
+
+
+
+<script type="text/javascript">
+	
+	var category=null;
+	var searchInput=null;
+	var actiArea=null;
+
+$(function(){
+	
+	try{
+		category=<%=request.getParameter("category")%>;
+		searchInput=<%=request.getParameter("searchInput")%>;
+		dong=<%=request.getParameter("actiArea")%>;
+	}catch (e) {
+	}
+	
+	try{
+		searchInput="<%=request.getParameter("searchInput")%>";
+		if(searchInput=="null"){
+			searchInput="";
+		}
+	}catch (e) {
+	}
+	
+	$("#select_town").change(function(){		
+		actiArea=$("#select_town option").index($("#select_town option:selected"));
+		searchInput=null;
+		callProdList();
+	});
+	
+	$("#select_category").change(function(){		
+		category=$("#select_category option").index($("#select_category option:selected"));
+		searchInput=null;
+		callProdList();
+	});
+	
+	callProdList();
+	
+}); 
+
+function callProdList() {
+	
+	var jsonParam={"categoryName" : category, "areaName":actiArea , "searchName" : searchInput };
+	$.ajax({
+		url : "buy_data_json.jsp",
+		data : jsonParam,
+		dataType : "JSON",
+		contentType: "application/json",
+		type: "get",
+		error : function( xhr ){
+			alert( "서버에서 문제가 발생하였습니다" ); //사용자에게 보여줌
+			console.log( "에러코드 : " +xhr.status); //개발자가봄
+		},
+		success : function( jsonArr ){
+			var tbody ="";
+			let cnt=0;
+			
+		    if($("#socialring_popular_table tr").length >0){
+		    	$("#socialring_popular_table > tbody").empty(); //tbody 모두 삭제
+		    }//end if
+			
+			$.each( jsonArr, function(idx, jsonObj) {	
+			if(cnt%2==0){
+				tbody+="</tr><tr>";
+			}
+			cnt++;
+			tbody+="<td class='prdCol' id='remov'><div><a href='http://localhost/prj_2/cis/product_info.jsp?prodNum="+jsonObj.PROD_NUM+"'><img class='prod_img' src='"+jsonObj.PROD_IMG+
+			"'/></a></div><div><strong><h3>"+jsonObj.PROD_NAME+
+			"</h3></strong><br>"+jsonObj.PRICE.toLocaleString()+
+			   "원<br>"+jsonObj.PLACE_TRANSACTION+
+			   "<br>조회"+jsonObj.VIEW_CNT+
+			   "<br></div></td>"; 
+			}); //each   
+			
+			$("#socialring_popular_table").append(tbody);
+		}//succes	
+		 
+	});//ajax
+	
+}//callProdList
+
+</script>
+
 
 </head>
 
@@ -67,21 +155,18 @@
     </div>
     -->
 
-
-
-
-    </div><!--category_container1-->  
+</div><!--category_container1-->  
    
   
 
 
-   
+ <form action="clubmore.do" method="get">  
   
  <div class="category_container2">
-    <select class="form-select" aria-label="Default select example">
+    <select class="form-select" aria-label="Default select example" name="area">
        <option selected>지역을 선택해 주세요</option>
        <option value=1>서울</option>
-       <option value=2>경기</option>
+       <option value=2>강원</option>
        <option value=3>대전</option>
        <option value=4>충남</option>
        <option value=5>충북</option>
@@ -93,23 +178,28 @@
        <option value=11>부산</option>
        <option value=12>경남</option>
        <option value=13>울산</option>
-       <option value=13>제주</option>
-       <option value=13>대구</option>
-       <option value=13>경북</option>
+       <option value=14>제주</option>
+       <option value=15>대구</option>
+       <option value=16>경북</option>
    </select> 
         
  </div><!--category_container2  -->
  
  
+ 
+ 
 <div class="category_container3">
 
+<table class="socialring_popular_table" id="socialring_popular_table">
+  <tr>
+  </tr>
+</table> <!--popular_sale_table  -->
 
 </div><!--category_container3 모임들  -->
         
 
+       
 
-        
-<form action="clubmore.do" method="post">
 
 <div class="category_container4">
 

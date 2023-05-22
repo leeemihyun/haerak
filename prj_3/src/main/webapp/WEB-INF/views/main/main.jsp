@@ -3,10 +3,10 @@
 %>
     
 <!-- 추가 -->
-<%-- 
+
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %> 
---%>
+
 
 <!-- bootstrap 시작-->
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
@@ -26,6 +26,9 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
 <!-- jQuery CDN 시작 -->
 
+
+<script type="text/javascript">
+</script>
 </head>
 
 
@@ -41,15 +44,18 @@
    
  <div class="container1">
       <div class="mainImg">
-         <img src="http://localhost/prj_3/images/munto_main.PNG">
+         <img src="http://localhost/prj_3/images/haerak_main.PNG">
       </div><!--mainImg-->
         
  </div><!-- container1 메인사진-->
         
         
+  
+
         
         
 <!-----------------------------소셜링---------------------------------------->       
+<form method="get">     
         
 <div class="container2">
      <div class="socialring_text">
@@ -59,43 +65,49 @@
  
 <table class="socialring_popular_table">
   <tr>
-    <c:forEach var="MainProdVO" items="${prodSearch}" varStatus="i">
+    <c:forEach var="club" items="${selectList}" varStatus="i">
       <c:if test="${i.count <= 4}">
       
 
         <td class="prdCol1" colspan="3">
+        
           <div class="prod_div">
-            <a href="http://localhost/prj_test/cis/product_info.jsp?prodNum=${MainProdVO.prodNum}">
-            <img class="prod_img" src="${MainProdVO.prodImg}" /></a>
+            <a href="http://localhost/prj_3/club_info.do?clubNum=${club.club_Num}">
+            <img class="prod_img" src="${club.club_Img}" /></a>
           </div>
         </td>
         
-        <td class="prdCol2">
+        <td class="prdCol2" style="border: 1px solid black;">
            <div>
-               제목<strong><c:out value="${MainProdVO.prodName}" /></strong> <br>
-               가격<fmt:formatNumber pattern="#,###,###" value="${MainProdVO.price}" />원<br>
-               장소<c:out value="${MainProdVO.place}"/> 날짜 <c:out value="${MainProdVO.viewCnt}"/> <br>
-               프로필사진<img class="user_profile" src="${MainProdVO.user_profile}"/></a>
+               <strong><c:out value="${club.club_name}" /></strong> <br>
+               <fmt:formatNumber pattern="#,###,###" value="${club.price}" />원<br>
+               <c:out value="${club.area_name}"/>  <fmt:formatDate value="${club.club_Date}" pattern="M.d.(E) a hh시"/> <br>
+               
+               
+               <c:forEach var="user" items="${club.userInfo}">
+                  <img class="user_profile" src="${user.USER_IMG}" onerror="this.onerror=null; this.src='http://localhost/prj_3/images/a.png';"/>
+               </c:forEach>
+               
            </div>
         </td>
 
         <c:if test="${i.count % 2 eq 0}">
     </tr>
           
-          <tr>
+         <tr>
         </c:if>
       </c:if>
     </c:forEach>
   </tr>
 </table><!--socialring_popular_table -->
+
+
      
      <div class="socialring_more">
         <input type="button" value="더보기 >" class="btnMore">
      </div><!--socialring_more-->
 </div><!--container2 소셜링-->
-
-
-
+</form>
 
 
 

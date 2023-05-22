@@ -4,65 +4,108 @@
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kr.co.haerak.dao.main_mapper">
 
+
+
+<!-- 모임 검색 : 검색창에 모임 검색 했을 때 모임 등록한 날짜를 기준으로 최신순으로 보임 -->  
 <select id="selectSearch" resultType="kr.co.haerak.domain.main.ClubSalesDomain" parameterType="String">
-select CLUB_NAME, PRICE, CLUB_DATE,CLUB_ADDR, CLUB_IMG, AREA_NAME,NUMBER_PEOPLE, CLUB_STATUS
-from   CLUB c, CLUB_IMG ci, ACTIVITY_AREA aa
-where  c.CLUB_NUM=ci.CLUB_NUM and aa.ACTI_AREA_NUM= C.ACTI_AREA_NUM and c.CLUB_STATUS='모집중'and
+SELECT CLUB_NAME, PRICE, CLUB_DATE, CLUB_ADDR, CLUB_IMG, AREA_NAME, NUMBER_PEOPLE, CLUB_STATUS
+FROM CLUB c, CLUB_IMG ci, ACTIVITY_AREA aa
+WHERE c.CLUB_NUM = ci.CLUB_NUM AND aa.ACTI_AREA_NUM = c.ACTI_AREA_NUM AND c.CLUB_STATUS = '모집중'
+    AND CLUB_IMG_NUM IN (
+      SELECT MIN(CLUB_IMG_NUM) AS CLUB_IMG_NUM
+      FROM CLUB_IMG
+      GROUP BY CLUB_NUM
+    )
+    AND CLUB_NAME LIKE CONCAT('%', #{searchText}, '%') <!-- 검색어로 CLUB_NAME 필터링 -->
 
-CLUB_IMG_NUM in (
-select min(CLUB_IMG_NUM) as CLUB_IMG_NUM
-from CLUB_IMG
-group by CLUB_NUM )
-
-order by VIEW_CNT desc;
-</select>
-
-
-
-<select id="selectUserImg" resultType="kr.co.haerak.domain.main.ClubSalesDomain" parameterType="String">
-select  USER_IMG
-from    CLUB c, JOIN_LIST jl, USERS u
-where   c.CLUB_NUM=jl.CLUB_NUM and jl.USER_ID=u.USER_ID;
+ORDER BY CLUB_DATE DESC
 </select>
 
 
 
 
+
+
+<!-- 모임에 참가하는 회원 이미지 -->
+<select id="selectUserImg" resultType="kr.co.haerak.domain.main.UserDomain" parameterType="int">
+select  USER_IMG, USER_ID
+from(   select  USER_IMG, u.USER_ID, row_number() over(order by join_date desc) userNumber 
+        from    CLUB c, JOIN_LIST jl, USERS u
+        where   c.CLUB_NUM=jl.CLUB_NUM and jl.USER_ID=u.USER_ID and c.club_num=#{clubNumber}
+        )
+where userNumber &lt; 4
+</select>
+
+
+
+
+
+
+<!--메인 인기모임 : 메인 화면에서 카테고리별로 조회수 높은 순서 대로 4개씩 보임  -->  
 <select id="selectRankClub" resultType="kr.co.haerak.domain.main.ClubSalesDomain" parameterType="String">
+ SELECT c.CLUB_NUM, CLUB_NAME, PRICE, CLUB_DATE, CLUB_ADDR, CLUB_IMG, AREA_NAME, NUMBER_PEOPLE, CLUB_STATUS, CATEGORY_NUM
+  FROM CLUB c, CLUB_IMG ci, ACTIVITY_AREA aa
+  WHERE c.CLUB_NUM = ci.CLUB_NUM AND aa.ACTI_AREA_NUM = c.ACTI_AREA_NUM AND c.CLUB_STATUS = '모집중'
+    AND CLUB_IMG_NUM IN (
+      SELECT MIN(CLUB_IMG_NUM) AS CLUB_IMG_NUM
+      FROM CLUB_IMG
+      GROUP BY CLUB_NUM
+    )
 
+  <choose>
+    <when test="clubType eq 1"><!-- 소셜링 -->
+      AND CATEGORY_NUM = 1
+    </when>
+    <when test="clubType eq 2"><!-- 클럽 -->
+      AND CATEGORY_NUM = 2
+    </when>
+    <when test="clubType eq 3"><!-- 챌린지 -->
+      AND CATEGORY_NUM = 3
+    </when>
+  </choose>
+
+  ORDER BY (
+    SELECT MAX(VIEW_CNT)
+    FROM CLUB
+    WHERE CATEGORY_NUM = c.CATEGORY_NUM
+  ) DESC
+  FETCH FIRST 4 ROWS ONLY
 </select>
 
 
 
 
 
-<select id="selectMoreClub" resultType="kr.co.haerak.domain.main.ClubSalesDomain" parameterType="String">
-select CLUB_NAME, PRICE, CLUB_DATE,CLUB_ADDR, CLUB_IMG, AREA_NAME,NUMBER_PEOPLE, CLUB_STATUS, CATEGORY_NUM
-from   CLUB c, CLUB_IMG ci, ACTIVITY_AREA aa
-where  c.CLUB_NUM=ci.CLUB_NUM and aa.ACTI_AREA_NUM= C.ACTI_AREA_NUM and c.CLUB_STATUS='모집중'and
-
-CLUB_IMG_NUM in (
-select min(CLUB_IMG_NUM) as CLUB_IMG_NUM
-from CLUB_IMG
-group by CLUB_NUM )
 
 
-<choose>
-<when test="clubType eq 1" ><!--소셜링 -->
-CATEGORY_NUM = 1;
-</when>
+<!-- 모임 더보기 : 카테고리별로 더보기 클릭시 모임 등록한 날짜를 기준으로 최신순으로 보임  -->
+ <select id="selectMoreClub" resultType="kr.co.haerak.domain.main.ClubSalesDomain" parameterType="String">
+  SELECT CLUB_NAME, PRICE, CLUB_DATE, CLUB_ADDR, CLUB_IMG, AREA_NAME, NUMBER_PEOPLE, CLUB_STATUS, CATEGORY_NUM
+  FROM CLUB c, CLUB_IMG ci, ACTIVITY_AREA aa
+  WHERE c.CLUB_NUM = ci.CLUB_NUM AND aa.ACTI_AREA_NUM = c.ACTI_AREA_NUM AND c.CLUB_STATUS = '모집중'
+    AND CLUB_IMG_NUM IN (
+      SELECT MIN(CLUB_IMG_NUM) AS CLUB_IMG_NUM
+      FROM CLUB_IMG
+      GROUP BY CLUB_NUM
+    )
 
-<when test="clubType eq 2" ><!--클럽 -->
-CATEGORY_NUM = 2;
-</when>
+  <choose>
+    <when test="clubType eq 1">소셜링
+      AND CATEGORY_NUM = 1
+    </when>
+    <when test="clubType eq 2">클럽
+      AND CATEGORY_NUM = 2
+    </when>
+    <when test="clubType eq 3">챌린지
+      AND CATEGORY_NUM = 3
+    </when>
+  </choose>
 
-<when test="clubType eq 3" ><!--챌린지 -->
-CATEGORY_NUM = 3;
-</when>
-</choose>
-
-order by CLUB_DATE desc
+  ORDER BY INPUT_DATE DESC
 </select>
+
+
+
 
 
 

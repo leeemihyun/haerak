@@ -4,16 +4,14 @@
     info="header import"
     session="true"
 %>
-
-
-<%
-request.setCharacterEncoding("UTF-8");
-
-LoginSessionDomain lsDomain = (LoginSessionDomain)session.getAttribute("lsDomain");
-%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<!-- jQuery CDN 시작 -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+<!-- jQuery CDN 시작 -->
 
 
 <script type="text/javascript">
+
  function validateSearchInput(){
 	    var searchInput = document.querySelector('.search');
 	    if (searchInput.value.trim() === '') {
@@ -33,15 +31,16 @@ LoginSessionDomain lsDomain = (LoginSessionDomain)session.getAttribute("lsDomain
 
 
 
-<% if(lsDomain == null){ %>
-
-<a href="http://localhost/prj_3/main.do">
+<c:choose>
+	<c:when test="${ empty lsDomain }">
+	
+<a href="main.do">
 <img class="logo" src="http://localhost/prj_3/images/logo.png"></a>
 
    
    
 <div class="navi_socialring">
-   <a href="http://localhost/prj_3/category.do" style="color: inherit;"><font size="4px"><strong>소셜링</strong></font></a><br><br>
+   <a href="category.do" style="color: inherit;"><font size="4px"><strong>소셜링</strong></font></a><br><br>
 </div><!-- navi_socialring -->
 
 
@@ -57,7 +56,7 @@ LoginSessionDomain lsDomain = (LoginSessionDomain)session.getAttribute("lsDomain
 
 
 <div class="navi_login">
-  <a href="login.do?categoryNum=3" style="color: inherit;"><font size="4px"><strong>로그인</strong></font></a><br><br>
+  <a href="login.do" style="color: inherit;"><font size="4px"><strong>로그인</strong></font></a><br><br>
 </div><!-- navi_login  -->
 
 
@@ -72,11 +71,15 @@ LoginSessionDomain lsDomain = (LoginSessionDomain)session.getAttribute("lsDomain
 
 
 
+</c:when>
 
+<c:otherwise>
 
-<% } else { %>
   
+<a href="main.do">
+<img class="logo" src="http://localhost/prj_3/images/logo.png"></a>
 
+  
 <div class="navi_socialring">
    <a href="category.do?categoryNum=1" style="color: inherit;"><font size="4px"><strong>소셜링</strong></font></a><br><br>
 </div><!-- navi_socialring -->
@@ -99,7 +102,7 @@ LoginSessionDomain lsDomain = (LoginSessionDomain)session.getAttribute("lsDomain
 
 
 <div class="navi_logout">
-    <a href="http://localhost/prj_3/logout.do" style="color: inherit;"><font size="4px"><strong>로그아웃</strong></font></a><br><br>
+    <a href="logout_process.do" style="color: inherit;"><font size="4px"><strong>로그아웃</strong></font></a><br><br>
 </div><!-- navi_logout  --> 
 
 
@@ -111,7 +114,6 @@ LoginSessionDomain lsDomain = (LoginSessionDomain)session.getAttribute("lsDomain
 </form><!-- 검색창 -->
 
        
- <% } %>
-
-    
+</c:otherwise>
+</c:choose>
  

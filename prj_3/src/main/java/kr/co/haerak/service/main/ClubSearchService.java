@@ -18,40 +18,20 @@ public class ClubSearchService {
 	
 	
 	
-	//검색
-	public List<ClubSalesDomain> selectSearch(String clubName){
+	//모임검색
+	public List<ClubSalesDomain> clubSearchProcess(ClubSalesDomain csDomain){
 		
-		List<ClubSalesDomain> search = cDAO.selectSearch(clubName);
+		List<ClubSalesDomain> list = cDAO.selectSearch(csDomain);
 		
-		return search;
+		return list;
 	}
 	
-	
-	
-	//
-	
-	
-	
-	
-	
-	//
 
 	
 	
 	
-	//
 	
-	
-	
-	
-	
-	//카테고리별 더보기 클릭했을 때 리스트 조회
-	public List<ClubSalesDomain> selectMoreClub(SeeMoreVO smVO){
-		
-	List<ClubSalesDomain> clubMore = cDAO.selectMoreClub(smVO);
-		
-	return selectMoreClub(smVO);
-	}
+
 	
 	
 }//ClubSearchService
