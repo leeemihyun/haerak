@@ -12,6 +12,7 @@ import kr.co.haerak.domain.user.ModifyInfoDomain;
 import kr.co.haerak.domain.user.ModifyProfileDomain;
 import kr.co.haerak.vo.user.ChkIdPassVO;
 import kr.co.haerak.vo.user.ModifyInfoVO;
+import kr.co.haerak.vo.user.ModifyPassVO;
 import kr.co.haerak.vo.user.ModifyProfileVO;
 import kr.co.sist.util.cipher.DataDecrypt;
 import kr.co.sist.util.cipher.DataEncrypt;
@@ -19,7 +20,7 @@ import kr.co.sist.util.cipher.DataEncrypt;
 @Component
 public class ModifyService {
 	
-	@Autowired
+	@Autowired(required = false)
 	private UserDAO uDAO;
 	
 	public boolean passChkService(ChkIdPassVO cipVO) throws NoSuchAlgorithmException {
@@ -67,5 +68,20 @@ public class ModifyService {
 		
 		return cnt;
 	}//modifyInfoService
+	
+	
+	public int modifyPassService(ModifyPassVO mpVO) throws NoSuchAlgorithmException {
+		String dPass = DataEncrypt.messageDigest("MD5", mpVO.getNewPass());
+		mpVO.setNewPass(dPass);
+		
+		int cnt = uDAO.updatePass(mpVO);
+		
+		return cnt;
+	}//modifyPassService
+	
+	public int deleteUserService(String userId) {
+		int cnt= uDAO.deleteUser(userId);
+		return cnt;
+	}//deleteUserService
 	
 }//class

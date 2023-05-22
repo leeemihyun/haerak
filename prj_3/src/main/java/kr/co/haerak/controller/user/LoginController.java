@@ -7,6 +7,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.bind.support.SessionStatus;
 
 import kr.co.haerak.domain.user.LoginSessionDomain;
 import kr.co.haerak.service.user.LoginService;
@@ -35,5 +37,15 @@ public class LoginController {
 		model.addAttribute("lsDomain", lsDomain);
 		return "main/main";
 	}//loginForm
+	
+	@GetMapping("logout_process.do")
+	public String logoutProcess(Model model, SessionStatus ss) {
+		
+		ss.setComplete();
+		System.out.println(model.getAttribute("lsDomain"));
+		
+		return "main/main";
+	}//logoutProcess
+	
 	
 }//class
