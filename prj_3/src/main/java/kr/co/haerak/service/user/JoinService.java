@@ -26,6 +26,8 @@ public class JoinService {
 		uVO.setEmail(uVO.getEmail()+"@"+uVO.getEmail2());//이메일 하나로 합치기
 		
 		uVO.setEmail( de.encryption( uVO.getEmail()) );//이메일 주소 암호화하기
+		uVO.setTel1(uVO.getTel1()+uVO.getTel2());
+		uVO.setPersonalIntro("안녕하세요");
 		
 		int cnt = uDAO.insertMember(uVO);
 		return cnt;
@@ -34,16 +36,16 @@ public class JoinService {
 	public int idDupService(String userId) {
 		boolean flag=uDAO.idDup(userId);//false시 아이디 사용 가능
 		int cnt = 0;
-		if(!flag)cnt=1;
+		if(flag)cnt=1;//false 시 1
 		
 		
-		return cnt;
+		return cnt;//1이면 사용가능
 	}//idDupService
 	
 	public int nickDupService(String nickname) {
 		boolean flag=uDAO.nickDup(nickname);//false시 닉네임 사용 가능
 		int cnt = 0;
-		if(!flag)cnt=1;
+		if(flag)cnt=1;
 		
 		
 		return cnt;
@@ -53,11 +55,8 @@ public class JoinService {
 		DataEncrypt de = new DataEncrypt("Tkddydgangnamkong");//암호화 키
 		
 		udVO.setEmail(udVO.getEmail()+"@"+udVO.getEmail2());//이메일 하나로 합치기
-		
 		udVO.setEmail( de.encryption( udVO.getEmail()) );//이메일 주소 암호화하기
-		
-		String userId = uDAO.userDup(udVO);
-		
+		String userId = uDAO.userDup(udVO);//값이 있으면 안됨
 		return userId;
 	}//userDupService
 	

@@ -25,7 +25,7 @@ public class UserDAO {
 		SqlSession ss = MyBatisHandler.getInstance().getMyBatisHandler(false);
 
 		// 2. Handler사용
-		int cnt = ss.insert("kr.co.sist.user-Mapper.insertMember", uVO);
+		int cnt = ss.insert("kr.co.haerak.user_mapper.insertMember", uVO);
 		// 3. transaction완료
 		if (cnt == 1) {
 			ss.commit();
@@ -59,22 +59,21 @@ public class UserDAO {
 	}// idDup
 
 	public boolean nickDup(String nickName) {
-		boolean dupFlag = false;
+		boolean dupFlag = true;
 
 		// 1. MyBatis Handler 얻기
 		SqlSession ss = MyBatisHandler.getInstance().getMyBatisHandler(false);
 
 		// 2. Handler사용
-		String result = ss.selectOne("kr.co.haerak.user_mapper.idDup", nickName);
+		String result = ss.selectOne("kr.co.haerak.user_mapper.nickDup", nickName);
 		// 3. transaction완료
-		if (result != null) {
+		if (result != null) {//result가 없으면 사용가능
 			dupFlag = false;
 		}
 		// 4. 연결끊기
 		if (ss != null) {
 			ss.close();
 		}
-
 		return dupFlag;// false시 아이디 사용 가능
 	}// nickDup
 
@@ -85,9 +84,8 @@ public class UserDAO {
 		SqlSession ss = MyBatisHandler.getInstance().getMyBatisHandler(false);
 
 		// 2. Handler사용
-		userId = ss.selectOne("kr.co.haerak.user_mapper.idDup", udVO);
+		userId = ss.selectOne("kr.co.haerak.user_mapper.userDup", udVO);
 		// 3. transaction완료
-
 		// 4. 연결끊기
 		if (ss != null) {
 			ss.close();
@@ -137,8 +135,7 @@ public class UserDAO {
 		return userId;
 	}// selectFindId
 
-	public boolean selectFindPass(FindPassVO fpVO) {
-		boolean passFlag = false;
+	public String selectFindPass(FindPassVO fpVO) {
 
 		// 1. MyBatis Handler 얻기
 		SqlSession ss = MyBatisHandler.getInstance().getMyBatisHandler(false);
@@ -147,14 +144,12 @@ public class UserDAO {
 		String userId = ss.selectOne("kr.co.haerak.user_mapper.selectFindPass", fpVO);
 		// 3. transaction완료
 
-		if (userId != null)// 조회결과가 있으면
-			passFlag = true;// 입력한 값이 정상이면 트루
 		// 4. 연결끊기
 		if (ss != null) {
 			ss.close();
 		}
 
-		return passFlag;// true면 성공 false면 실패
+		return userId;// true면 성공 false면 실패
 	}// selectFindPass
 
 	/**
@@ -169,7 +164,7 @@ public class UserDAO {
 		SqlSession ss = MyBatisHandler.getInstance().getMyBatisHandler(false);
 
 		// 2. Handler사용
-		String user_id = ss.selectOne("kr.co.haerak.user_mapper.selectChkUserInfo", userId);
+		String user_id = ss.selectOne("kr.co.haerak.user_mapper.selectChkUser", userId);
 		// 3. transaction완료
 		
 		if (user_id != null)//조회결과가 있으면 true

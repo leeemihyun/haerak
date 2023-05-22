@@ -1,68 +1,421 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>    
+	pageEncoding="UTF-8"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>회원가입</title>
-<link rel="stylesheet" type="text/css" href="http://localhost/spring_mvc/prj/main.css">
-<style type="text/css">
-#wrap{ width: 1200px; height: 1200px;margin: 0px auto; border:1px solid #333}
-#header{  height: 80px; position: relative; border-bottom: 2px solid #5E5E5E}
-#container{  height: 1800px;position: relative; }
-#footer{  height: 300px;}
-#logo{width:202px; height: 54px;position: absolute; left: 128px; top: 13px;}
-#joinMembership{width:300px; height: 56px; text-align: center; font-size: 37px; font-weight: bold; 
-				position: absolute; left: 450px; top: 9px; border: 2px solid #333; border-radius: 10px;color:#5E5E5E}
-#div1{position: absolute;width:500px;height:100px;left:360px;top: 130px;}
-#div2{position: absolute;width:500px;height:100px;left:360px;top: 250px;}
-#div3{position: absolute;width:500px;height:100px;left:360px;top: 370px;}
-#div4{position: absolute;width:500px;height:100px;left:360px;top: 490px;}
-#div5{position: absolute;width:500px;height:100px;left:360px;top: 610px;}
-#div6{position: absolute;width:500px;height:100px;left:360px;top: 730px;}
-#div7{position: absolute;width:500px;height:100px;left:360px;top: 850px;}
-#div8{position: absolute;width:500px;height:100px;left:360px;top: 970px;}
-#div9{position: absolute;width:500px;height:100px;left:360px;top: 1090px;}
-#div10{position: absolute;width:500px;height:100px;left:360px;top: 1190px;}
-#div11{position: absolute;width:500px;height:100px;left:360px;top: 1260px;}
-#div12{position: absolute;width:500px;height:100px;left:360px;top: 1360px;}
-#div13{position: absolute;width:500px;height:100px;left:360px;top: 1480px;}
-#div14{position: absolute;width:500px;height:100px;left:360px;top: 1600px;}
-#font1{font-size:25px;font-family: "고딕"; font-weight:bold; color: #333333; }
-#inputBox, #addr, #detailAddr{width:500px;height: 50px;border: 2px solid #333; border-radius: 10px;color:#5E5E5E;font-size: 15px;cursor: pointer;}
-#zipcode{width:230px;height: 50px;border: 2px solid #333; border-radius: 10px;color:#5E5E5E;font-size: 15px;cursor: pointer;}
-#addrBtn{width:230px;height: 50px;border: 2px solid #333; border-radius: 10px;color:#5E5E5E;font-size: 15px;cursor: pointer;}
-#inputBox_tel1{width:130px;height: 50px;border: 2px solid #333; border-radius: 10px;color:#5E5E5E;font-size: 15px;cursor: pointer;}
-#inputBox_tel2{width:350px;height: 50px;border: 2px solid #333; border-radius: 10px;color:#5E5E5E;font-size: 15px;cursor: pointer;}
-#inputBox_id{width:375px;height: 50px;border: 2px solid #333; border-radius: 10px;color:#5E5E5E;cursor: pointer;}
-#inputBox_birth{width:150px;height: 50px;border: 2px solid #333; border-radius: 10px;color:#5E5E5E;cursor: pointer;}
-#inputBox_email1{width:195px;height: 50px;border: 2px solid #333; border-radius: 10px;color:#5E5E5E;cursor: pointer;}
-#inputBox_email2{width:120px;height: 50px;border: 2px solid #333; border-radius: 10px;color:#5E5E5E;cursor: pointer;}
-.inputBox_email1{width:150px;height: 50px;border: 2px solid #333; border-radius: 10px;color:#5E5E5E;cursor: pointer;}
-.inputBox_email2{width:150px;height: 50px;border: 2px solid #333; border-radius: 10px;color:#5E5E5E;cursor: pointer;}
-#inputBox_domain{width:150px;height: 50px;border: 2px solid #333; border-radius: 10px;color:#5E5E5E;cursor: pointer;}
-.idBtn{width:110px;height: 50px;border-radius: 10px;font-size: 15px;
-		border: 1px solid #333;cursor: pointer;background-color: #F7A144;color:#FFF;font-weight: bold;;cursor: pointer;}
-#nextBtn{width:500px;height: 50px;border: 2px solid #333;font-weight:bold;
-			 border-radius: 10px;color:#F7A144;font-size: 20px;cursor: pointer;background-color: #F7A144;color:#FFF}
-#output1{font-size: 8px; color: red;}
-#output2{font-size: 8px; color: green;}
-#output3{font-size: 8px; color: red;}
-#output4{font-size: 8px; color: green;}
-#output5{font-size: 8px; color: red;}
-#output6{font-size: 8px; color: green;}
-#output7{font-size: 8px; color: red;}
-#output8{font-size: 8px; color: green;}
-#output9{font-size: 8px; color: red;}
-#output10{font-size: 8px; color: green;}
-</style>
-<!-- 다음 주소찾기 api -->
-<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
-<!-- JQuery CDN  -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
-<script type="text/javascript">
 
+<style type="text/css">
+#wrap {
+	width: 1200px;
+	height: 1200px;
+	margin: 0px auto;
+	border: 1px solid #333
+}
+
+#header {
+	height: 80px;
+	position: relative;
+	border-bottom: 2px solid #5E5E5E
+}
+
+#container {
+	height: 1800px;
+	position: relative;
+}
+
+#footer {
+	height: 300px;
+}
+
+#logo {
+	width: 202px;
+	height: 54px;
+	position: absolute;
+	left: 478px;
+	top: 13px;
+}
+
+#joinMembership {
+	width: 300px;
+	height: 56px;
+	text-align: center;
+	font-size: 37px;
+	font-weight: bold;
+	position: absolute;
+	left: 800px;
+	top: 9px;
+	border: 2px solid #333;
+	border-radius: 10px;
+	color: #5E5E5E
+}
+
+#div1 {
+	position: absolute;
+	width: 500px;
+	height: 100px;
+	left: 710px;
+	top: 130px;
+}
+
+#div2 {
+	position: absolute;
+	width: 500px;
+	height: 100px;
+	left: 710px;
+	top: 250px;
+}
+
+#div3 {
+	position: absolute;
+	width: 500px;
+	height: 100px;
+	left: 710px;
+	top: 370px;
+}
+
+#div4 {
+	position: absolute;
+	width: 500px;
+	height: 100px;
+	left: 710px;
+	top: 490px;
+}
+
+#div5 {
+	position: absolute;
+	width: 500px;
+	height: 100px;
+	left: 710px;
+	top: 610px;
+}
+
+#div6 {
+	position: absolute;
+	width: 500px;
+	height: 100px;
+	left: 710px;
+	top: 730px;
+}
+
+#div7 {
+	position: absolute;
+	width: 500px;
+	height: 100px;
+	left: 710px;
+	top: 850px;
+}
+
+#div8 {
+	position: absolute;
+	width: 500px;
+	height: 100px;
+	left: 710px;
+	top: 970px;
+}
+
+#div9 {
+	position: absolute;
+	width: 500px;
+	height: 100px;
+	left: 710px;
+	top: 1090px;
+}
+
+#div10 {
+	position: absolute;
+	width: 500px;
+	height: 100px;
+	left: 710px;
+	top: 1190px;
+}
+
+#div11 {
+	position: absolute;
+	width: 500px;
+	height: 100px;
+	left: 710px;
+	top: 1260px;
+}
+
+#div12 {
+	position: absolute;
+	width: 500px;
+	height: 100px;
+	left: 710px;
+	top: 1360px;
+}
+
+#div13 {
+	position: absolute;
+	width: 500px;
+	height: 100px;
+	left: 710px;
+	top: 1480px;
+}
+
+#div14 {
+	position: absolute;
+	width: 500px;
+	height: 100px;
+	left: 710px;
+	top: 1600px;
+}
+
+#font1 {
+	font-size: 25px;
+	font-family: "고딕";
+	font-weight: bold;
+	color: #333333;
+}
+
+#inputBox, #addr, #detailAddr {
+	width: 500px;
+	height: 50px;
+	border: 2px solid #333;
+	border-radius: 10px;
+	color: #5E5E5E;
+	font-size: 15px;
+	cursor: pointer;
+}
+
+#zipcode {
+	width: 230px;
+	height: 50px;
+	border: 2px solid #333;
+	border-radius: 10px;
+	color: #5E5E5E;
+	font-size: 15px;
+	cursor: pointer;
+}
+
+#addrBtn {
+	width: 230px;
+	height: 50px;
+	border: 2px solid #333;
+	border-radius: 10px;
+	color: #5E5E5E;
+	font-size: 15px;
+	cursor: pointer;
+}
+
+#inputBox_tel1 {
+	width: 130px;
+	height: 50px;
+	border: 2px solid #333;
+	border-radius: 10px;
+	color: #5E5E5E;
+	font-size: 15px;
+	cursor: pointer;
+}
+
+#inputBox_tel2 {
+	width: 350px;
+	height: 50px;
+	border: 2px solid #333;
+	border-radius: 10px;
+	color: #5E5E5E;
+	font-size: 15px;
+	cursor: pointer;
+}
+
+#inputBox_id {
+	width: 375px;
+	height: 50px;
+	border: 2px solid #333;
+	border-radius: 10px;
+	color: #5E5E5E;
+	cursor: pointer;
+}
+
+#inputBox_nick {
+	width: 375px;
+	height: 50px;
+	border: 2px solid #333;
+	border-radius: 10px;
+	color: #5E5E5E;
+	cursor: pointer;
+}
+
+#inputBox_birth {
+	width: 150px;
+	height: 50px;
+	border: 2px solid #333;
+	border-radius: 10px;
+	color: #5E5E5E;
+	cursor: pointer;
+}
+
+#inputBox_email1 {
+	width: 195px;
+	height: 50px;
+	border: 2px solid #333;
+	border-radius: 10px;
+	color: #5E5E5E;
+	cursor: pointer;
+}
+
+#inputBox_email2 {
+	width: 120px;
+	height: 50px;
+	border: 2px solid #333;
+	border-radius: 10px;
+	color: #5E5E5E;
+	cursor: pointer;
+}
+
+.inputBox_email1 {
+	width: 150px;
+	height: 50px;
+	border: 2px solid #333;
+	border-radius: 10px;
+	color: #5E5E5E;
+	cursor: pointer;
+}
+
+.inputBox_email2 {
+	width: 150px;
+	height: 50px;
+	border: 2px solid #333;
+	border-radius: 10px;
+	color: #5E5E5E;
+	cursor: pointer;
+}
+
+#inputBox_domain {
+	width: 150px;
+	height: 50px;
+	border: 2px solid #333;
+	border-radius: 10px;
+	color: #5E5E5E;
+	cursor: pointer;
+}
+
+.idBtn {
+	width: 110px;
+	height: 50px;
+	border-radius: 10px;
+	font-size: 15px;
+	border: 1px solid #333;
+	cursor: pointer;
+	background-color: #F7A144;
+	color: #FFF;
+	font-weight: bold;;
+	cursor: pointer;
+}
+
+.nickBtn {
+	width: 110px;
+	height: 50px;
+	border-radius: 10px;
+	font-size: 15px;
+	border: 1px solid #333;
+	cursor: pointer;
+	background-color: #F7A144;
+	color: #FFF;
+	font-weight: bold;;
+	cursor: pointer;
+}
+
+#nextBtn {
+	width: 500px;
+	height: 50px;
+	border: 2px solid #333;
+	font-weight: bold;
+	border-radius: 10px;
+	color: #F7A144;
+	font-size: 20px;
+	cursor: pointer;
+	background-color: #F7A144;
+	color: #FFF
+}
+
+#id_result1 {
+	font-size: 8px;
+	color: green;
+}
+
+#id_result2 {
+	font-size: 8px;
+	color: red;
+}
+
+#nick_result1 {
+	font-size: 8px;
+	color: green;
+}
+
+#nick_result2 {
+	font-size: 8px;
+	color: red;
+}
+
+#output1 {
+	font-size: 8px;
+	color: red;
+}
+
+#output2 {
+	font-size: 8px;
+	color: green;
+}
+
+#output3 {
+	font-size: 8px;
+	color: red;
+}
+
+#output4 {
+	font-size: 8px;
+	color: green;
+}
+
+#output5 {
+	font-size: 8px;
+	color: red;
+}
+
+#output6 {
+	font-size: 8px;
+	color: green;
+}
+
+#output7 {
+	font-size: 8px;
+	color: red;
+}
+
+#output8 {
+	font-size: 8px;
+	color: green;
+}
+
+#output9 {
+	font-size: 8px;
+	color: red;
+}
+
+#output10 {
+	font-size: 8px;
+	color: green;
+}
+</style>
+<!-- bootstrap 시작-->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
+<!-- bootstrap 끝-->
+<link rel="stylesheet" type="text/css" href="http://localhost/haerak/css/headerFooter.css">
+<link rel="stylesheet" type="text/css" href="http://localhost/haerak/css/main.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+<!-- 다음 주소찾기 api -->
+<script
+	src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+<!-- JQuery CDN  -->
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+<script type="text/javascript">
 function findZip() {
     new daum.Postcode({
         oncomplete: function(data) {
@@ -97,17 +450,7 @@ function findZip() {
     }).open();
 }
 
-function openIdPop(){
-	//부모창에서 발생한 값을 자식창에 넘기기 위해 web parameter를 사용한다.
-	window.open("popup_id.jsp","popup","width=520,height=320,top="
-			+(window.screenY+100)	+",left="+(window.screenX+100));
-}//openIdPop
 
-function openNickPop(){
-	//부모창에서 발생한 값을 자식창에 넘기기 위해 web parameter를 사용한다.
-	window.open("popup_nick.jsp","popup","width=520,height=320,top="
-			+(window.screenY+100)	+",left="+(window.screenX+100));
-}//openNickPop
 
 function passValid1(){
 	var obj=document.frm;
@@ -275,6 +618,18 @@ function checkNull() {
 		return;
 	}
 	
+	if(document.getElementById("id_result1").innerHTML!="사용가능한 아이디입니다."){//아이디 유효성검증 
+		alert("유효하지않은 아이디입니다.")
+		obj.userId.focus();
+		return;
+	}
+	
+	if(document.getElementById("nick_result1").innerHTML!="사용가능한 닉네임입니다."){//닉네임 유효성검증 
+		alert("유효하지않은 닉네임입니다.")
+		obj.nickName.focus();
+		return;
+	}
+	
 	obj.submit();
 	
 }//checknull
@@ -290,137 +645,245 @@ $(function(){
 	    $("#last_email").val($('#email_select').val()); //선택값 입력
 	    $("#last_email").attr("readonly",true); //비활성화
 	   }
-	  });
-	 });
+	  });//change
+	  
+	 
+		 $("#id_dup").click(function() {
+			var userId = $("#inputBox_id").val();
+			if ( validateId( userId ) ) {//유효성검증이 통과되었을시
+				$.ajax({
+					url : "id_dup.do",
+					data : "userId=" + userId,
+					dataType : "text",
+					error : function(xhr) {
+						console.log(xhr.status)
+					},
+					success : function(result) {
+						if (result == 1) {
+							$("#id_result1").html("사용가능한 아이디입니다.");
+							$("#id_result2").html("");
+						}//end if
+						if (result == 0) {
+							$("#id_result1").html("");
+							$("#id_result2").html("이미 사용중인 아이디입니다!");
+						}//end if
+					}//success
+				});//ajax
+			} else {
+				alert("아이디는 영어 소문자, 숫자 조합으로 4-15자로 설정해주세요.");
+				$("#inputBox_id").focus();
+			}//else
+		});//click
+ 		$("#nick_dup").click(function() {
+			var nickName = $("#inputBox_nick").val();
+			if ( validateNick(nickName) ) {//유효성검증이 통과되었을시
+				$.ajax({
+					url : "nick_dup.do",
+					data : "nickName=" + nickName,
+					dataType : "text",
+					error : function(xhr) {
+						console.log(xhr.status)
+					},
+					success : function(result) {
+						if (result == 1) {
+							$("#nick_result1").html("사용가능한 닉네임입니다.");
+							$("#nick_result2").html("");
+						}//end if
+						if (result == 0) {
+							$("#nick_result1").html("");
+							$("#nick_result2").html("이미 사용중인 닉네임입니다!");
+						}//end if
+					}//success
+				});//ajax
+			} else {
+				alert("닉네임은 2-8자 한글만 가능합니다.");
+				$("#inputBox_nick").focus();
+			}//else
+		});//click
 
+	});//ready
+
+	function useId() {
+		var obj = document.frm;
+		var userId = obj.userId.value;
+		if (validateId(userId)) {//유효성검증통과
+			document.getElementById("id_result1").innerHTML = "";
+			document.getElementById("id_result2").innerHTML = "";
+			return;
+		} else {
+			document.getElementById("id_result1").innerHTML = "";
+			document.getElementById("id_result2").innerHTML = "영어 소문자, 숫자로 4-15자 내로 사용 가능합니다.";
+			return;
+		}//end else
+	}//useId
+
+	function validateId(id) {
+		var regex = /^[a-z0-9]{4,15}$/;
+		return regex.test(id);
+	}//validateId
+	
+	function useNick(){
+		var obj=document.frm;
+		var nickName = obj.nickName.value;
+
+		if(validateNick(nickName)){//유효성검증통과
+				document.getElementById("nick_result1").innerHTML = "";
+				document.getElementById("nick_result2").innerHTML = "";
+				return;
+			} else {
+				document.getElementById("nick_result1").innerHTML = "";
+				document.getElementById("nick_result2").innerHTML = "한글만 2-6자 사용 가능합니다.";
+				return;
+			}
+		
+	}//useNick
+	
+	function validateNick(nickName){
+		var regex = /^[가-힣]{2,6}$/;
+		return regex.test(nickName);
+	} 
 </script>
+	
 </head>
 <body>
-<div class="wrap"> <!-- wrap ( w : 900 x h : 1200) -->
-<div id="header">
-	<a href="#void"><img id="logo" alt="logo"  src="http://localhost/spring_mvc/images/haerak.png"></a>
-</div>
-<form name="frm" action="join_process.jsp" method="post">
-<div id="container">
-<br>
-	<input type="text" id="joinMembership" value="회원가입" readonly="readonly">
-<div id="div1"> 
-	<font id="font1">아이디</font><br>
-	<input type="text" id="inputBox_id" name="userId" placeholder="아이디" value="" onclick="openIdPop()" readonly="readonly">
-	<input type="button" class="idBtn" value="중복확인" onclick="openIdPop()">
-</div>
-<div id="div2"> 
-	<font id="font1">비밀번호</font><br>
-	<input type="password" id="inputBox" name="userPassword" placeholder="비밀번호 입력" onkeyup="passValid1()" value="">
-	<div id="output3" ></div>
-	<div id="output4" ></div>
-</div>
-<div id="div3"> 
-	<font id="font1">비밀번호 재확인</font><br>
-	<input type="password" id="inputBox" name="pass2" placeholder="비밀번호 재입력" onkeyup="passValid2()" value=""><br>
-	<div id="output1" name="output1" ></div>
-	<div id="output2" ></div>
-</div>
-<div id="div4"> 
-	<font id="font1">이름</font><br>
-	<input type="text" id="inputBox" placeholder="이름" name="userName" onkeyup="nameValid()" value="">
-	<div id="output5" ></div>
-	<div id="output6" ></div>
-</div>
+	<div class="wrap">
+		<!-- wrap ( w : 900 x h : 1200) -->
+		<div class="header">
+			<jsp:include page="/header.do"/>
+		</div>
+		<form name="frm" action="join_process.do" method="post">
+			<div id="container">
+				<br> <input type="text" id="joinMembership" value="회원가입"
+					readonly="readonly">
+				<div id="div1">
+					<font id="font1">아이디</font><br> <input type="text"
+						id="inputBox_id" name="userId" onkeyup="useId()" placeholder="아이디"
+						value=""> <input type="button" id="id_dup" class="idBtn"
+						value="중복확인">
+					<div id="id_result1"></div>
+					<div id="id_result2"></div>
+				</div>
+				<div id="div2">
+					<font id="font1">비밀번호</font><br> <input type="password"
+						id="inputBox" name="userPassword" placeholder="비밀번호 입력"
+						onkeyup="passValid1()" value="">
+					<div id="output3"></div>
+					<div id="output4"></div>
+				</div>
+				<div id="div3">
+					<font id="font1">비밀번호 재확인</font><br> <input type="password"
+						id="inputBox" name="pass2" placeholder="비밀번호 재입력"
+						onkeyup="passValid2()" value=""><br>
+					<div id="output1" name="output1"></div>
+					<div id="output2"></div>
+				</div>
+				<div id="div4">
+					<font id="font1">이름</font><br> <input type="text"
+						id="inputBox" placeholder="이름" name="userName"
+						onkeyup="nameValid()" value="${ userName != null? userName : '' }" readonly="readonly">
+					<div id="output5"></div>
+					<div id="output6"></div>
+				</div>
 
-<div id="div5"> 
-	<font id="font1">생년월일</font><br>
-	 <input type="date"
-         id="inputBox"
-         name="birthDate"
-         max="2023-12-31"
-         min="1900-01-01"
-         value="">
-	
-</div>
-<div id="div6"> 
-	<font id="font1">이메일</font><br>
-	<input type="text" class="inputBox_email1" placeholder="이메일" name="email" id="email" onkeyup="emailValid()"><strong>@</strong>
-	<input type="text" id="last_email" size="10" class="inputBox_email2" name="email2" >
-	<select class="inputBox_email2" id="email_select" name="email_select">
-		<option value="" selected>선택없음</option>
-		<option value="gmail.com">gmail.com</option>
-		<option value="naver.com">naver.com</option>
-		<option value="nate.com">nate.com</option>
-		<option value="daum.net">daum.net</option>
-		<option value="hotmail.com">hotmail.com</option>
-		<option value="1">직접 입력</option>
-	</select>
-	<div id="output7" ></div>
-	<div id="output8" ></div>
-	
-</div>
-<div id="div7"> 
-	<font id="font1">닉네임</font><br>
-	<input type="text" id="inputBox_id" name="nickName" placeholder="닉네임"  onclick="openNickPop()" readonly="readonly" value="">
-	<input type="button" class="idBtn" value="중복확인"  onclick="openNickPop()">
-</div>
-<div id="div8"> 
-	<font id="font1">성별</font><br>
-	<select id="inputBox" name="gender">
-		<option value="none">선택없음</option>
-		<option value="남자" selected="selected">남자</option>
-		<option value="여자">여자</option>
-	</select>
-</div>
-<div id="div9"> 
-	<font id="font1">주소</font><br>
-	<input type="text" id="zipcode" name="zipcode" placeholder="우편번호" readonly="readonly" value="">
-	<input type="button" class="idBtn" name="addrBtn" value="주소찾기"  onclick="findZip()">
-</div>
-<div id="div10"> 
-	<input type="text" id="addr" name="addr" placeholder="주소" readonly="readonly" value="">
-</div>
-<div id="div11"> 
-	<input type="text" id="detailAddr" name="detailAddr" placeholder="상세주소" value="">
-</div>
-<div id="div12"> 
-	<font id="font1">활동지역</font><br>
-	<select id="inputBox" name="actAreaNum">
-		<option value="지역선택" selected="selected">지역선택</option>
-		<option value=1>서울</option>
-		<option value=2>강원</option>
-		<option value=3>대전</option>
-		<option value=4>충남</option>
-		<option value=5>충북</option>
-		<option value=6>인천</option>
-		<option value=7>경기</option>
-		<option value=8>광주</option>
-		<option value=9>전남</option>
-		<option value=10>전북</option>
-		<option value=11>부산</option>
-		<option value=12>경남</option>
-		<option value=13>울산</option>
-		<option value=14>제주</option>
-		<option value=15>대구</option>
-		<option value=16>경북</option>
-	</select>
-</div>
-<div id="div13"> 
-	<font id="font1">전화번호</font><br>
-	<select id="inputBox_tel1" name="tel1">
-		<option value ="010" selected="selected">010</option>
-		<option value ="011">011</option>
-		<option value ="017">017</option>
-	</select>
-	<input type="text" id="inputBox_tel2" name="tel2" placeholder="-없이 입력" maxlength="8" value="" onkeyup="telValid()">
-	<div id="output9" ></div>
-	<div id="output10" ></div>
-</div>
-<div id="div14"> 
-	<input type="button" id="nextBtn" value="가입하기" onclick="checkNull()">
-</div>
-</div>
-</form>
+				<div id="div5">
+					<font id="font1">생년월일</font><br> <input type="date"
+						id="inputBox" name="birthDate" max="2023-12-31" min="1900-01-01"
+						value="">
 
-<div class="footer">
-<%-- <c:import url="../lmh/footer.jsp"/> --%>
-   </div><!-- footer-->
-</div>
+				</div>
+				<div id="div6">
+					<font id="font1">이메일</font><br> <input type="text"
+						class="inputBox_email1" placeholder="이메일" name="email" id="email" value="${ email != null? email : '' }"
+						onkeyup="emailValid()" readonly="readonly"><strong>@</strong> <input
+						type="text" id="last_email" size="10" class="inputBox_email2" value="${ email2 != null? email2 : '' }"
+						name="email2" readonly="readonly"> <select class="inputBox_email2"
+						id="email_select" name="email_select">
+						<option value="" selected>선택없음</option>
+						<option value="gmail.com">gmail.com</option>
+						<option value="naver.com">naver.com</option>
+						<option value="nate.com">nate.com</option>
+						<option value="daum.net">daum.net</option>
+						<option value="hotmail.com">hotmail.com</option>
+						<option value="1">직접 입력</option>
+					</select>
+					<div id="output7"></div>
+					<div id="output8"></div>
+
+				</div>
+				<div id="div7">
+					<font id="font1">닉네임</font><br> <input type="text"
+						id="inputBox_nick" name="nickName" onkeyup="useNick()"
+						placeholder="닉네임" value=""> <input type="button"
+						id="nick_dup" class="nickBtn" value="중복확인">
+					<div id="nick_result1"></div>
+					<div id="nick_result2"></div>
+				</div>
+				<div id="div8">
+					<font id="font1">성별</font><br> <select id="inputBox"
+						name="gender">
+						<option value="none">선택없음</option>
+						<option value="남자" selected="selected">남자</option>
+						<option value="여자">여자</option>
+					</select>
+				</div>
+				<div id="div9">
+					<font id="font1">주소</font><br> <input type="text" id="zipcode"
+						name="zipcode" placeholder="우편번호" readonly="readonly" value="">
+					<input type="button" class="idBtn" name="addrBtn" value="주소찾기"
+						onclick="findZip()">
+				</div>
+				<div id="div10">
+					<input type="text" id="addr" name="addr" placeholder="주소"
+						readonly="readonly" value="">
+				</div>
+				<div id="div11">
+					<input type="text" id="detailAddr" name="detailAddr"
+						placeholder="상세주소" value="">
+				</div>
+				<div id="div12">
+					<font id="font1">활동지역</font><br> <select id="inputBox"
+						name="actAreaNum">
+						<option value="지역선택" selected="selected">지역선택</option>
+						<option value=1>서울</option>
+						<option value=2>강원</option>
+						<option value=3>대전</option>
+						<option value=4>충남</option>
+						<option value=5>충북</option>
+						<option value=6>인천</option>
+						<option value=7>경기</option>
+						<option value=8>광주</option>
+						<option value=9>전남</option>
+						<option value=10>전북</option>
+						<option value=11>부산</option>
+						<option value=12>경남</option>
+						<option value=13>울산</option>
+						<option value=14>제주</option>
+						<option value=15>대구</option>
+						<option value=16>경북</option>
+					</select>
+				</div>
+				<div id="div13">
+					<font id="font1">전화번호</font><br> <select id="inputBox_tel1"
+						name="tel1">
+						<option value="010" selected="selected">010</option>
+						<option value="011">011</option>
+						<option value="017">017</option>
+					</select> <input type="text" id="inputBox_tel2" name="tel2"
+						placeholder="-없이 입력" maxlength="8" value="" onkeyup="telValid()">
+					<div id="output9"></div>
+					<div id="output10"></div>
+				</div>
+				<div id="div14">
+					<input type="button" id="nextBtn" value="가입하기"
+						onclick="checkNull()">
+				</div>
+			</div>
+		</form>
+
+		<div class="container5">
+			<jsp:include page="/footer.do" />
+		</div>
+		<!--container5  -->
+	</div><!-- wrap -->
 </body>
 </html>

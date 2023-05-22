@@ -51,7 +51,13 @@ loginBox는 container의 시작점이 loginBox의 시작좌표가된다.
 <link rel="stylesheet" type="text/css" href="http://localhost/haerak/css/main.css">
 
 <script type="text/javascript">
-
+$(function() {
+	$("#colorBtn2").click(function() {
+		
+		$("#frm").submit();
+		
+	});//click
+});//ready
 </script>
 </head>
 <body>
@@ -62,7 +68,7 @@ loginBox는 container의 시작점이 loginBox의 시작좌표가된다.
 <jsp:include page="/header.do"/>
 </div>
 
-<form name="frm">
+<form name="frm" action="pass_inquiry.do" method="get">
 <div id="container">
 	<a href="#void">
 	<input type="button" id="colorBtn" value="아이디찾기" >
@@ -71,27 +77,25 @@ loginBox는 container의 시작점이 loginBox의 시작좌표가된다.
 	<input type="button" id="whiteBtn" value="비밀번호찾기" >
 	</a>
 	<div id="div1">
-		<font id="font3">아이디 찾기 성공!</font>
+		<font id="font3">존재하는 아이디!</font>
 	</div>
 	<div id="div2" >
 		회원님의 아이디는<br><br>
-		<input type="text" id="inputBox1" value="${userId }" readonly="readonly"><br><br>
+		<input type="text" id="inputBox1" name="userId" value="${userId}" readonly="readonly"><br><br>
 		입니다.
 	</div>
 	<div id="div3">
 	
 	</div>
-	<a href="http://localhost/prj_2/lmh/main_login.jsp">
-	<input type="button" id="whiteBtn2" value="홈으로">
+	<a href="#void">
+	<input type="button" id="whiteBtn2" value="로그인">
 	</a>
-	<a href="http://localhost/prj_2/ldk/pass_inquiry.do?userId=${userId }">
 	<input type="button" id="colorBtn2" value="비밀번호 찾기">
-	</a>
 </div><!-- container -->
 </form>
 
 <div class="container5">
-   <jsp:include page="/footer.do" />
+   <jsp:include page="/footer.do"/>
 </div><!--container5  -->
 </div><!-- wrap -->
 </body>

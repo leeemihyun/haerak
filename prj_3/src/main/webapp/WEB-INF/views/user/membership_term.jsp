@@ -6,11 +6,8 @@
 <head>
 <meta charset="UTF-8">
 <title>회원가입 약관</title>
-<link rel="stylesheet" type="text/css" href="http://localhost/prj_2/ldk/main.css">
 
 <style type="text/css">
-#wrap{ width: 1200px; height: 1400px;margin: 0px auto;}
-#header{  height: 80px; position: relative; border-bottom: 2px solid #5E5E5E}
 #container{  height: 900px;position: relative; }
 /* container에 position:relative가 설정되었고  container의 자식 div인 
 loginBox는 container의 시작점이 loginBox의 시작좌표가된다.
@@ -18,14 +15,14 @@ loginBox는 container의 시작점이 loginBox의 시작좌표가된다.
 
 #footer{  height: 300px;}
 #joinMembership{width:300px; height: 56px; text-align: center; font-size: 37px; font-weight: bold; 
-				position: absolute; left: 450px; top: 9px; border: 2px solid #333; border-radius: 10px;color:#5E5E5E}
+				position: absolute; left: 800px; top: 9px; border: 2px solid #333; border-radius: 10px;color:#5E5E5E}
 #logo{width:202px; height: 54px;position: absolute; left: 128px; top: 13px;}
-#checkbox1{position: absolute; left: 350px; top: 130px;}
-#checkbox2{position: absolute; left: 350px; top: 200px;}
-#checkbox3{position: absolute; left: 350px; top: 450px;}
-#checkBtn{position: absolute; left: 726px; top: 630px; width:130px;height: 50px;
+#checkbox1{position: absolute; left: 700px; top: 130px;}
+#checkbox2{position: absolute; left: 700px; top: 200px;}
+#checkbox3{position: absolute; left: 700px; top: 450px;}
+#checkBtn{position: absolute; left: 1076px; top: 630px; width:130px;height: 50px;
 		border: 1px solid #333;cursor: pointer;background-color: #F7A144;color:#FFF;font-weight: bold;border-radius: 10px;}
-#cancelBtn{position: absolute; left: 590px; top: 630px; width:130px;border-radius: 10px;
+#cancelBtn{position: absolute; left: 940px; top: 630px; width:130px;border-radius: 10px;
 		height: 50px;
 		border: 1px solid #333;
 		cursor: pointer;
@@ -36,7 +33,14 @@ loginBox는 container의 시작점이 loginBox의 시작좌표가된다.
 #font2{font-size:10px;font-family: "맑은고딕"; font-weight:bold; color: #E88935;  }
 #font3{font-size:17px;font-family: "맑은고딕"; font-weight:bold; color: #333333;  }
 #textarea{width:500px;height: 150px;}
+
 </style>
+<!-- bootstrap 시작-->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
+<!-- bootstrap 끝-->
+<link rel="stylesheet" type="text/css" href="http://localhost/haerak/css/headerFooter.css">
+<link rel="stylesheet" type="text/css" href="http://localhost/haerak/css/main.css">
 <script type="text/javascript">
 function setAll() {
 	var obj=document.frm;
@@ -51,12 +55,11 @@ function setAll() {
 
 function check() {
 	var obj=document.frm;
-	var link="#void";
 	if(!(obj.chk1.checked)){
 		alert("이용약관 동의는 필수사항입니다!")
 		obj.chk1.focus();
 	}else if(obj.chk1.checked){
-		location.href= link;
+		location.href= "user_dup.do";
 	}
 	
 }
@@ -64,9 +67,9 @@ function check() {
 </head>
 <body>
 
-<div id="wrap"> <!-- wrap ( w : 900 x h : 1200) -->
-<div id="header">
-	<a href="#void"><img id="logo" alt="logo"  src="http://localhost/spring_mvc/images/haerak.png"></a>
+<div class="wrap"> 
+<div class="header" >
+<jsp:include page="/header.do"/>
 </div>
 <form name="frm">
 <div id="container">
@@ -97,9 +100,9 @@ function check() {
 </div>
 </form>
 
-<div class="footer">
-<%-- <c:import url="../lmh/footer.jsp"/> --%>
-   </div><!-- footer-->
+<div class="container5">
+   <jsp:include page="/footer.do" />
+</div><!--container5  -->
 </div>
 </body>
 </html>

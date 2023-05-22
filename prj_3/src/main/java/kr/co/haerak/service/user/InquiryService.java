@@ -26,8 +26,7 @@ public class InquiryService {
 		
 		fiVO.setEmail(fiVO.getEmail()+"@"+fiVO.getEmail2());//이메일 하나로 합치기
 		fiVO.setEmail( de.encryption( fiVO.getEmail()) );//이메일 주소 암호화하기
-		
-		uDAO.selectFindId(fiVO);
+		userId=uDAO.selectFindId(fiVO);
 		
 		return userId;
 	}//idInquiryService
@@ -41,7 +40,7 @@ public class InquiryService {
 		fpVO.setEmail(fpVO.getEmail()+"@"+fpVO.getEmail2());//이메일 하나로 합치기
 		fpVO.setEmail( de.encryption( fpVO.getEmail()) );//이메일 주소 암호화하기
 		
-		uDAO.selectFindPass(fpVO);
+		userId=uDAO.selectFindPass(fpVO);
 		
 		return userId;
 	}//idInquiryService
