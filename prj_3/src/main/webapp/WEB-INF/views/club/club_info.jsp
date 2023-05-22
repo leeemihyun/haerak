@@ -1,11 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>모임상세페이지</title>
-<link rel="stylesheet" type="text/css" href="http://localhost/test_mvc/headerFooter.css">
+<link rel="stylesheet" type="text/css" href="http://localhost/prj_3/css/headerFooter.css">
 <!-- jQuery CDN 시작 -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
 <!-- jQuery CDN 시작 -->
@@ -101,23 +103,74 @@ a{text-decoration: none; color: #333;}
 <script type="text/javascript">
 $(function() {
 	
+	/* 모임판매자 경우 바꾸기  */
+	if(${clubInfo.userId eq sessionScope.mId }){
+		$("#apply_button").val('수정하기');
+		$("#apply_button").removeAttr("onclick");
+		$("#apply_button").attr("onclick","clubChangeInfo()");
+		
+	}//end if
+	
+	
 	/*관심목록 추가기능  */
 	$("#heart").click(function() {
+		/* ${not empty sessionScope.mId} */	
+		if(true) {
 		$("#heart").fadeOut(250).fadeIn(200);
 		var src=$(this).attr('src');
 		
-		if(src=='http://localhost/test_mvc/common/images/heart_on.svg'){
-			 $(this).attr('src','http://localhost/test_mvc/common/images/heart_off.png'); 
+		if(src=='http://localhost/prj_3/images/heart_on.svg'){
+		$(this).attr('src','http://localhost/prj_3/images/heart_off.png');
+			interCallAjax(2);
 		}//end if
 		
-		if(src=='http://localhost/test_mvc/common/images/heart_off.png'){
-		 $(this).attr('src','http://localhost/test_mvc/common/images/heart_on.svg'); 
+		if(src=='http://localhost/prj_3/images/heart_off.png'){
+		 $(this).attr('src','http://localhost/prj_3/images/heart_on.svg'); 
+		 	interCallAjax(1);
 			
 		}//end if
+
+		}else{
+			alert("로그인 후 이용해주세요");
+		}//end else
+		
 	});//click
 	
 	
 });
+
+function approvalrequest() {
+	//${not empty sessionScope.mId}
+	if(true){
+		//${interFlag==true}
+		if(false){
+		window.location.href="approvalrequest.do?club_Num=1";				
+		}else{
+			alert("이미 신청한 모임입니다.");
+		}//end else
+	}else{
+		alert("로그인 후 이용해주세요");
+	}//end else
+}
+
+function clubChangeInfo() {
+	alert("ddddd");
+}
+
+function interCallAjax(flagcnt) {
+	var param={club_Num:1,userId:'abcd4',flag:flagcnt}	
+	$.ajax({
+		url:"updateInterestList.do",
+		data : param,
+		dataType: "text",
+		error: function(xhr) {
+			alert("문제발생");
+			console.log(xhr.status);
+		},
+		success: function(jsonObj) {		
+		}//success			
+	});//ajax	
+}//interCallAjax
 </script>
 <!-- 카카오 지도  -->
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=e13a6e6c7238e2054c9ce8fa02405bdb"></script>
@@ -125,14 +178,14 @@ $(function() {
 $(function() {
 var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
     mapOption = { 
-        center: new kakao.maps.LatLng(37.497672, 127.0332215), // 지도의 중심좌표
+        center: new kakao.maps.LatLng(${clubInfo.longitude},${clubInfo.latitude}), // 지도의 중심좌표
         level: 3 // 지도의 확대 레벨
     };
 
 var map = new kakao.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
 
 // 마커가 표시될 위치입니다 
-var markerPosition  = new kakao.maps.LatLng(37.497672, 127.0332215); 
+var markerPosition  = new kakao.maps.LatLng(${clubInfo.longitude},${clubInfo.latitude}); 
 
 // 마커를 생성합니다
 var marker = new kakao.maps.Marker({
@@ -151,7 +204,7 @@ marker.setMap(map);
 <body>
 <div id="wrap"> <!-- wrap( 1200 x 1200) -->
 	<div class="header">
-	 <%@ include file="../main/header.jsp" %>
+	 <jsp:include page="/header.do" />
 	</div><!-- header  -->
 	<div id="container">
 	
@@ -163,17 +216,16 @@ marker.setMap(map);
     <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
     <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
     <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
+    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="3" aria-label="Slide 4"></button>
+    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="4" aria-label="Slide 5"></button>
   </div>
+  
   <div class="carousel-inner">
-    <div class="carousel-item active">
-      <img src="http://localhost/test_mvc/common/images/a.png" class="d-block w-100" alt="..." height="480px">
+   <c:forEach var="imgs" items="${clubInfo.clubImg}" varStatus="i" begin="0">
+     <div class="carousel-item${i.index==0 ?" active":""}">
+      <img src="${imgs}" class="d-block w-100" alt="..." height="480px">
     </div>
-    <div class="carousel-item">
-      <img src="http://localhost/test_mvc/common/images/b.png" class="d-block w-100" alt="..." height="480px">
-    </div>
-    <div class="carousel-item">
-      <img src="http://localhost/test_mvc/common/images/ab.png" class="d-block w-100" alt="..." height="480px">
-    </div>
+   </c:forEach> 
   </div>
   <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
     <span class="carousel-control-prev-icon" aria-hidden="true"></span>
@@ -187,17 +239,17 @@ marker.setMap(map);
 	
 	</div><!-- 캐러셀  -->
 	<div id="club_detail">
-	<div id="club_detail_text1"><label style="font-weight: bold; font-size: 18px; color: red">▶소셜링</label></div>
-	<div style="font-size: 30px; font-weight: bold;" id="club_detail_text2">클론코딩을 위한 제목 예시입니다.</div>
-	<img src="http://localhost/test_mvc/common/images/heart_off.png" class="bookmark" id="heart">
-	<div style="font-size: 30px; font-weight: bold;" id="club_detail_text3">45,000원</div>
-	<span style="font-weight: bold; font-size: 20px;" class="club_seller_info2">후기 3 | 찜 260 | 조회수 541</span>
-	<input type="button" value="신청하기" class="btn btn-outline-dark" id="apply_button">
+	<div id="club_detail_text1"><label style="font-weight: bold; font-size: 18px; color: red">▶${clubInfo.categoryName}</label></div>
+	<div style="font-size: 30px; font-weight: bold;" id="club_detail_text2">${clubInfo.clubName}</div>
+	<img src="${interFlag ? 'http://localhost/prj_3/images/heart_on.svg':'http://localhost/prj_3/images/heart_off.png'}" class="bookmark" id="heart">
+	<div style="font-size: 30px; font-weight: bold;" id="club_detail_text3"><fmt:formatNumber value="${clubInfo.price}" pattern="#,###" />원</div>
+	<span style="font-weight: bold; font-size: 20px;" class="club_seller_info2">후기 ${clubInfo.reviewCnt} | 찜 ${clubInfo.interCnt} | 조회수 ${clubInfo.viewCnt}</span>
+	<input type="button" value="신청하기" class="btn btn-outline-dark" id="apply_button" onclick="approvalrequest()" >
 	<div id="club_sellerInformation">
-	<img src="" onerror="this.onerror=null; this.src='http://localhost/test_mvc/common/images/profile.png';" id="seller_profile_img"/>
-	<a href=""><span style="font-weight: bold; font-size: 20px;" class="club_seller_info1">호스트명 ></span></a>
-	<span style="font-weight: bold; font-size: 17px;" class="club_seller_info_addr">경기도 수원시</span>
-	<span style="font-weight: bold; font-size: 17px;" class="club_seller_info_aboutMe">안녕하세요~ 민수입니다.</span>
+	<img src="${clubInfo.userImg}" onerror="this.onerror=null; this.src='http://localhost/test_mvc/common/images/profile.png';" id="seller_profile_img"/>
+	<a href=""><span style="font-weight: bold; font-size: 20px;" class="club_seller_info1"> ${clubInfo.nickName} ></span></a>
+	<span style="font-weight: bold; font-size: 17px;" class="club_seller_info_addr">${clubInfo.addr} </span>
+	<span style="font-weight: bold; font-size: 17px;" class="club_seller_info_aboutMe">${clubInfo.personalIntro}</span>
 	</div><!-- club_sellerInformation  -->	
 	</div><!--club_detail  -->
 	</div><!-- club_info_div  -->
@@ -249,7 +301,7 @@ marker.setMap(map);
 	<div id="club_introduce">
 	<span style="font-weight: bold; font-size: 25px;" id="club_introduce_title">모임소개</span>
 	<div id="club_introduce_textArea">
-	같이 저녁 드실분~
+	${clubInfo.detailTxt}
 	<img src="http://localhost/test_mvc/common/images/see_more_test.jpg">
 	</div>
 	</div><!-- club_introduce -->
@@ -258,24 +310,24 @@ marker.setMap(map);
 	</div><!-- club_introduce_textArea_more_button_div -->
 	<div id="hr3"><hr></div>
 	<div id="club_member_info">
-	<div id="club_member_info_text"><span style="font-weight: bold; font-size: 20px;"> 인원수: 5명 </span></div>
+	<div id="club_member_info_text"><span style="font-weight: bold; font-size: 20px;"> 인원수: ${clubInfo.numberPeople}명 </span></div>
 	</div><!-- club_member_info -->
 	<div id="hr4"><hr></div>
 	<div id="club_date_info">
 	<div id="club_date_info_text1" style="font-weight: bold; font-size: 25px; ">만나는 날짜&시간</div>
-	<div id="club_date_info_text2" style="font-weight: bold; font-size: 15px; ">언제까지 모일까요? 2023년 5월 20일</div>
-	<div id="club_date_info_text3" style="font-weight: bold; font-size: 15px; ">몇시까지 모일까요? 오전 12시 50분</div>
+	<div id="club_date_info_text2" style="font-weight: bold; font-size: 15px; ">언제까지 모일까요? <fmt:formatDate value="${clubInfo.clubDate}" pattern="yyyy년 MM월 dd일"/></div>
+	<div id="club_date_info_text3" style="font-weight: bold; font-size: 15px; ">몇시까지 모일까요? <fmt:formatDate value="${clubInfo.clubDate}" pattern="a hh시 mm분"/></div>
 	</div><!-- club_date_info -->
 	<div id="hr5"><hr></div>
 	<div id="club_place">
 	<div id="map" style="width:100%;height:350px;"></div>
 	<div>장소명</div>
-	<div>상세주소</div>
+	<div>${clubInfo.clubAddr}</div>
 	</div><!-- club_place -->
 	<div id="hr6"><hr></div>
 	</div><!-- container  -->
-	<div class="container5" style="left: 300px;">
-		<%@ include file="../main/footer.jsp" %>
+	<div class="container5">
+		<jsp:include page="/footer.do" />
 	</div><!-- footer  -->
 </div>
 </body>

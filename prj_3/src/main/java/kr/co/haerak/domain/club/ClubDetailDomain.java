@@ -6,11 +6,9 @@ import java.util.List;
 public class ClubDetailDomain {
 
 	private List<String> clubImg;
-	private String clubName,clubAddr,detailTxt,userId,NickName,userImg,addr,personalIntro,categoryName,latitude,longitude;
+	private String clubName,clubAddr,detailTxt,userId,nickName,userImg,addr,personalIntro,categoryName,latitude,longitude;
 	private int reviewCnt,viewCnt,interCnt,price,clubNum,numberPeople;
 	private Date inputDate,clubDate;
-	
-	
 	
 	public List<String> getClubImg() {
 		return clubImg;
@@ -43,10 +41,10 @@ public class ClubDetailDomain {
 		this.userId = userId;
 	}
 	public String getNickName() {
-		return NickName;
+		return nickName;
 	}
 	public void setNickName(String nickName) {
-		NickName = nickName;
+		this.nickName = nickName;
 	}
 	public String getUserImg() {
 		return userImg;
@@ -137,13 +135,12 @@ public class ClubDetailDomain {
 	@Override
 	public String toString() {
 		return "ClubDetailDomain [clubImg=" + clubImg + ", clubName=" + clubName + ", clubAddr=" + clubAddr
-				+ ", detailTxt=" + detailTxt + ", userId=" + userId + ", NickName=" + NickName + ", userImg=" + userImg
+				+ ", detailTxt=" + detailTxt + ", userId=" + userId + ", nickName=" + nickName + ", userImg=" + userImg
 				+ ", addr=" + addr + ", personalIntro=" + personalIntro + ", categoryName=" + categoryName
 				+ ", latitude=" + latitude + ", longitude=" + longitude + ", reviewCnt=" + reviewCnt + ", viewCnt="
 				+ viewCnt + ", interCnt=" + interCnt + ", price=" + price + ", clubNum=" + clubNum + ", numberPeople="
 				+ numberPeople + ", inputDate=" + inputDate + ", clubDate=" + clubDate + "]";
 	}
-	
 	
 	
 	

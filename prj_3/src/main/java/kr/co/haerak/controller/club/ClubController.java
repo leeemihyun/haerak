@@ -1,10 +1,18 @@
 package kr.co.haerak.controller.club;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.websocket.Session;
 
+import org.json.simple.JSONObject;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import kr.co.haerak.service.club.ShowClubService;
 
 /**
  * 민수 페이지 (모임 상세, 등록, 수정, 후기글 페이지)
@@ -13,6 +21,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class ClubController {
 	
+	@Autowired(required = false)
+	private ShowClubService scs;
+	
 		/**
 		 * 모임상세페이지
 		 * @param model
@@ -20,8 +31,16 @@ public class ClubController {
 		 * @return
 		 */
 		@GetMapping("/club/club_info.do")
-		public String showClubInfoForm(Model model) {
+		public String showClubInfoForm(int club_Num,Model model) {
+			String userId="";
+			userId=(String)model.getAttribute("userId");
+
+			if(userId==null) {
+				userId="틀린아이디";
+			}
 			
+			model.addAttribute("clubInfo",scs.showClubService(club_Num));
+			model.addAttribute("interFlag",scs.selectInterService(userId, club_Num));
 			
 			return "club/club_info";
 		}//ShowClubInfoForm
@@ -33,11 +52,40 @@ public class ClubController {
 		 * @param model
 		 * @param clubNum
 		 */
+		@ResponseBody
 		@GetMapping("/club/updateInterestList.do")
-		public void updateInterestList(Model model,int clubNum) {
+		public String updateInterestList(int club_Num,String userId,int flag) {
+			//System.out.println("웹 파라메터로 넘어온 이름 : "+);
+			//Service 생성
 			
+			scs.updateInterList(userId, club_Num, flag);
+			String result="true";
+			return result;
 		}//updateInterestList
 		
+		
+		/**
+		 * 모임신청하기 클릭 
+		 * @param model
+		 * @param club_Num
+		 * @return
+		 */
+		@GetMapping("/club/approvalrequest.do")
+		public String insertapprovalList(Model model,int club_Num) {
+			
+			String userId="";
+			userId=(String)model.getAttribute("userId");
+
+			if(userId==null) {
+				userId="틀린아이디";
+			}
+			
+			model.addAttribute("approvalFlag",scs.clubApprovalInsert("abcd4", club_Num));
+			model.addAttribute("clubInfo",scs.showClubService(club_Num));
+			model.addAttribute("interFlag",scs.selectInterService(userId, club_Num));
+			
+			return "club/club_info";
+		}
 		
 
 		/**
@@ -50,7 +98,7 @@ public class ClubController {
 		public String reviewSeeMoreForm(Model model,int clubNum) {
 			
 			
-			return "reviewMore";
+			return "club/review";
 		}//reviewSeeMoreForm	
 		
 		
@@ -109,7 +157,7 @@ public class ClubController {
 		public String clubRegistrationCategoryForm(Model model) {
 			
 			
-			return "result";
+			return "club/select_category_page";
 		}//clubRegistrationCategoryForm
 		
 		
@@ -122,8 +170,10 @@ public class ClubController {
 		@GetMapping("/club/clubRegistrationForm.do")
 		public String clubRegistrationForm(Model model, int categoryNum) {
 			
+			model.addAttribute("categoryNum",categoryNum);
+			model.addAttribute("pageInfo","모임 등록");
 			
-			return "result";
+			return "club/sell_page";
 		}//clubRegistrationForm
 		
 		
@@ -135,6 +185,7 @@ public class ClubController {
 		 */
 		@GetMapping("/club/clubRegistrationProcess.do")
 		public String clubRegistrationProcess(Model model, HttpServletRequest request) {
+			
 			
 			
 			return "result";

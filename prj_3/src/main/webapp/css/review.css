@@ -1,0 +1,199 @@
+@charset "UTF-8";
+
+.wrap{width: 1900px; height : auto; margin: 0px auto;} 
+
+
+/********container_review********/
+.container_review{
+position: relative; 
+height: 250px; 
+}
+
+
+.review_cnt{
+position: absolute;
+top: 100px;
+left: 300px;	
+}
+
+
+.review_hr{
+position: absolute;
+top: 150px;
+border: 1px solid #EAEBEE;
+}
+
+
+.review_write{
+position: absolute;
+top: 200px;
+left: 300px;	
+}
+/********container_review********/
+
+
+/***********div_hr_container_review2*******/
+.div_hr_container_review2{
+position: relative;
+width: 1200px;
+left: 300px;
+}
+
+
+.hr_container_review2{
+border: 3px solid #6e6e6e;
+}
+/***********div_hr_container_review2*******/
+
+
+
+/********* container_review2**********/
+.container_review2{
+position: relative; 
+height: 450px; 
+}
+
+
+.purchaser_name{
+position: absolute; 
+top: 50px;
+left: 450px;
+}
+
+.purchaser_profile{
+width: 40px;
+height: 40px;
+object-fit: cover;
+border-radius: 10px;
+}
+
+
+.review_form{
+position: absolute; 
+top:100px;
+left:0; right:0; margin-left:auto; margin-right:auto; 
+width: 1000px;
+}
+/********* container_review2**********/
+
+
+.container_review3{
+position: relative; 
+height: 1000px; 	
+}
+
+
+.purchaser_reivew_name{
+position: absolute; 
+top: 50px;
+left: 450px;
+
+width: 300px;
+height: 50px;
+}
+
+
+.purchaser_Col1{
+width: 60px; 
+}
+
+
+.purchaser_Col2{
+width: 200px; 	
+padding-left: 5px;
+}
+
+
+.purchaser_profile2{
+position: absolute;
+top: 7px;
+width: 40px;
+height: 40px;
+object-fit: cover;
+border-radius: 10px;
+}
+
+
+.purchaser_reivew{
+position: absolute; 
+top:130px;
+left:0; right:0; margin-left:auto; margin-right:auto; 
+width: 1000px;
+background-color: gray;
+}
+
+
+.seller_review_arrow{
+position: absolute;
+left: 500px;
+top: 300px; 	
+}
+
+
+.seller_review_arrow_img{
+position: absolute;
+width: 40px;
+height: 40px;	
+}
+
+
+
+
+.seller_reivew_name{
+position: absolute; 
+top: 300px;
+left: 550px;
+width: 300px;
+height: 50px;
+}
+
+
+
+.seller_Col1{
+width: 60px;	
+}
+
+.seller_Col2{
+width: 200px; 	
+padding-left: 5px;
+}
+
+
+
+.seller_profile{
+position: absolute;
+top: 7px;
+width: 40px;
+height: 40px;
+object-fit: cover;
+border-radius: 10px;	
+}
+
+
+/* .seller_name{
+position: absolute; 
+top: 280px;
+left: 450px;
+}
+
+
+.seller_profile{
+width: 40px;
+height: 40px;
+object-fit: cover;
+border-radius: 10px;
+}
+ */
+.seller_reivew{
+position: absolute; 
+top:370px;
+left:0; right:0; margin-left:auto; margin-right:auto; 
+width: 1000px;	
+}
+
+.review_footer{
+height: 300px; 
+position: relative; 
+}
+
+
