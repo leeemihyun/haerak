@@ -14,7 +14,7 @@ import kr.co.sist.util.cipher.DataEncrypt;
 
 @Component
 public class InquiryService {
-	@Autowired
+	@Autowired(required = false)
 	private UserDAO uDAO;
 	
 	

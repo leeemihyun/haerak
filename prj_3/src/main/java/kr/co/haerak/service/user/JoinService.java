@@ -15,7 +15,7 @@ import kr.co.sist.util.cipher.DataEncrypt;
 @Component
 public class JoinService {
 
-	@Autowired
+	@Autowired(required = false)
 	private UserDAO uDAO;
 	
 	public int joinService(UserVO uVO) throws UnsupportedEncodingException, GeneralSecurityException {

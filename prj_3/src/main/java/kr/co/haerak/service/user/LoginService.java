@@ -12,7 +12,7 @@ import kr.co.sist.util.cipher.DataEncrypt;
 
 @Component
 public class LoginService {
-	@Autowired
+	@Autowired(required = false)
 	private UserDAO uDAO;
 	
 	
@@ -20,7 +20,7 @@ public class LoginService {
 		LoginSessionDomain lsDomain=null;
 		//암호화 하기
 		
-		if(uDAO.selectChkUser(lVO.getUserId())) {// 탈퇴한 회원인지 확인하기
+		if(!uDAO.selectChkUser(lVO.getUserId())) {// 탈퇴한 회원인지 확인하기
 			lVO.setUserPassword(DataEncrypt.messageDigest("MD5", lVO.getUserPassword()));
 			lsDomain=uDAO.selectLogin(lVO);
 		}//end if

@@ -30,8 +30,8 @@
 
 
 <script type="text/javascript">
-
-	if(<%=request.getParameter("flag")%>==false){
+	var flag = '${flag}';
+	if(flag!=""){
 		alert("아이디나 비밀번호를 다시 확인해주세요");
 	}//end if
 	
@@ -64,7 +64,7 @@
 <div class="wrap">
 
   <div class="header"> 
-        <%@ include file="header.jsp" %>
+        <jsp:include page="/header.do"/>
   </div> <!--header-->
 
 
@@ -75,7 +75,7 @@
      
    
  <div class="login_frm">
- <form id="postFrm"  action="http://localhost/prj_2/lmh/login_frm_process.jsp" method="post" >
+ <form id="postFrm"  action="login_process.do" method="post" >
      
      <div class="input_login">
      <input type="text"  id="id" name="userId" class="text_input_login"  placeholder="아이디를 입력해주세요"  autofocus="autofocus"> 
@@ -100,7 +100,7 @@
      
      
       <div class="div_btn_join_member">
-        <input type="button"  value="회원가입" class="btn_join_member"  onclick="location.href='http://localhost/prj_2/ldk/membership_term.jsp' ">
+        <input type="button"  value="회원가입" class="btn_join_member"  onclick="location.href='join_term.do' ">
      </div>
      
      
@@ -110,7 +110,7 @@
 
 
 <div class="container5">
-    <%@ include file="footer.jsp" %>
+    <jsp:include page="/footer.do"/>
 </div><!--container5  -->
 
 
