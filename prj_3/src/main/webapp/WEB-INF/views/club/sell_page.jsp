@@ -40,6 +40,13 @@ top:560px;
 left:350px;
 }
 
+#detail1{
+position:absolute;
+top:580px;
+left:400px;
+}
+
+
 .hrsty4{
 border-color:#000000;
 width:1200px;
@@ -244,6 +251,15 @@ height:100px;
 #addr{width:450px;height: 50px;border: 2px solid #333; border-radius: 10px;color:#5E5E5E;font-size: 15px;cursor: pointer;}
 #detailAddr{width:450px;height: 50px;border: 2px solid #333; border-radius: 10px;color:#5E5E5E;font-size: 15px;cursor: pointer;}
 
+#detaiTxt{
+width: 800px; 
+height: 330px;
+position:absolute;
+top:30px;
+left:10px;
+resize: none;
+}
+
 .place_area2{
 position:absolute;
 left:400px;
@@ -296,32 +312,28 @@ left: 325px;
 </style>
 <link rel="stylesheet" type="text/css" href="http://localhost/prj_3/css/headerFooter.css">
 
+<!-- 다음 api  -->
+<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+<!-- 다음 api  -->
+
 <!-- bootstrap 시작 -->
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.min.js" integrity="sha384-Y4oOpwW3duJdCWv5ly8SCFYWqFDsfob/3GkgExXKV4idmbt98QcxXYs9UoXAB7BZ" crossorigin="anonymous"></script>
 <!-- bootstrap 끝 -->
-
-<!-- summernote-lite 시작 -->
-<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" 
-integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous">
-</script>
-<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css" rel="stylesheet">
-<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.js">
-</script>
-<!-- summernote-lite 끝 -->
+<!-- jQuery CDN 시작 -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+<!-- jQuery CDN 시작 -->
 
 <!-- 달력 Datapicker jQuery -->
 <link rel="stylesheet"  href="css/ui-lightness/jquery-ui-1.8.16.custom.css"/>
 <link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
 <link rel="stylesheet" href="/resources/demos/style.css">
-
 <!-- 달력 Datapicker jQuery 끝 -->
 
 <!-- 시간 timepicker jQuery -->
 <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.css">
 <!-- 시간 timepicker jQuery 끝 -->
 
-<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script type="text/javascript">
 
 function findZip() {
@@ -441,13 +453,16 @@ $(function() {
 	
 	$("#price_none_button").click(function() { //참가비 없음
 		$("#input_price").hide();
+		$("#input_price").val(0);
 		 $(this).css("background-color", "#F7A144");
 		 $(this).css("color", "white");
 		 $("#price_button").css("background-color", "#E0E0E0");
 		 $("#price_button").css("color", "black");
 	});
 	
+	
 	$("#complete_button").click(function(){
+		
 		/* 상품 이미지 */
  		if($("#input_img").val()==""){
 			alert("이미지를 넣어주세요."); 
@@ -456,36 +471,66 @@ $(function() {
 		}//end if 
 		 
 		/* 상품 제목 */
-		if($("#input_title").val()==""){
-			alert("제목을 입력해주세요"); 
+		if(!$("#input_title").val()){
+			alert("모임명을 입력해주세요"); 
 			$("#input_title").focus();
+			return;
+		}//end if
+		
+		
+		/* 자세한 설명 */
+	 	if(!$("#detaiTxt").val()){
+			alert("상품에 대한 설명을 적어주세요.");
+			$("#detaiTxt").focus();
+			return;
+		}//end if  
+		
+		if($("#input_member option:selected").val()=="0"){
+			alert("인원수를 선택해주세요"); 
+			$("#input_member").focus();
 			return;
 		}//end if
 				
 		/* 가격 */
-		if($("#price").val()==""){
-			alert("가격을 설정해주세요(나눔하기 체크 시 0원으로 입력됩니다!)");
-			$("#price").focus();
+		if(!$("#input_price").val()){
+			alert("가격을 설정해주세요(참가비 없음 체크 시 0원으로 입력됩니다!)");
+			$("#input_price").focus();
 			return;
 		}//end if
 		
-		/* 자세한 설명 */
-	/* 	if($("#input_explain").val()==""){
-			alert("상품에 대한 설명을 적어주세요.");
-			$("#input_explain").focus();
+		if(!$("#datepicker").val()){
+			alert("날짜를 선택해주세요");
+			$("#datepicker").focus();
 			return;
-		}//end if  */
+		}//end if
+
+		if(!$("#timepicker").val()){
+			alert("시간을 선택해주세요");
+			$("#timepicker").focus();
+			return;
+		}//end if
+
+		if(!$("#zipcode").val()){
+			alert("장소를 선택해주세요");
+			$("#zipcode").focus();
+			return;
+		}//end if
 		
-		/* 거래희망장소 */
-	/* 	if($("#input_location").val()==""){
-			alert("거래장소를 설정해주세요.");
-			$("#input_location").focus();
+		if(!$("#longitude").val()){
+			alert("위도를 선택해주세요");
 			return;
-		}//end if */
+		}//end if
+		
+		if(!$("#latitude").val()){
+			alert("경도를 선택해주세요");
+			return;
+		}//end if
+		
+		
+		
 
 		alert("성공적으로 등록되었습니다!");
-	});//click
-	
+	});//click	
 	
 	
 });
@@ -493,7 +538,6 @@ $(function() {
 
 
 </script>
-<script src="js/jquery-ui-1.8.16.custom.min.js"></script>
 </head>
 <body>
 <div id="wrap">
@@ -508,7 +552,8 @@ $(function() {
 <label class="info_title" style="font-size:30pt; margin-top:30px;"><strong>${pageInfo}</strong></label>
 
 <!-- <form id="form" name="form" action="" method="post" enctype="multipart/form-data"> -->
-
+	<input type="hidden" name="latitude" id="latitude" 	>
+	<input type="hidden" name="longitude" id="longitude" >
 <!-- 제목영역 -->
   <hr class="hrsty1"/>
   <div class="title_area">
@@ -521,7 +566,7 @@ $(function() {
 
 <!-- 사진영역 -->
 <div class="img_area">
-  <label style="font-size:15pt"><strong>*이미지를 넣어주세요</strong>(<span id="imgCnt">0</span>/6)</label><br/>
+  <label style="font-size:15pt"><strong>*이미지를 넣어주세요</strong>(<span id="imgCnt">0</span>/5)</label><br/>
   	<div class="input_img">
   	<img src="" id="clubImg" name="clubImg" class="profile_img" width="100%" height="100%" style="display: none;">
 	</div>
@@ -543,28 +588,9 @@ $(function() {
   
 <!-- 자세한 설명 영역 -->
 <hr class="hrsty3" />
+<span style="font-size:15pt" id="detail1"><strong>*자세한 설명</strong></span>
 <div class="explain_area">
-<label style="font-size:15pt"><strong>*자세한 설명</strong></label>
-
-    <div id="summernote"></div>
-    <script>
-      $('#summernote').summernote({
-        placeholder: '모임에 관하여 자유롭게 써보세요!',
-        tabsize: 2,
-        width:800,
-        height: 300,
-        minHeight:300,
-        maxHeight:300,
-        toolbar: [
-          ['style', ['style']],
-          ['font', ['bold', 'underline', 'clear']],
-          ['color', ['color']],
-          ['para', ['ul', 'ol', 'paragraph']],
-          ['table', ['table']],
-          ['insert', ['link', 'picture']],
-        ]
-      });
-    </script>
+   	<textarea  id="detaiTxt"></textarea>
 </div>
 
 
@@ -573,6 +599,7 @@ $(function() {
 <div class="member_count_area">
 <label style="font-size:15pt"><strong>*참가인원 수</strong></label>
 <select id="input_member" name="numberPeople">
+<option value="0" selected="selected">선택</option>
 <c:forEach var="i"  begin="1" end="10">
 <option value="${i}">${i}명</option>
 </c:forEach>
@@ -585,7 +612,7 @@ $(function() {
 <label for="input_price" style="font-size:15pt"><strong>*참가비</strong></label><br/>
 <input type="button" value="없음" class="price_none_button" id="price_none_button"/>
 <input type="button" value="있음" class="price_button" id="price_button"/>
-<input type="text" id="input_price" placeholder="가격을 입력해주세요"   name="price" value="">
+<input type="text" id="input_price" placeholder="가격을 입력해주세요" name="price" >
 </div>
 
 <!-- 만나는 날짜&시간 영역 -->
@@ -675,6 +702,9 @@ kakao.maps.event.addListener(map, 'click', function(mouseEvent) {
     
     var message = '클릭한 위치의 위도는 ' + latlng.getLat() + ' 이고, ';
     message += '경도는 ' + latlng.getLng() + ' 입니다';
+    
+    $("#latitude").val(latlng.getLat());
+    $("#longitude").val(latlng.getLng());
     
     var resultDiv = document.getElementById('clickLatlng'); 
     resultDiv.innerHTML = message;
