@@ -5,12 +5,30 @@ import java.util.List;
 
 public class ClubInsertVO {
 
-	private int price,categoryNum,ActiAreaNum,numberPeople,clubNum;
-	private String clubName,detailTxt,clubAddr,userId,latitude,longitude;
+	private int price,categoryNum,actiAreaNum,numberPeople;
+	private String clubName,detailTxt,clubAddr,detailAddr,userId,latitude,longitude,clubTime,zipcode;
 	private List<String> clubImg;
 	private Date clubDate;
 	
 	
+	public String getDetailAddr() {
+		return detailAddr;
+	}
+	public void setDetailAddr(String detailAddr) {
+		this.detailAddr = detailAddr;
+	}
+	public String getZipcode() {
+		return zipcode;
+	}
+	public void setZipcode(String zipcode) {
+		this.zipcode = zipcode;
+	}
+	public String getClubTime() {
+		return clubTime;
+	}
+	public void setClubTime(String clubTime) {
+		this.clubTime = clubTime;
+	}
 	public int getPrice() {
 		return price;
 	}
@@ -24,22 +42,16 @@ public class ClubInsertVO {
 		this.categoryNum = categoryNum;
 	}
 	public int getActiAreaNum() {
-		return ActiAreaNum;
+		return actiAreaNum;
 	}
 	public void setActiAreaNum(int actiAreaNum) {
-		ActiAreaNum = actiAreaNum;
+		this.actiAreaNum = actiAreaNum;
 	}
 	public int getNumberPeople() {
 		return numberPeople;
 	}
 	public void setNumberPeople(int numberPeople) {
 		this.numberPeople = numberPeople;
-	}
-	public int getClubNum() {
-		return clubNum;
-	}
-	public void setClubNum(int clubNum) {
-		this.clubNum = clubNum;
 	}
 	public String getClubName() {
 		return clubName;
@@ -89,14 +101,38 @@ public class ClubInsertVO {
 	public void setClubDate(Date clubDate) {
 		this.clubDate = clubDate;
 	}
+	
+	
 	@Override
 	public String toString() {
-		return "ClubInsertVO [price=" + price + ", categoryNum=" + categoryNum + ", ActiAreaNum=" + ActiAreaNum
-				+ ", numberPeople=" + numberPeople + ", clubNum=" + clubNum + ", clubName=" + clubName + ", detailTxt="
-				+ detailTxt + ", clubAddr=" + clubAddr + ", userId=" + userId + ", latitude=" + latitude
-				+ ", longitude=" + longitude + ", clubImg=" + clubImg + ", clubDate=" + clubDate + "]";
+		return "ClubInsertVO [price=" + price + ", categoryNum=" + categoryNum + ", actiAreaNum=" + actiAreaNum
+				+ ", numberPeople=" + numberPeople + ", clubName=" + clubName + ", detailTxt=" + detailTxt
+				+ ", clubAddr=" + clubAddr + ", detailAddr=" + detailAddr + ", userId=" + userId + ", latitude="
+				+ latitude + ", longitude=" + longitude + ", clubTime=" + clubTime + ", zipcode=" + zipcode
+				+ ", clubImg=" + clubImg + ", clubDate=" + clubDate + "]";
 	}
-	
+	public ClubInsertVO(int price, int categoryNum, int actiAreaNum, int numberPeople, String clubName,
+			String detailTxt, String clubAddr, String detailAddr, String userId, String latitude, String longitude,
+			String clubTime, String zipcode, List<String> clubImg, Date clubDate) {
+		this.price = price;
+		this.categoryNum = categoryNum;
+		this.actiAreaNum = actiAreaNum;
+		this.numberPeople = numberPeople;
+		this.clubName = clubName;
+		this.detailTxt = detailTxt;
+		this.clubAddr = clubAddr;
+		this.detailAddr = detailAddr;
+		this.userId = userId;
+		this.latitude = latitude;
+		this.longitude = longitude;
+		this.clubTime = clubTime;
+		this.zipcode = zipcode;
+		this.clubImg = clubImg;
+		this.clubDate = clubDate;
+	}
+	public ClubInsertVO() {
+		// TODO Auto-generated constructor stub
+	}
 	
 	
 }//ClubInsertVO

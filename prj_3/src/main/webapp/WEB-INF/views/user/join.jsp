@@ -845,21 +845,22 @@ $(function(){
 						name="actAreaNum">
 						<option value="지역선택" selected="selected">지역선택</option>
 						<option value=1>서울</option>
-						<option value=2>강원</option>
-						<option value=3>대전</option>
-						<option value=4>충남</option>
+						<option value=2>경기</option>
+						<option value=3>인천</option>
+						<option value=4>강원</option>
 						<option value=5>충북</option>
-						<option value=6>인천</option>
-						<option value=7>경기</option>
-						<option value=8>광주</option>
-						<option value=9>전남</option>
-						<option value=10>전북</option>
-						<option value=11>부산</option>
-						<option value=12>경남</option>
-						<option value=13>울산</option>
-						<option value=14>제주</option>
-						<option value=15>대구</option>
-						<option value=16>경북</option>
+						<option value=6>세종</option>
+						<option value=7>충남</option>
+						<option value=8>대전</option>
+						<option value=9>경북</option>
+						<option value=10>대구</option>
+						<option value=11>울산</option>
+						<option value=12>부산</option>
+						<option value=13>경남</option>
+						<option value=14>전북</option>
+						<option value=15>전남</option>
+						<option value=16>광주</option>
+						<option value=17>제주</option>
 					</select>
 				</div>
 				<div id="div13">

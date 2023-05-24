@@ -1,18 +1,30 @@
 package kr.co.haerak.controller.club;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.websocket.Session;
+import java.io.File;
+import java.io.IOException;
+import java.sql.Date;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.List;
 
-import org.json.simple.JSONObject;
+import javax.servlet.http.HttpServletRequest;
+
+import org.apache.ibatis.javassist.Loader.Simple;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.oreilly.servlet.MultipartRequest;
+import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
+
+import kr.co.haerak.domain.user.LoginSessionDomain;
+import kr.co.haerak.service.club.InsertClubService;
 import kr.co.haerak.service.club.ShowClubService;
+import kr.co.haerak.vo.club.ClubInsertVO;
 
 /**
  * 민수 페이지 (모임 상세, 등록, 수정, 후기글 페이지)
@@ -23,6 +35,9 @@ public class ClubController {
 	
 	@Autowired(required = false)
 	private ShowClubService scs;
+	
+	@Autowired
+	private InsertClubService ics;
 	
 		/**
 		 * 모임상세페이지
@@ -182,13 +197,54 @@ public class ClubController {
 		 * @param model
 		 * @param categoryNum
 		 * @return
+		 * @throws IOException 
 		 */
-		@GetMapping("/club/clubRegistrationProcess.do")
-		public String clubRegistrationProcess(Model model, HttpServletRequest request) {
+		@PostMapping("/clubRegistrationProcess.do")
+		public String clubRegistrationProcess(Model model, HttpServletRequest request) throws IOException {
+			System.out.println("컨트롤러");
+			File file=new File("C:/Users/user/git/prj_3/prj_3/src/main/webapp/club_images");
+			int max=1024*1024*5;
+			MultipartRequest mr = new MultipartRequest(request, file.getAbsolutePath(), max, "UTF-8", new DefaultFileRenamePolicy());
 			
+			LoginSessionDomain lsDomain = (LoginSessionDomain) model.getAttribute("lsDomain");
+			//String userId = lsDomain.getUserId();
+			String userId = "abcd1";
+			int price= Integer.parseInt(mr.getParameter("price"));
+			int categoryNum= Integer.parseInt(mr.getParameter("categoryNum"));
+			int actiAreaNum= 1;
+			int numberPeople= Integer.parseInt(mr.getParameter("numberPeople"));
+			String clubName = mr.getParameter("clubName");
+			String detailTxt = mr.getParameter("detailTxt");
+			String clubAddr = mr.getParameter("clubAddr");
+			String detailAddr = mr.getParameter("detailAddr");
+			String latitude = mr.getParameter("latitude");
+			String longitude = mr.getParameter("longitude");
+			String clubTime = mr.getParameter("clubTime");
+			String zipcode = mr.getParameter("zipcode");
+			SimpleDateFormat sdf= new SimpleDateFormat("MM/dd/yyyy");
+			List<String> clubImg =new ArrayList<String>();
+			//String[] clubImgs = mr.getParameterValues("clubImg");
+			//System.out.println(clubImgs.toString());
+			String imageNames = mr.getParameter("imageNames");
+			System.out.println("컨트롤러 이미지명 파라미터 찍어보기 : "+imageNames);
+			String[] clubImgs= imageNames.split(",");
 			
+			for(int i=0; i<clubImgs.length;i++ ) {
+				clubImg.add(clubImgs[i]);
+			}
 			
-			return "result";
+			java.util.Date date=null;
+			try {
+				date = sdf.parse(mr.getParameter("clubDate"));
+			} catch (ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			Date clubDate = new java.sql.Date(date.getTime());;
+			ClubInsertVO ciVO = new ClubInsertVO(price, categoryNum, actiAreaNum, numberPeople, clubName, detailTxt, clubAddr, detailAddr, userId, latitude, longitude, clubTime, zipcode, clubImg, clubDate);
+			ics.insertClubInfo(ciVO);
+			
+			return "main/main";
 		}//clubRegistrationProcess
 		
 		

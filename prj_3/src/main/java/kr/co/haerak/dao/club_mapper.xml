@@ -81,14 +81,21 @@
 		values(HAERAK.REVIEW_REPLY_SEQ.NEXTVAL,#{REVIEW_REPLY},sysdate,#{REVIEW_NUM});
 	</insert>
   <!-- 모임 등록하기   -->
-	<insert id="insertClubInfo" parameterType="int">
+	<insert id="insertClubInfo" parameterType="kr.co.haerak.vo.club.ClubInsertVO">
 		insert into CLUB(CLUB_NUM, CLUB_NAME, INPUT_DATE, VIEW_CNT, PRICE, DETAIL_TXT,CLUB_ADDR,
- 		CLUB_DATE, LONGITUDE, LATITUDE, NUMBER_PEOPLE, CLUB_STATUS, ACTI_AREA_NUM, CATEGORY_NUM, USER_ID)
- 		values(HAERAK.CLUB_SEQ.NEXTVAL,#{CLUB_NAME},sysdate,0,#{price},#{DETAIL_TXT},#{CLUB_ADDR},
- 		#{CLUB_DATE},#{LONGITUDE},#{LATITUDE},#{NUMBER_PEOPLE},'모집중',#{ACTI_AREA_NUM},#{CATEGORY_NUM},#{USER_ID});
+ 		CLUB_DATE,CLUB_TIME ,LONGITUDE, LATITUDE, NUMBER_PEOPLE, CLUB_STATUS, ACTI_AREA_NUM, CATEGORY_NUM, USER_ID)
+ 		values(club_seq.NEXTVAL,#{clubName},sysdate,0,#{price},#{detailTxt},#{clubAddr},
+ 		#{clubDate},#{clubTime},#{longitude},#{latitude},#{numberPeople},'모집중',#{actiAreaNum},#{categoryNum},#{userId})
+	</insert>
+	<!-- 모임 이미지테이블에도 등록
+	 -->
+	<insert id="insertClubImg" parameterType="String">
+			insert into club_img(club_img_num, club_num, club_img)
+			values (club_img_seq.nextval, CLUB_SEQ.CURRVAL, #{clubImg} )
+		
 	</insert>
   <!-- 모임 정보수정하기   -->
-	<update id="updateClub" parameterType="int">
+	<update id="updateClub" parameterType="kr.co.haerak.vo.club.ClubInsertVO">
 		update 	club
 		set		
 		<if test="CLUB_NAME !=null and CLUB_NAME != ''">
