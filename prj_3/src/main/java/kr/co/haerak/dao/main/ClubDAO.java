@@ -22,20 +22,20 @@ public class ClubDAO {
 	/**
 	 *검색
 	 */
-	public List<ClubSalesDomain>selectSearch(ClubSalesDomain csDo)throws PersistenceException{
-		List<ClubSalesDomain>search = new ArrayList<ClubSalesDomain>();
+	public List<ClubSalesDomain>selectSearch(String search)throws PersistenceException{
+		List<ClubSalesDomain>result = new ArrayList<ClubSalesDomain>();
 		
 		
 		//1. MyBatis Handler 얻기
 		SqlSession ss = MyBatisHandler.getInstance().getMyBatisHandler(false);
 			
 	   //2. 쿼리수행 후 결과 얻기
-		search = ss.selectList("kr.co.haerak.dao.main_mapper.selectSearch",csDo);
+		result = ss.selectList("kr.co.haerak.dao.main_mapper.selectSearch",search);
 			
 	   //3. MyBatis Handler 닫기
 		if( ss!=null) {ss.close();} //end if
 		
-		return search;
+		return result;
 		
 	}
 	
@@ -68,7 +68,6 @@ public class ClubDAO {
 			csd.setUserInfo(ud);   
 		}
 		
-		System.out.println(clubRank);
 		
 		//3. MyBatis Handler 닫기
 		if(ss != null) { ss.close();}
@@ -84,28 +83,42 @@ public class ClubDAO {
 	/**
 	 * 카테고리별 더보기
 	 */
-	public List<ClubSalesDomain>selectMoreClub(SeeMoreVO smVO){
+	public List<ClubSalesDomain>selectMoreClub(int categoryNum){
 		List<ClubSalesDomain>clubMore = new ArrayList<ClubSalesDomain>();
 		
-		//1. 
+		//1.
 		SqlSession ss = MyBatisHandler.getInstance().getMyBatisHandler(false);
 		
-		//2. 
-		clubMore = ss.selectList("kr.co.haerak.dao.main_mapper.clubMore",smVO);
+		//2.
+		clubMore = ss.selectList("kr.co.haerak.dao.main_mapper.selectMoreClub",categoryNum);
+		
+		for(ClubSalesDomain csd : clubMore) {
+			
+			List<UserDomain> ud = null;
+			ud=ss.selectList("kr.co.haerak.dao.main_mapper.selectUserImg", csd.getClub_Num());
+			
+			csd.setUserInfo(ud);
+		}
+		
 		
 		//3.
 		if(ss != null) {ss.close();}
+		
 		
 		return clubMore;
 	}
 
 
 
-
-	 public static void main(String[] args) { 
-	System.out.println(new ClubDAO().selectRankClub(1));
 	
-	 }
+	
+	
+	
+	  public static void main(String[] args) { 
+		  System.out.println(new ClubDAO().selectMoreClub(1));
+	 
+	  }
+	 
 	 
 
 }

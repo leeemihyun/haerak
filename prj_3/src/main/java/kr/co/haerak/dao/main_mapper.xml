@@ -8,17 +8,16 @@
 
 <!-- 모임 검색 : 검색창에 모임 검색 했을 때 모임 등록한 날짜를 기준으로 최신순으로 보임 -->  
 <select id="selectSearch" resultType="kr.co.haerak.domain.main.ClubSalesDomain" parameterType="String">
-SELECT CLUB_NAME, PRICE, CLUB_DATE, CLUB_ADDR, CLUB_IMG, AREA_NAME, NUMBER_PEOPLE, CLUB_STATUS
+SELECT c.CLUB_NUM, CLUB_NAME, PRICE, CLUB_DATE, CLUB_ADDR, CLUB_IMG, AREA_NAME, NUMBER_PEOPLE, CLUB_STATUS, CATEGORY_NUM
 FROM CLUB c, CLUB_IMG ci, ACTIVITY_AREA aa
-WHERE c.CLUB_NUM = ci.CLUB_NUM AND aa.ACTI_AREA_NUM = c.ACTI_AREA_NUM AND c.CLUB_STATUS = '모집중'
+WHERE c.CLUB_NUM = ci.CLUB_NUM AND aa.ACTI_AREA_NUM = c.ACTI_AREA_NUM AND c.CLUB_STATUS = '모집중' 
     AND CLUB_IMG_NUM IN (
       SELECT MIN(CLUB_IMG_NUM) AS CLUB_IMG_NUM
       FROM CLUB_IMG
       GROUP BY CLUB_NUM
-    )
-    AND CLUB_NAME LIKE CONCAT('%', #{searchText}, '%') <!-- 검색어로 CLUB_NAME 필터링 -->
-
-ORDER BY CLUB_DATE DESC
+)
+AND CLUB_NAME LIKE '%'||#{searchText}||'%' 
+ORDER BY INPUT_DATE DESC
 </select>
 
 
@@ -45,7 +44,7 @@ where userNumber &lt; 4
 <select id="selectRankClub" resultType="kr.co.haerak.domain.main.ClubSalesDomain" parameterType="String">
  SELECT c.CLUB_NUM, CLUB_NAME, PRICE, CLUB_DATE, CLUB_ADDR, CLUB_IMG, AREA_NAME, NUMBER_PEOPLE, CLUB_STATUS, CATEGORY_NUM
   FROM CLUB c, CLUB_IMG ci, ACTIVITY_AREA aa
-  WHERE c.CLUB_NUM = ci.CLUB_NUM AND aa.ACTI_AREA_NUM = c.ACTI_AREA_NUM AND c.CLUB_STATUS = '모집중'
+  WHERE c.CLUB_NUM = ci.CLUB_NUM AND aa.ACTI_AREA_NUM = c.ACTI_AREA_NUM AND c.CLUB_STATUS = '모집중' 
     AND CLUB_IMG_NUM IN (
       SELECT MIN(CLUB_IMG_NUM) AS CLUB_IMG_NUM
       FROM CLUB_IMG
@@ -80,9 +79,9 @@ where userNumber &lt; 4
 
 <!-- 모임 더보기 : 카테고리별로 더보기 클릭시 모임 등록한 날짜를 기준으로 최신순으로 보임  -->
  <select id="selectMoreClub" resultType="kr.co.haerak.domain.main.ClubSalesDomain" parameterType="String">
-  SELECT CLUB_NAME, PRICE, CLUB_DATE, CLUB_ADDR, CLUB_IMG, AREA_NAME, NUMBER_PEOPLE, CLUB_STATUS, CATEGORY_NUM
+ SELECT c.CLUB_NUM, CLUB_NAME, PRICE, CLUB_DATE, CLUB_ADDR, CLUB_IMG, AREA_NAME, NUMBER_PEOPLE, CLUB_STATUS, CATEGORY_NUM
   FROM CLUB c, CLUB_IMG ci, ACTIVITY_AREA aa
-  WHERE c.CLUB_NUM = ci.CLUB_NUM AND aa.ACTI_AREA_NUM = c.ACTI_AREA_NUM AND c.CLUB_STATUS = '모집중'
+  WHERE c.CLUB_NUM = ci.CLUB_NUM AND aa.ACTI_AREA_NUM = c.ACTI_AREA_NUM AND c.CLUB_STATUS = '모집중' 
     AND CLUB_IMG_NUM IN (
       SELECT MIN(CLUB_IMG_NUM) AS CLUB_IMG_NUM
       FROM CLUB_IMG
@@ -90,17 +89,16 @@ where userNumber &lt; 4
     )
 
   <choose>
-    <when test="clubType eq 1">소셜링
+    <when test="clubType eq 1"><!-- 소셜링 -->
       AND CATEGORY_NUM = 1
     </when>
-    <when test="clubType eq 2">클럽
+    <when test="clubType eq 2"><!-- 클럽 -->
       AND CATEGORY_NUM = 2
     </when>
-    <when test="clubType eq 3">챌린지
+    <when test="clubType eq 3"><!-- 챌린지 -->
       AND CATEGORY_NUM = 3
     </when>
   </choose>
-
   ORDER BY INPUT_DATE DESC
 </select>
 

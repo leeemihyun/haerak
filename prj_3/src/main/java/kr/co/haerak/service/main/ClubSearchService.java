@@ -19,9 +19,9 @@ public class ClubSearchService {
 	
 	
 	//모임검색
-	public List<ClubSalesDomain> clubSearchProcess(ClubSalesDomain csDomain){
+	public List<ClubSalesDomain> clubSearchProcess(String search){
 		
-		List<ClubSalesDomain> list = cDAO.selectSearch(csDomain);
+		List<ClubSalesDomain> list = cDAO.selectSearch(search);
 		
 		return list;
 	}

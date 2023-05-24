@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import kr.co.haerak.domain.main.ClubSalesDomain;
 import kr.co.haerak.service.main.ClubMainService;
@@ -57,44 +58,50 @@ public class MainController {
 	
 	//메인에서 모임 순위
 	@RequestMapping(value="/main.do", method= {RequestMethod.GET,RequestMethod.POST})
-	//@GetMapping("/main.do")
 	public String mainRank(Model model) {
 		
-		model.addAttribute("selectList", cmas.mainRank(1) );
-		model.addAttribute("selectList2", cmas.mainRank(2) );
-		model.addAttribute("selectList3", cmas.mainRank(3) );
+		model.addAttribute("socialring", cmas.mainRank(1) );
+		model.addAttribute("club", cmas.mainRank(2) );
+		model.addAttribute("challenge", cmas.mainRank(3) );
 		
 		return "main/main";
 	}
+	
+	
+
+	
+	// 모임 더보기 ajax 요청 url
+	@ResponseBody
+	@RequestMapping(value="/categoryAjax.do", method= {RequestMethod.GET})
+	public String categoryMoreAjax(Model model ) {
+		
+		String jsonObj =cms.selectMoreClub(1);
+		
+		
+		return jsonObj;
+	}
+
+	// 모임 더보기
+	@RequestMapping(value="/category.do", method= {RequestMethod.GET, RequestMethod.POST})
+	public String categoryMore(Model model ) {
+
+		
+		return "main/category";
+	}
+	
+	
 	
 	
 	
 	
 	//검색
 	@GetMapping("/club_search.do")
-	public String clubSearchProcess(ClubSalesDomain csDomain, Model model) {
+	public String clubSearchProcess(String search, Model model) {
 		
-		model.addAttribute("clubList", css.clubSearchProcess(csDomain));
-		
-		return "main/category";
-	}
-	
-	
-	
-	
-	// 모임 더보기
-	@GetMapping("/category.do")
-	public String categoryMore(SeeMoreVO smVO, Model model ) {
-		
-		model.addAttribute("categoryList", cms.selectMoreClub(smVO));
+		model.addAttribute("clubList", css.clubSearchProcess(search));
 		
 		return "main/category";
 	}
-	
-	
-	
-	
-	
 	
 	
 	

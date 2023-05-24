@@ -28,6 +28,9 @@
 
 
 <script type="text/javascript">
+$(function(){
+})
+
 </script>
 </head>
 
@@ -65,21 +68,20 @@
  
 <table class="socialring_popular_table">
   <tr>
-    <c:forEach var="club" items="${selectList}" varStatus="i">
+    <c:forEach var="club" items="${socialring}" varStatus="i">
       <c:if test="${i.count <= 4}">
       
 
         <td class="prdCol1" colspan="3">
-        
-          <div class="prod_div">
+        <div class="prod_div">
             <a href="http://localhost/prj_3/club_info.do?clubNum=${club.club_Num}">
             <img class="prod_img" src="${club.club_Img}" /></a>
-          </div>
+          </div> 
         </td>
         
-        <td class="prdCol2" style="border: 1px solid black;">
+        <td class="prdCol2"> 
            <div>
-               <strong><c:out value="${club.club_name}" /></strong> <br>
+               <strong><c:out value="${club.club_name}" /></strong> <br><br>
                <fmt:formatNumber pattern="#,###,###" value="${club.price}" />원<br>
                <c:out value="${club.area_name}"/>  <fmt:formatDate value="${club.club_Date}" pattern="M.d.(E) a hh시"/> <br>
                
@@ -87,7 +89,7 @@
                <c:forEach var="user" items="${club.userInfo}">
                   <img class="user_profile" src="${user.USER_IMG}" onerror="this.onerror=null; this.src='http://localhost/prj_3/images/a.png';"/>
                </c:forEach>
-               
+               <c:out value="${club.userTotal }" />/<c:out value="${club.number_People}" />
            </div>
         </td>
 
@@ -99,12 +101,14 @@
       </c:if>
     </c:forEach>
   </tr>
-</table><!--socialring_popular_table -->
+</table><!--socialring_popular_table --> 
+
+
 
 
      
      <div class="socialring_more">
-        <input type="button" value="더보기 >" class="btnMore">
+      <a href="http://localhost/prj_3/club_info.do?clubNum="><input type="button" value="더보기 >" class="btnMore"></a>
      </div><!--socialring_more-->
 </div><!--container2 소셜링-->
 </form>
@@ -123,35 +127,40 @@
      
 <table class="socialring_popular_table">
   <tr>
-    <c:forEach var="MainProdVO" items="${prodSearch}" varStatus="i">
+    <c:forEach var="club" items="${club}" varStatus="i">
       <c:if test="${i.count <= 4}">
       
 
-        <td class="prdCol1" colspan="3">
-          <div class="prod_div">
-            <a href="http://localhost/prj_test/cis/product_info.jsp?prodNum=${MainProdVO.prodNum}">
-            <img class="prod_img" src="${MainProdVO.prodImg}" /></a>
-          </div>
+       <td class="prdCol1" colspan="3">
+        <div class="prod_div">
+            <a href="http://localhost/prj_3/club_info.do?clubNum=${club.club_Num}">
+            <img class="prod_img" src="${club.club_Img}" /></a>
+          </div> 
         </td>
         
-        <td class="prdCol2">
+        <td class="prdCol2"> 
            <div>
-               제목<strong><c:out value="${MainProdVO.prodName}" /></strong> <br>
-               가격<fmt:formatNumber pattern="#,###,###" value="${MainProdVO.price}" />원<br>
-               장소<c:out value="${MainProdVO.place}"/> 날짜 <c:out value="${MainProdVO.viewCnt}"/> <br>
-               프로필사진<img class="user_profile" src="${MainProdVO.user_profile}"/></a>
+               <strong><c:out value="${club.club_name}" /></strong> <br><br>
+               <fmt:formatNumber pattern="#,###,###" value="${club.price}" />원<br>
+               <c:out value="${club.area_name}"/>  <fmt:formatDate value="${club.club_Date}" pattern="M.d.(E) a hh시"/> <br>
+               
+               
+               <c:forEach var="user" items="${club.userInfo}">
+                  <img class="user_profile" src="${user.USER_IMG}" onerror="this.onerror=null; this.src='http://localhost/prj_3/images/a.png';"/>
+               </c:forEach>
            </div>
         </td>
 
         <c:if test="${i.count % 2 eq 0}">
     </tr>
           
-          <tr>
+         <tr>
         </c:if>
       </c:if>
     </c:forEach>
   </tr>
-</table><!--socialring_popular_table -->
+</table><!--socialring_popular_table --> 
+
      
      
      
@@ -177,35 +186,40 @@
      
 <table class="socialring_popular_table">
   <tr>
-    <c:forEach var="MainProdVO" items="${prodSearch}" varStatus="i">
+    <c:forEach var="club" items="${challenge}" varStatus="i">
       <c:if test="${i.count <= 4}">
       
 
-        <td class="prdCol1" colspan="3">
-          <div class="prod_div">
-            <a href="http://localhost/prj_test/cis/product_info.jsp?prodNum=${MainProdVO.prodNum}">
-            <img class="prod_img" src="${MainProdVO.prodImg}" /></a>
-          </div>
+       <td class="prdCol1" colspan="3">
+        <div class="prod_div">
+            <a href="http://localhost/prj_3/club_info.do?clubNum=${club.club_Num}">
+            <img class="prod_img" src="${club.club_Img}" /></a>
+          </div> 
         </td>
         
-        <td class="prdCol2">
+        <td class="prdCol2"> <!-- style="border: 1px solid black;" -->
            <div>
-               제목<strong><c:out value="${MainProdVO.prodName}" /></strong> <br>
-               가격<fmt:formatNumber pattern="#,###,###" value="${MainProdVO.price}" />원<br>
-               장소<c:out value="${MainProdVO.place}"/> 날짜 <c:out value="${MainProdVO.viewCnt}"/> <br>
-               프로필사진<img class="user_profile" src="${MainProdVO.user_profile}"/></a>
+               <strong><c:out value="${club.club_name}" /></strong> <br><br>
+               <fmt:formatNumber pattern="#,###,###" value="${club.price}" />원<br>
+               <c:out value="${club.area_name}"/>  <fmt:formatDate value="${club.club_Date}" pattern="M.d.(E) a hh시"/> <br>
+               
+               
+               <c:forEach var="user" items="${club.userInfo}">
+                  <img class="user_profile" src="${user.USER_IMG}" onerror="this.onerror=null; this.src='http://localhost/prj_3/images/a.png';"/>
+               </c:forEach>
            </div>
         </td>
 
         <c:if test="${i.count % 2 eq 0}">
     </tr>
           
-          <tr>
+         <tr>
         </c:if>
       </c:if>
     </c:forEach>
   </tr>
-</table><!--socialring_popular_table -->
+</table><!--socialring_popular_table --> 
+
      
      
      

@@ -65,7 +65,7 @@
 <form class="d-flex" role="search" action="club_search.do" method="get" onSubmit="return validateSearchInput()" name="frmheader" id="">
     <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
     <button class="btn btn-outline-warning" type="button" name="searchInput1">Search</button>
-</form><!-- 검색창 -->
+ </form><!-- 검색창 -->
 
 
 

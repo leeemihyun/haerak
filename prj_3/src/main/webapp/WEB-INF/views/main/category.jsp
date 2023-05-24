@@ -1,12 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"
 %>
-    
+   
 <!-- 추가 -->
-<%-- 
+
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %> 
---%>
+
 
 <!-- bootstrap 시작-->
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
@@ -19,100 +19,75 @@
 <meta charset="UTF-8">
 <title>HAERAK</title>
 
-<link rel="stylesheet" type="text/css" href="http://localhost/prj_3/css/main.css">
+<!-- <link rel="stylesheet" type="text/css" href="http://localhost/prj_3/css/main.css"> -->
 <link rel="stylesheet" type="text/css" href="http://localhost/prj_3/css/headerFooter.css">
 <link rel="stylesheet" type="text/css" href="http://localhost/prj_3/css/category.css">
 
 <!-- jQuery CDN 시작 -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
-<!-- jQuery CDN 시작 -->
-
+<!-- jQuery CDN 끝 -->
 
 
 
 
 <script type="text/javascript">
-	
-	var category=null;
-	var searchInput=null;
-	var actiArea=null;
-
 $(function(){
-	
-	try{
-		category=<%=request.getParameter("category")%>;
-		searchInput=<%=request.getParameter("searchInput")%>;
-		dong=<%=request.getParameter("actiArea")%>;
-	}catch (e) {
-	}
-	
-	try{
-		searchInput="<%=request.getParameter("searchInput")%>";
-		if(searchInput=="null"){
-			searchInput="";
-		}
-	}catch (e) {
-	}
-	
-	$("#select_town").change(function(){		
-		actiArea=$("#select_town option").index($("#select_town option:selected"));
-		searchInput=null;
-		callProdList();
-	});
-	
-	$("#select_category").change(function(){		
-		category=$("#select_category option").index($("#select_category option:selected"));
-		searchInput=null;
-		callProdList();
-	});
-	
-	callProdList();
-	
-}); 
+	callClubList();
+});
 
-function callProdList() {
-	
-	var jsonParam={"categoryName" : category, "areaName":actiArea , "searchName" : searchInput };
-	$.ajax({
-		url : "buy_data_json.jsp",
-		data : jsonParam,
-		dataType : "JSON",
-		contentType: "application/json",
-		type: "get",
-		error : function( xhr ){
-			alert( "서버에서 문제가 발생하였습니다" ); //사용자에게 보여줌
-			console.log( "에러코드 : " +xhr.status); //개발자가봄
-		},
-		success : function( jsonArr ){
-			var tbody ="";
-			let cnt=0;
-			
-		    if($("#socialring_popular_table tr").length >0){
-		    	$("#socialring_popular_table > tbody").empty(); //tbody 모두 삭제
-		    }//end if
-			
-			$.each( jsonArr, function(idx, jsonObj) {	
-			if(cnt%2==0){
-				tbody+="</tr><tr>";
-			}
-			cnt++;
-			tbody+="<td class='prdCol' id='remov'><div><a href='http://localhost/prj_2/cis/product_info.jsp?prodNum="+jsonObj.PROD_NUM+"'><img class='prod_img' src='"+jsonObj.PROD_IMG+
-			"'/></a></div><div><strong><h3>"+jsonObj.PROD_NAME+
-			"</h3></strong><br>"+jsonObj.PRICE.toLocaleString()+
-			   "원<br>"+jsonObj.PLACE_TRANSACTION+
-			   "<br>조회"+jsonObj.VIEW_CNT+
-			   "<br></div></td>"; 
-			}); //each   
-			
-			$("#socialring_popular_table").append(tbody);
-		}//succes	
+
+
+
+	function callClubList(){
 		 
-	});//ajax
-	
-}//callProdList
+		var jsonParam={"cityName" : "${cityNumber}", "searchName": "${search}"};
+		$.ajax({
+			url : "categoryAjax.do",
+			data : jsonParam,
+			dataType : "JSON",
+			error : function( xhr ){
+				alert( "서버에서 문제가 발생하였습니다" ); //사용자에게 보여줌
+				console.log( "에러코드 : " +xhr.status); //개발자가봄
+			},
+			success : function(jsonObj){
+				var tbody="";
+				let cnt=0;
+				
+				if($("#socialring_popular_table tr").length > 0){
+					$("#socialring_popular_table > tbody").empty();
+				}
+				
+				
+				
+				
+				$.each(jsonObj.data, function(idx, ele){
+					if(cnt%2==0){
+						tbody+="</tr><tr>";
+					}
+					cnt ++;
+					tbody+="<td class='prdCol1' colspan='3'><div class='prod_div'><a href='http://localhost/prj_3/club_info.do?clubNum="+ele.club_Num+"'>"+
+					"<img class='prod_img' src='"+ele.club_Img+"' /></a></div> </td><td class='prdCol2'><div><strong>"+
+					ele.club_name+"</strong><br><br>"+
+					ele.price+"원<br>"+
+					ele.area_name+" "+ele.club_Date+ "<br>";
+
+				    $.each(ele.userInfo, function(idx, ele1){
+				        tbody+="<img class='user_profile' src='"+ele1.USER_IMG+"' onerror='this.onerror=null; this.src='http://localhost/prj_3/images/a.png';'/>";
+				    });
+				    
+				    tbody+="</div></td>";
+				});
+				
+
+				
+				
+				$("#socialring_popular_table").append(tbody);
+			}
+		});
+	}
+
 
 </script>
-
 
 </head>
 
@@ -190,10 +165,9 @@ function callProdList() {
  
 <div class="category_container3">
 
-<table class="socialring_popular_table" id="socialring_popular_table">
-  <tr>
-  </tr>
-</table> <!--popular_sale_table  -->
+ <table class="socialring_popular_table" id="socialring_popular_table">
+  
+</table> <!--popular_sale_table  --> 
 
 </div><!--category_container3 모임들  -->
         
