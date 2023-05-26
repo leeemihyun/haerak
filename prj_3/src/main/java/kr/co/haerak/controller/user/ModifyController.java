@@ -31,99 +31,135 @@ public class ModifyController {
 	@Autowired
 	private ModifyService ms;
 	
-	/*
-	 * @GetMapping public String passChkForm() {
-	 * 
-	 * return ""; }//passChkForm
-	 * 
-	 * 
-	 * @PostMapping("") public String passChkProcess(Model model ,String
-	 * userPassword) throws NoSuchAlgorithmException {
-	 * 
-	 * LoginSessionDomain lsDomain =
-	 * (LoginSessionDomain)model.getAttribute("lsDomain"); ChkIdPassVO cipVO = new
-	 * ChkIdPassVO(lsDomain.getUserId(), userPassword);
-	 * 
-	 * boolean flag =ms.passChkService(cipVO);
-	 * 
-	 * if(!flag) {// ½ÇÆÐ½Ã return ""; }
-	 * 
-	 * return "";//¼º°ø½Ã }//passChkProcess
-	 * 
-	 * 
-	 * @GetMapping("") public String modifyProfileForm(Model model) {
-	 * LoginSessionDomain lsDomain =
-	 * (LoginSessionDomain)model.getAttribute("lsDomain"); String userId =
-	 * lsDomain.getUserId();
-	 * 
-	 * ModifyProfileDomain mpDomain = ms.setProfileService(userId);
-	 * model.addAttribute("mpDomain", mpDomain);
-	 * 
-	 * return ""; }//modifyProfileForm
-	 * 
-	 * @PostMapping("") public String modifyProfileProcess(Model model,
-	 * HttpServletRequest request) throws IOException { File file = new File("");
-	 * int maxSize= 1024*1024*10; MultipartRequest mr = new
-	 * MultipartRequest(request, file.getAbsolutePath(), maxSize, "UTF-8", new
-	 * DefaultFileRenamePolicy()); String nickName=(String)
-	 * request.getAttribute("nickName"); String userImg=(String)
-	 * request.getAttribute("userImg"); String personalIntro=(String)
-	 * request.getAttribute("personalIntro"); LoginSessionDomain lsDomain =
-	 * (LoginSessionDomain)model.getAttribute("lsDomain"); String userId =
-	 * lsDomain.getUserId(); ModifyProfileVO mpVO = new ModifyProfileVO(nickName,
-	 * userImg, personalIntro, userId); int cnt=ms.modifyProfileService(mpVO);
-	 * if(cnt==1){//¼º°ø return ""; } return ""; }//modifyProfileProcess
-	 * 
-	 * @PostMapping("") public String ModifyPassForm() {
-	 * 
-	 * 
-	 * return ""; }//ModifyPassForm
-	 * 
-	 * @PostMapping("") public String ModifyPassProcess(Model model, String
-	 * userPassword) throws NoSuchAlgorithmException {
-	 * 
-	 * LoginSessionDomain lsDomain =
-	 * (LoginSessionDomain)model.getAttribute("lsDomain"); String userId =
-	 * lsDomain.getUserId();
-	 * 
-	 * ModifyPassVO mpVO = new ModifyPassVO(userId, userPassword); int cnt =
-	 * ms.modifyPassService(mpVO); if (cnt==1) {//¼º°ø return ""; }//end if
-	 * 
-	 * return ""; }//ModifyPassForm
-	 * 
-	 * 
-	 * @GetMapping("") public String ModifyInfoForm(Model model) throws
-	 * NoSuchAlgorithmException, UnsupportedEncodingException,
-	 * GeneralSecurityException { LoginSessionDomain lsDomain =
-	 * (LoginSessionDomain)model.getAttribute("lsDomain"); String userId =
-	 * lsDomain.getUserId(); ModifyInfoDomain mpDomain = ms.setInfoService(userId);
-	 * model.addAttribute("mpDomain", mpDomain);
-	 * 
-	 * return ""; }//ModifyInfoForm
-	 * 
-	 * @PostMapping("") public String ModifyInfoProcess(ModifyInfoVO miVO, Model
-	 * model) { LoginSessionDomain lsDomain =
-	 * (LoginSessionDomain)model.getAttribute("lsDomain"); String userId =
-	 * lsDomain.getUserId(); miVO.setUserId(userId);
-	 * 
-	 * int cnt = ms.modifyInfoService(miVO);
-	 * 
-	 * if(cnt==1) { return "";//¼º°ø½Ã }//end if
-	 * 
-	 * return ""; }//ModifyInfoForm
-	 * 
-	 * @GetMapping("") public String deleteUserForm() {
-	 * 
-	 * return ""; }
-	 * 
-	 * @GetMapping("") public String deleteUserProcess(Model model) {
-	 * LoginSessionDomain lsDomain =
-	 * (LoginSessionDomain)model.getAttribute("lsDomain"); String userId =
-	 * lsDomain.getUserId();
-	 * 
-	 * int cnt=ms.deleteUserService(userId); if(cnt==1) { return "";//¼º°ø½Ã }//end if
-	 * 
-	 * return ""; }
-	 */
+	
+	@GetMapping("passChk.do")
+	public String passChkForm() {
+	  
+	  return "mypage/pass_chk"; 
+	  }//passChkForm
+	 
+	 
+	 @PostMapping("passChkProcess.do")
+	 public String passChkProcess(Model model ,String userPassword) throws NoSuchAlgorithmException {
+	 
+	 LoginSessionDomain lsDomain =
+	   (LoginSessionDomain)model.getAttribute("lsDomain");
+	 ChkIdPassVO cipVO = new ChkIdPassVO(lsDomain.getUserId(), userPassword);
+	   
+	   boolean flag =ms.passChkService(cipVO);
+	   
+	   if(!flag) {// ï¿½ï¿½ï¿½Ð½ï¿½ return ""; 
+	   
+	   }
+	   
+	   return "mypage/edit_list";//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ 
+	   }//passChkProcess
+	   
+	   
+	   @GetMapping("editProfile.do")
+	   public String modifyProfileForm(Model model) {
+	   LoginSessionDomain lsDomain =
+	   (LoginSessionDomain)model.getAttribute("lsDomain");
+	   String userId = lsDomain.getUserId();
+	   
+	   ModifyProfileDomain mpDomain = ms.setProfileService(userId);
+	   model.addAttribute("mpDomain", mpDomain);
+	   
+	   return "forward:profileProcess.do"; 
+	   }//modifyProfileForm
+	   
+	   @PostMapping("profileProcess.do")
+	   public String modifyProfileProcess(Model model,
+	   HttpServletRequest request) throws IOException {
+		   File file = new File("");
+	   
+	   int maxSize= 1024*1024*10;
+	   MultipartRequest mr = new MultipartRequest(request, file.getAbsolutePath(), maxSize, "UTF-8", new DefaultFileRenamePolicy());
+	   String nickName=(String)request.getAttribute("nickName");
+	   String userImg=(String)request.getAttribute("userImg");
+	   String personalIntro=(String)request.getAttribute("personalIntro");
+	   LoginSessionDomain lsDomain =(LoginSessionDomain)model.getAttribute("lsDomain");
+	   String userId =lsDomain.getUserId();
+	   ModifyProfileVO mpVO = new ModifyProfileVO(nickName,userImg, personalIntro, userId);
+	   int cnt=ms.modifyProfileService(mpVO);
+	   if(cnt==1){//ï¿½ï¿½ï¿½ï¿½ 
+		   return "mypage/host_list"; 
+	   }
+	   
+	   return "mypage/host_list"; 
+	   }//modifyProfileProcess
+	   
+	   
+	   @PostMapping("editPass.do")
+	   public String ModifyPassForm() {
+	   
+	   
+	   return "forward:editPassProcess.do"; 
+	   }//ModifyPassForm
+	   
+	   @PostMapping("editPassProcess.do")
+	   public String ModifyPassProcess(Model model, String userPassword) throws NoSuchAlgorithmException {
+	   
+	   LoginSessionDomain lsDomain =(LoginSessionDomain)model.getAttribute("lsDomain");
+	   String userId = lsDomain.getUserId();
+	   
+	   ModifyPassVO mpVO = new ModifyPassVO(userId, userPassword);
+	   int cnt =ms.modifyPassService(mpVO);
+	   if (cnt==1) {//ï¿½ï¿½ï¿½ï¿½ 
+		   return "main/logout"; 
+		   }//end if
+	   
+	   return "main/logout";
+	   }//ModifyPassForm
+	   
+	   
+	   @GetMapping("editPersonal.do")
+	   public String ModifyInfoForm(Model model) throws
+	   NoSuchAlgorithmException, UnsupportedEncodingException,
+	   GeneralSecurityException {
+		   LoginSessionDomain lsDomain =(LoginSessionDomain)model.getAttribute("lsDomain");
+		   String userId =lsDomain.getUserId();
+		   ModifyInfoDomain mpDomain = ms.setInfoService(userId);
+	   model.addAttribute("mpDomain", mpDomain);
+	   
+	   return "forward:editPersonalProcess.do"; 
+	   }//ModifyInfoForm
+	   
+	   @PostMapping("editPersonalProcess.do")
+	   public String ModifyInfoProcess(ModifyInfoVO miVO, Model
+	   model) { 
+		   LoginSessionDomain lsDomain =(LoginSessionDomain)model.getAttribute("lsDomain");
+		   String userId =lsDomain.getUserId();
+		   miVO.setUserId(userId);
+	   
+	   int cnt = ms.modifyInfoService(miVO);
+	   
+	   if(cnt==1) { 
+		   return "mypage/edit_list";//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ 
+	   }//end if
+	   
+	   return "main/logout"; 
+	   }//ModifyInfoForm
+	   
+	   @GetMapping("deleteAccount")
+	   public String deleteUserForm() {
+	   
+	   return "forward:deleteProcess.do"; 
+	   }
+	   
+	   @GetMapping("deleteProcess.do")
+	   public String deleteUserProcess(Model model) {
+	   LoginSessionDomain lsDomain =(LoginSessionDomain)model.getAttribute("lsDomain");
+	   String userId =lsDomain.getUserId();
+	   
+	   int cnt=ms.deleteUserService(userId);
+	   if(cnt==1) { 
+		   return "main/logout";//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ 
+		   }//end if
+	   
+	   return "main/logout"; 
+	   }
+	   
+	  
 	
 }//class

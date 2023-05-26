@@ -2,8 +2,87 @@
 <!DOCTYPE mapper
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="kr.co.haerak.mypage_Mapper">
-  <select id="selectEmp" resultType="String">
-    select ename from emp
-  </select>
+<mapper namespace="kr.co.haerak.mypage_mapper">
+  <select id="hostList" resultType="kr.co.haerak.domain.mypage.HostListDomain">
+		select g.CATEGORY_NAME categoryName, c.club_num clubNum, c.CLUB_NAME clubName, c.CLUB_DATE clubDate, c.number_people numberPeople, c.CLUB_STATUS clubStatus
+		from club c, club_category g
+		where c.category_num=g.category_num and user_id=#{sessionId}
+	</select>
+	
+	<select id="approvalStatus" resultType="kr.co.haerak.domain.mypage.ApprovalDomain">
+		select		s.CLUB_NUM clubNum,c.CLUB_NAME clubName, s.USER_ID userId, s.APPROVAL_STATUS approvalStatus
+		from		club c, approval_status s
+		where		c.club_num=#{clubNum} and c.club_num=s.club_num		
+	</select>
+
+ 	<insert id="approve1" parameterType="kr.co.haerak.vo.mypage.ApprovalVO">
+		insert into JOIN_LIST values (sysdate, #{userId}, #{clubNum})
+	</insert>
+	
+ 	<select id="approve2" resultType="kr.co.haerak.vo.mypage.ApprovalVO">
+		delete	
+		from	approval_status
+		where	user_id=#{userId} and club_num=#{clubNum}	
+	</select>
+
+	<update id="decline" parameterType="kr.co.haerak.vo.mypage.ApprovalVO">
+		update	APPROVAL_STATUS
+		set		approval_status='승인거절', approval_date=sysdate
+		where	club_num=#{clubNum} and user_id=#{userId}
+	</update>
+	
+	<select id="interest" resultType="kr.co.haerak.domain.mypage.InterestDomain" >
+		select club_num clubNum, club_name clubName, interest_date interestDate, club_img clubImg, img
+		from(
+		select i.user_id, i.CLUB_NUM, c.club_name, i.INTEREST_DATE,m.CLUB_IMG, row_number() over(PARTITION BY i.club_num order by m.CLUB_IMG) img
+			from CLUB_IMG m, INTEREST_LIST i, club c
+			where m.club_num=i.club_num and c.club_num=i.club_num)
+		where img=1 and user_id=#{sessionId}
+	</select>
+
+	<delete id="deleteInterest" parameterType="kr.co.haerak.vo.mypage.InterestVO" >
+		delete	
+		from	interest_list
+		where	user_id=#{userId} and club_num=#{clubNum}	
+	</delete>
+
+	<select id="joinList" resultType="kr.co.haerak.domain.mypage.JoinListDomain" parameterType="String">
+		select		j.club_num clubNum, c.club_name clubName, u.nickname host, c.club_date clubDate
+		from		club c, join_list j, users u
+		where		j.club_num=c.club_num and u.user_id=c.user_id and j.user_id=#{sessionId}		
+	</select>
+	
+	<select id="waitList" resultType="kr.co.haerak.domain.mypage.JoinListDomain" >
+		select c.club_name clubName, a.club_num clubNum, u.nickname host, c.club_date clubDate
+		from club c, users u, APPROVAL_STATUS a
+		where a.club_num=c.club_num and c.user_id=u.user_id and a.user_id=#{sessionId}
+	</select>
+
+	<delete id="deleteJoinList" parameterType="kr.co.haerak.vo.mypage.JoinListVO2" >
+		delete from JOIN_LIST where user_id=#{userId} and club_num=#{clubNum}		
+	</delete>
+	
+	<delete id="deleteWaitList" parameterType="kr.co.haerak.vo.mypage.JoinListVO" >
+		delete
+		from APPROVAL_STATUS
+		where user_id=#{userId} and club_num=#{clubNum}
+	</delete>
+
+	<select id="review" resultType="kr.co.haerak.domain.mypage.ClubReviewDomain" >
+		select		review_num reviewNum, club_review clubReview, write_date writeDate, club_num clubNum
+		from		club_review
+		where		user_id=#{sessionId}
+	</select>
+
+	<select id="reply" resultType="kr.co.haerak.domain.mypage.ReviewReplyDomain" >
+		select c.club_num clubNum, r.write_date writeDate, r.REVIEW_REPLY reviewReply
+		from club_review c, REVIEW_REPLY r, club b
+		where r.REVIEW_NUM=c.REVIEW_NUM and b.club_num=c.club_num and b.user_id=#{sessionId}	
+	</select>
+<!--
+	<select id="mypage" resultType="kr.co.haerak.domain.mypage.MypageDomain" >
+		select		
+		from		
+	</select>
+	 -->
 </mapper>
