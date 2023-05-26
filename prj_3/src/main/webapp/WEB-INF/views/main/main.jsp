@@ -28,8 +28,6 @@
 
 
 <script type="text/javascript">
-$(function(){
-})
 
 </script>
 </head>
@@ -89,7 +87,7 @@ $(function(){
                <c:forEach var="user" items="${club.userInfo}">
                   <img class="user_profile" src="${user.USER_IMG}" onerror="this.onerror=null; this.src='http://localhost/prj_3/images/a.png';"/>
                </c:forEach>
-               <c:out value="${club.userTotal }" />/<c:out value="${club.number_People}" />
+               <c:out value="${club.USER_COUNT}" />명 / <c:out value="${club.number_People}"/>명
            </div>
         </td>
 
@@ -108,8 +106,10 @@ $(function(){
 
      
      <div class="socialring_more">
-      <a href="http://localhost/prj_3/club_info.do?clubNum="><input type="button" value="더보기 >" class="btnMore"></a>
+      <a href="http://localhost/prj_3/category.do?clubNum=1">
+      <input type="button" value="더보기 >" class="btnMore"></a>
      </div><!--socialring_more-->
+     
 </div><!--container2 소셜링-->
 </form>
 
@@ -148,6 +148,7 @@ $(function(){
                <c:forEach var="user" items="${club.userInfo}">
                   <img class="user_profile" src="${user.USER_IMG}" onerror="this.onerror=null; this.src='http://localhost/prj_3/images/a.png';"/>
                </c:forEach>
+                <c:out value="${club.USER_COUNT}"/>명 /<c:out value="${club.number_People}"/>명
            </div>
         </td>
 
@@ -165,7 +166,9 @@ $(function(){
      
      
      <div class="club_more">
+     <a href="http://localhost/prj_3/category.do?categoryNum=2">
         <input type="button" value="더보기 >" class="btnMore">
+        </a>
      </div><!--club_more-->
 </div><!--containe3 클럽-->
 
@@ -207,6 +210,7 @@ $(function(){
                <c:forEach var="user" items="${club.userInfo}">
                   <img class="user_profile" src="${user.USER_IMG}" onerror="this.onerror=null; this.src='http://localhost/prj_3/images/a.png';"/>
                </c:forEach>
+                <c:out value="${club.USER_COUNT}" />명 / <c:out value="${club.number_People}" />명
            </div>
         </td>
 
@@ -225,7 +229,9 @@ $(function(){
      
      
      <div class="challenge_more">
+     <a href="http://localhost/prj_3/category.do?categoryNum=3">
         <input type="button" value="더보기 >" class="btnMore">
+        </a>
      </div><!--challenge_more-->
 </div><!--containe4 챌린지-->
    

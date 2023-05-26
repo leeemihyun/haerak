@@ -6,12 +6,13 @@ import java.util.List;
 public class ClubSalesDomain {
 	
 	private List<UserDomain> userInfo;
-	private String club_Img, club_name, area_name, userTotal ;
-	private int club_Num, price, category_Num, number_People;
+	private String club_Img, club_name, area_name  ;
+	private int club_Num, price, category_Num, number_People, USER_COUNT;
 	private Date club_Date;
+	
+	
+	
 
-	
-	
 	public List<UserDomain> getUserInfo() {
 		return userInfo;
 	}
@@ -36,11 +37,11 @@ public class ClubSalesDomain {
 	public void setArea_name(String area_name) {
 		this.area_name = area_name;
 	}
-	public String getUserTotal() {
-		return userTotal;
+	public int getUSER_COUNT() {
+		return USER_COUNT;
 	}
-	public void setUserTotal(String userTotal) {
-		this.userTotal = userTotal;
+	public void setUSER_COUNT(int uSER_COUNT) {
+		USER_COUNT = uSER_COUNT;
 	}
 	public int getClub_Num() {
 		return club_Num;
@@ -72,17 +73,16 @@ public class ClubSalesDomain {
 	public void setClub_Date(Date club_Date) {
 		this.club_Date = club_Date;
 	}
-	
-	
 	@Override
 	public String toString() {
 		return "ClubSalesDomain [userInfo=" + userInfo + ", club_Img=" + club_Img + ", club_name=" + club_name
-				+ ", area_name=" + area_name + ", userTotal=" + userTotal + ", club_Num=" + club_Num + ", price="
-				+ price + ", category_Num=" + category_Num + ", number_People=" + number_People + ", club_Date="
+				+ ", area_name=" + area_name + ", club_Num=" + club_Num + ", price=" + price + ", category_Num="
+				+ category_Num + ", number_People=" + number_People + ", USER_COUNT=" + USER_COUNT + ", club_Date="
 				+ club_Date + "]";
 	}
 	
 	
+
 
 	
 	

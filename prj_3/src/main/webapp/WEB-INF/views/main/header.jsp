@@ -11,18 +11,14 @@
 
 
 <script type="text/javascript">
+$(function() {
+	$("#seachBtn").click(function() {
+		$("#searchFrm").submit();
+	});
+});
 
  function validateSearchInput(){
-	    var searchInput = document.querySelector('.search');
-	    if (searchInput.value.trim() === '') {
-	        alert('검색어를 입력하세요.');
-	        searchInput.focus();
-	        return false;
-	   		 } else {
-	   			 var encodedSearchInput = encodeURIComponent(searchInput.value);
-	   	window.location.href = 'http://localhost/prj_3/category.do?category=0&actiArea=0&searchInput='+encodedSearchInput;
-	        return false;   	
-	   		 }//end else
+	
 	}//validateSearchInput
 </script>
 
@@ -40,18 +36,18 @@
    
    
 <div class="navi_socialring">
-   <a href="category.do" style="color: inherit;"><font size="4px"><strong>소셜링</strong></font></a><br><br>
+   <a href="category.do?categoryNum=1" style="color: inherit;" ><font size="4px"><strong>소셜링</strong></font></a><br><br>
 </div><!-- navi_socialring -->
 
 
 
 <div class="navi_club">
-   <a href="category.do?categoryNum=1" style="color: inherit;"><font size="4px"><strong>클럽</strong></font></a><br><br>
+   <a href="category.do?categoryNum=2" style="color: inherit;"><font size="4px"><strong>클럽</strong></font></a><br><br>
 </div><!-- navi_club -->
 
 
 <div class="navi_challenge">
-   <a href="category.do?categoryNum=2" style="color: inherit;"><font size="4px"><strong>챌린지</strong></font></a><br><br>
+   <a href="category.do?categoryNum=3" style="color: inherit;"><font size="4px"><strong>챌린지</strong></font></a><br><br>
 </div><!-- navi_challenge -->
 
 
@@ -62,10 +58,10 @@
 
 
 <!-- 검색창  -->
-<form class="d-flex" role="search" action="club_search.do" method="get" onSubmit="return validateSearchInput()" name="frmheader" id="">
-    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-    <button class="btn btn-outline-warning" type="button" name="searchInput1">Search</button>
- </form><!-- 검색창 -->
+<form class="d-flex" role="search" action="category.do?categoryNum=0&actiAreaNum=0" method="get" name="frmheader" id="searchFrm" >
+    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="searchText" >
+    <button class="btn btn-outline-warning" type="button" name="searchInput1" id="seachBtn" >Search</button>
+</form><!-- 검색창 -->
 
 
 
@@ -108,9 +104,9 @@
 
 
 <!-- 검색창  -->
-<form class="d-flex" role="search" action="http://localhost/prj_3/category.do" method="get" onSubmit="return validateSearchInput()" name="frmheader" id="">
-    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-    <button class="btn btn-outline-warning" type="button" name="searchInput1">Search</button>
+<form class="d-flex" role="search" action="category.do?categoryNum=0&actiAreaNum=0" method="get" name="frmheader" id="searchFrm">
+    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="searchText">
+    <button class="btn btn-outline-warning" type="button" name="searchInput1" id="seachBtn" >Search</button>
 </form><!-- 검색창 -->
 
        

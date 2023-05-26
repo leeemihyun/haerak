@@ -19,7 +19,6 @@
 <meta charset="UTF-8">
 <title>HAERAK</title>
 
-<!-- <link rel="stylesheet" type="text/css" href="http://localhost/prj_3/css/main.css"> -->
 <link rel="stylesheet" type="text/css" href="http://localhost/prj_3/css/headerFooter.css">
 <link rel="stylesheet" type="text/css" href="http://localhost/prj_3/css/category.css">
 
@@ -31,16 +30,33 @@
 
 
 <script type="text/javascript">
+
+
+var actiArea=null;
+var searchInput=null;
+
+
 $(function(){
-	callClubList();
-});
+
+	
+	$("#area").change(function(){		
+		actiArea=$("#area option").index($("#area option:selected"));
+		callClubList(actiArea);
+	});
+	
+
+	if('${searchText}'!=''){
+		
+	}
+	
+	
+	callClubList(0);
+	
+}); 
 
 
-
-
-	function callClubList(){
-		 
-		var jsonParam={"cityName" : "${cityNumber}", "searchName": "${search}"};
+	function callClubList(actiArea){
+		var jsonParam={"searchText": "${searchText}", "categoryNum" : ${category_Num}, "actiAreaNum" : actiArea};
 		$.ajax({
 			url : "categoryAjax.do",
 			data : jsonParam,
@@ -56,9 +72,7 @@ $(function(){
 				if($("#socialring_popular_table tr").length > 0){
 					$("#socialring_popular_table > tbody").empty();
 				}
-				
-				
-				
+								
 				
 				$.each(jsonObj.data, function(idx, ele){
 					if(cnt%2==0){
@@ -68,12 +82,20 @@ $(function(){
 					tbody+="<td class='prdCol1' colspan='3'><div class='prod_div'><a href='http://localhost/prj_3/club_info.do?clubNum="+ele.club_Num+"'>"+
 					"<img class='prod_img' src='"+ele.club_Img+"' /></a></div> </td><td class='prdCol2'><div><strong>"+
 					ele.club_name+"</strong><br><br>"+
-					ele.price+"원<br>"+
+					ele.price.toLocaleString()+"원<br>"+
 					ele.area_name+" "+ele.club_Date+ "<br>";
-
-				    $.each(ele.userInfo, function(idx, ele1){
-				        tbody+="<img class='user_profile' src='"+ele1.USER_IMG+"' onerror='this.onerror=null; this.src='http://localhost/prj_3/images/a.png';'/>";
+					
+					
+				    $.each(ele.userInfo, function(i, ele1){
+				   
+				        tbody+="<img class='user_profile' src='"+ele1.USER_IMG+"' onerror='this.onerror=null; this.src='http://localhost/prj_3/images/a.png';'/> ";
 				    });
+					
+				    
+				    	tbody+=" "+ele.USER_COUNT+"명 / "+ele.number_People+"명";
+				    
+				    
+				    
 				    
 				    tbody+="</div></td>";
 				});
@@ -104,6 +126,10 @@ $(function(){
    
    
     <div class="category_container1">
+
+
+ <c:choose>
+    <c:when test="${category_Num == 1}">
     
     <div class="category_socialring_text">
          <font color="#F43630" size="5px"><strong>◆소셜링</strong></font><br><br>
@@ -111,8 +137,13 @@ $(function(){
          <font size="5px">누구나 열고 참여할 수 있는 원데이 모임,<br></font>
          <font size="5px">소셜링으로 가볍고 즐겁게 만나보세요!</font>
     </div><!--category_socialring_text-->
-    
-<!--    
+   </c:when>
+</c:choose> 
+ 
+ 
+  <c:choose>
+    <c:when test="${category_Num == 2}">  
+  
     <div class="category_socialring_text">
          <font color="#1C8A6A" size="5px"><strong>◆클럽</strong></font><br><br>
          <font size="6px"><strong>지속형 모임으로 <br> 계속해서 친하게 지내요</strong></font><br><br>
@@ -120,43 +151,70 @@ $(function(){
          <font size="5px">매일 함께하고 싶다면 클럽에서 만나요!</font>
     </div>
     
+     </c:when>
+</c:choose> 
     
-    
+ 
+ 
+ <c:choose>
+   <c:when test="${category_Num ==3}">      
     <div class="category_socialring_text">
          <font color="#3498D0" size="5px"><strong>◆챌린지</strong></font><br><br>
          <font size="6px"><strong>같은 목표를 가진 <br> 멤버들과 함께 도전해요</strong></font><br><br>
          <font size="5px">혼자 하기 어려운 큰 목표부터 작은 목표까지<br></font>
          <font size="5px">멤버들과 함께 즐기면서 쉽게 달성해요!</font>
     </div>
-    -->
+
+    
+   </c:when>
+</c:choose>
+    
+
 
 </div><!--category_container1-->  
    
   
 
 
- <form action="clubmore.do" method="get">  
+<form action="clubmore.do" method="get">   
   
  <div class="category_container2">
-    <select class="form-select" aria-label="Default select example" name="area">
-       <option selected>지역을 선택해 주세요</option>
-       <option value=1>서울</option>
-       <option value=2>강원</option>
-       <option value=3>대전</option>
-       <option value=4>충남</option>
-       <option value=5>충북</option>
-       <option value=6>인천</option>
-       <option value=7>경기</option>
-       <option value=8>광주</option>
-       <option value=9>전남</option>
-       <option value=10>전북</option>
-       <option value=11>부산</option>
-       <option value=12>경남</option>
-       <option value=13>울산</option>
-       <option value=14>제주</option>
-       <option value=15>대구</option>
-       <option value=16>경북</option>
-   </select> 
+    <select class="form-select" aria-label="Default select example" name="area" id="area">
+       
+       <option value="0" selected>지역을 선택해 주세요</option>
+       
+            <option value="1" ${actiArea_Num eq '1'?"selected='selected'":""}>서울</option>
+
+		    <option value="2" ${actiArea_Num eq '2'?"selected='selected'":""}>강원</option>
+
+				<option value="3" ${actiArea_Num eq '3'?"selected='selected'":""}>대전</option>
+
+				<option value="4" ${actiArea_Num eq '4'?"selected='selected'":""}>충남</option>
+
+				<option value="5" ${actiArea_Num eq '5'?"selected='selected'":""}>충북</option>
+
+				<option value="6" ${actiArea_Num eq '6'?"selected='selected'":""}>인천</option>
+
+				<option value="7" ${actiArea_Num eq '7'?"selected='selected'":""}>경기</option>
+
+				<option value="8" ${actiArea_Num eq '8'?"selected='selected'":""}>광주</option>
+
+				<option value="9" ${actiArea_Num eq '9'?"selected='selected'":""}>전남</option>
+
+				<option value="10" ${actiArea_Num eq '10'?"selected='selected'":""}>전북</option>
+
+				<option value="11" ${actiArea_Num eq '11'?"selected='selected'":""}>부산</option>
+
+				<option value="12" ${actiArea_Num eq '12'?"selected='selected'":""}>경남</option>
+
+				<option value="13" ${actiArea_Num eq '13'?"selected='selected'":""}>울산</option>
+
+				<option value="14" ${actiArea_Num eq '14'?"selected='selected'":""}>제주</option>
+
+				<option value="15" ${actiArea_Num eq '15'?"selected='selected'":""}>대구</option>
+
+				<option value="16" ${actiArea_Num eq '16'?"selected='selected'":""}>경북</option>
+			</select> 
         
  </div><!--category_container2  -->
  
@@ -167,7 +225,7 @@ $(function(){
 
  <table class="socialring_popular_table" id="socialring_popular_table">
   
-</table> <!--popular_sale_table  --> 
+ </table> <!--popular_sale_table  --> 
 
 </div><!--category_container3 모임들  -->
         
@@ -197,7 +255,7 @@ $(function(){
 
 </div><!--category_container4-->
 
-</form>
+<!-- </form> -->
 
 
 

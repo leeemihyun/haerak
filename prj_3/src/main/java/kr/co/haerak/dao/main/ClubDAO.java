@@ -1,6 +1,7 @@
 package kr.co.haerak.dao.main;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import org.apache.ibatis.exceptions.PersistenceException;
@@ -83,7 +84,8 @@ public class ClubDAO {
 	/**
 	 * 카테고리별 더보기
 	 */
-	public List<ClubSalesDomain>selectMoreClub(int categoryNum){
+	/*
+	public List<ClubSalesDomain>selectMoreClub(int categoryNum, int actiAreaNum){
 		List<ClubSalesDomain>clubMore = new ArrayList<ClubSalesDomain>();
 		
 		//1.
@@ -91,6 +93,10 @@ public class ClubDAO {
 		
 		//2.
 		clubMore = ss.selectList("kr.co.haerak.dao.main_mapper.selectMoreClub",categoryNum);
+		clubMore = ss.selectList("kr.co.haerak.dao.main_mapper.selectMoreClub",actiAreaNum);
+		
+		
+		
 		
 		for(ClubSalesDomain csd : clubMore) {
 			
@@ -108,16 +114,47 @@ public class ClubDAO {
 		return clubMore;
 	}
 
+*/	
 
-
 	
 	
 	
+	public List<ClubSalesDomain> selectMoreClub(SeeMoreVO smVO) {
+	    List<ClubSalesDomain> clubMore = new ArrayList<ClubSalesDomain>();
+	    System.out.println(smVO);
+	    // 1.
+	    SqlSession ss = MyBatisHandler.getInstance().getMyBatisHandler(false);
+	    
+	    // 2. 
+	    clubMore = ss.selectList("kr.co.haerak.dao.main_mapper.selectMoreClub",smVO);
+	    
+	    // 3.
+	    for (ClubSalesDomain csd : clubMore) {
+	    	
+	    	 List<UserDomain> ud = ss.selectList("kr.co.haerak.dao.main_mapper.selectUserImg", csd.getClub_Num());
+		     csd.setUserInfo(ud);
+	       }
+	    
+	    if(ss!=null) {ss.close();}
+	    
+		return clubMore;
+	       
+	    }
+	    
 	
-	  public static void main(String[] args) { 
-		  System.out.println(new ClubDAO().selectMoreClub(1));
-	 
-	  }
+	
+	
+		  public static void main(String[] args) {
+			  
+				
+				 SeeMoreVO smVO = new SeeMoreVO(); smVO.setSearchText("등산");
+			
+			  
+			  
+			  
+		 System.out.println(new ClubDAO().selectMoreClub(smVO));
+		  }
+		 
 	 
 	 
 

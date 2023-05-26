@@ -5,26 +5,6 @@
 <mapper namespace="kr.co.haerak.dao.main_mapper">
 
 
-
-<!-- 모임 검색 : 검색창에 모임 검색 했을 때 모임 등록한 날짜를 기준으로 최신순으로 보임 -->  
-<select id="selectSearch" resultType="kr.co.haerak.domain.main.ClubSalesDomain" parameterType="String">
-SELECT c.CLUB_NUM, CLUB_NAME, PRICE, CLUB_DATE, CLUB_ADDR, CLUB_IMG, AREA_NAME, NUMBER_PEOPLE, CLUB_STATUS, CATEGORY_NUM
-FROM CLUB c, CLUB_IMG ci, ACTIVITY_AREA aa
-WHERE c.CLUB_NUM = ci.CLUB_NUM AND aa.ACTI_AREA_NUM = c.ACTI_AREA_NUM AND c.CLUB_STATUS = '모집중' 
-    AND CLUB_IMG_NUM IN (
-      SELECT MIN(CLUB_IMG_NUM) AS CLUB_IMG_NUM
-      FROM CLUB_IMG
-      GROUP BY CLUB_NUM
-)
-AND CLUB_NAME LIKE '%'||#{searchText}||'%' 
-ORDER BY INPUT_DATE DESC
-</select>
-
-
-
-
-
-
 <!-- 모임에 참가하는 회원 이미지 -->
 <select id="selectUserImg" resultType="kr.co.haerak.domain.main.UserDomain" parameterType="int">
 select  USER_IMG, USER_ID
@@ -39,18 +19,19 @@ where userNumber &lt; 4
 
 
 
-
-<!--메인 인기모임 : 메인 화면에서 카테고리별로 조회수 높은 순서 대로 4개씩 보임  -->  
+<!--메인 인기모임2222 : 메인 화면에서 카테고리별로 조회수 높은 순서 대로 4개씩 보임  -->  
 <select id="selectRankClub" resultType="kr.co.haerak.domain.main.ClubSalesDomain" parameterType="String">
- SELECT c.CLUB_NUM, CLUB_NAME, PRICE, CLUB_DATE, CLUB_ADDR, CLUB_IMG, AREA_NAME, NUMBER_PEOPLE, CLUB_STATUS, CATEGORY_NUM
-  FROM CLUB c, CLUB_IMG ci, ACTIVITY_AREA aa
-  WHERE c.CLUB_NUM = ci.CLUB_NUM AND aa.ACTI_AREA_NUM = c.ACTI_AREA_NUM AND c.CLUB_STATUS = '모집중' 
-    AND CLUB_IMG_NUM IN (
-      SELECT MIN(CLUB_IMG_NUM) AS CLUB_IMG_NUM
-      FROM CLUB_IMG
-      GROUP BY CLUB_NUM
-    )
-
+SELECT c.CLUB_NUM, COALESCE(COUNT(jl.USER_ID), 0) AS USER_COUNT, CLUB_NAME, PRICE, CLUB_DATE, CLUB_ADDR, CLUB_IMG, AREA_NAME, NUMBER_PEOPLE, CLUB_STATUS, CATEGORY_NUM
+FROM CLUB c
+LEFT JOIN JOIN_LIST jl ON c.CLUB_NUM = jl.CLUB_NUM
+JOIN CLUB_IMG ci ON c.CLUB_NUM = ci.CLUB_NUM
+JOIN ACTIVITY_AREA aa ON aa.ACTI_AREA_NUM = c.ACTI_AREA_NUM
+WHERE c.CLUB_STATUS = '모집중'
+  AND CLUB_IMG_NUM IN (
+    SELECT MIN(CLUB_IMG_NUM) AS CLUB_IMG_NUM
+    FROM CLUB_IMG
+    GROUP BY CLUB_NUM
+  )
   <choose>
     <when test="clubType eq 1"><!-- 소셜링 -->
       AND CATEGORY_NUM = 1
@@ -62,13 +43,13 @@ where userNumber &lt; 4
       AND CATEGORY_NUM = 3
     </when>
   </choose>
-
-  ORDER BY (
-    SELECT MAX(VIEW_CNT)
-    FROM CLUB
-    WHERE CATEGORY_NUM = c.CATEGORY_NUM
-  ) DESC
-  FETCH FIRST 4 ROWS ONLY
+  
+GROUP BY c.CLUB_NUM, CLUB_NAME, PRICE, CLUB_DATE, CLUB_ADDR, CLUB_IMG, AREA_NAME, NUMBER_PEOPLE, CLUB_STATUS, CATEGORY_NUM
+ORDER BY (
+  SELECT MAX(VIEW_CNT)
+  FROM CLUB
+  WHERE CATEGORY_NUM = c.CATEGORY_NUM
+)
 </select>
 
 
@@ -77,34 +58,127 @@ where userNumber &lt; 4
 
 
 
-<!-- 모임 더보기 : 카테고리별로 더보기 클릭시 모임 등록한 날짜를 기준으로 최신순으로 보임  -->
- <select id="selectMoreClub" resultType="kr.co.haerak.domain.main.ClubSalesDomain" parameterType="String">
- SELECT c.CLUB_NUM, CLUB_NAME, PRICE, CLUB_DATE, CLUB_ADDR, CLUB_IMG, AREA_NAME, NUMBER_PEOPLE, CLUB_STATUS, CATEGORY_NUM
-  FROM CLUB c, CLUB_IMG ci, ACTIVITY_AREA aa
-  WHERE c.CLUB_NUM = ci.CLUB_NUM AND aa.ACTI_AREA_NUM = c.ACTI_AREA_NUM AND c.CLUB_STATUS = '모집중' 
+
+
+
+
+<!-- 모임 더보기222 : 카테고리별로 더보기 클릭시 모임 등록한 날짜를 기준으로 최신순으로 보임  -->
+<select id="selectMoreClub" resultType="kr.co.haerak.domain.main.ClubSalesDomain" parameterType="kr.co.haerak.vo.main.SeeMoreVO">
+SELECT c.CLUB_NUM, COALESCE(COUNT(jl.USER_ID), 0) AS USER_COUNT, CLUB_NAME, PRICE, CLUB_DATE, CLUB_ADDR, CLUB_IMG, AREA_NAME, NUMBER_PEOPLE, CLUB_STATUS, CATEGORY_NUM as category_Num , c.ACTI_AREA_NUM
+FROM CLUB c
+LEFT JOIN JOIN_LIST jl ON c.CLUB_NUM = jl.CLUB_NUM
+JOIN CLUB_IMG ci ON c.CLUB_NUM = ci.CLUB_NUM
+JOIN ACTIVITY_AREA aa ON aa.ACTI_AREA_NUM = c.ACTI_AREA_NUM
+WHERE c.CLUB_STATUS = '모집중'
+  AND CLUB_IMG_NUM IN (
+    SELECT MIN(CLUB_IMG_NUM) AS CLUB_IMG_NUM
+    FROM CLUB_IMG
+    GROUP BY CLUB_NUM
+)
+
+ <choose>
+ <when test="searchText !=null">
+AND CLUB_NAME LIKE '%'||#{searchText}||'%' 
+</when>
+</choose>
+
+
+
+  <choose>
+    <when test="categoryNum eq 1"><!-- 소셜링 -->
+      AND CATEGORY_NUM = 1
+    </when>
+    <when test="categoryNum eq 2"><!-- 클럽 -->
+      AND CATEGORY_NUM = 2
+    </when>
+    <when test="categoryNum eq 3"><!-- 챌린지 -->
+      AND CATEGORY_NUM = 3
+    </when>
+  </choose>
+  <choose>
+  
+      <when test="actiAreaNum eq 0">  <!-- -->
+   
+     </when>
+     <when test="actiAreaNum eq 1">  <!--서울 -->
+         AND c.ACTI_AREA_NUM=1
+     </when>
+     <when test="actiAreaNum eq 2">  <!--경기 -->
+         AND c.ACTI_AREA_NUM=2
+     </when>
+     <when test="actiAreaNum eq 3">  <!--인천 -->
+         AND c.ACTI_AREA_NUM=3
+     </when>
+     <when test="actiAreaNum eq 4">  <!--강원 -->
+         AND c.ACTI_AREA_NUM=4
+     </when>
+     <when test="actiAreaNum eq 5">  <!--충북 -->
+         AND c.ACTI_AREA_NUM=5
+     </when>
+     <when test="actiAreaNum eq 6">  <!--세종 -->
+         AND c.ACTI_AREA_NUM=6
+     </when>
+     <when test="actiAreaNum eq 7">  <!--충남 -->
+         AND c.ACTI_AREA_NUM=7
+     </when>
+      <when test="actiAreaNum eq 8">  <!--대전 -->
+         AND c.ACTI_AREA_NUM=8
+     </when>
+      <when test="actiAreaNum eq 9">  <!--경북 -->
+         AND c.ACTI_AREA_NUM=9
+     </when>
+     <when test="actiAreaNum eq 10">  <!--대구 -->
+         AND c.ACTI_AREA_NUM=10
+     </when>
+     <when test="actiAreaNum eq 11">  <!--울산 -->
+         AND c.ACTI_AREA_NUM=11
+     </when>
+     <when test="actiAreaNum eq 12">  <!--부산 -->
+         AND c.ACTI_AREA_NUM=12
+     </when>
+      <when test="actiAreaNum eq 13">  <!--경남 -->
+         AND c.ACTI_AREA_NUM=13
+     </when>
+       <when test="actiAreaNum eq 14">  <!--전북 -->
+         AND c.ACTI_AREA_NUM=14
+     </when>
+       <when test="actiAreaNum eq 15">  <!--전남 -->
+         AND c.ACTI_AREA_NUM=15
+     </when>
+     <when test="actiAreaNum eq 16">  <!--광주 -->
+         AND c.ACTI_AREA_NUM=16
+     </when>
+        <when test="actiAreaNum eq 17">  <!--제주 -->
+         AND c.ACTI_AREA_NUM=17
+     </when>
+  </choose>
+  
+GROUP BY c.CLUB_NUM, CLUB_NAME, PRICE, CLUB_DATE, CLUB_ADDR, CLUB_IMG, AREA_NAME, NUMBER_PEOPLE, CLUB_STATUS, CATEGORY_NUM, c.ACTI_AREA_NUM
+ORDER BY (
+SELECT MAX(VIEW_CNT)
+FROM CLUB
+WHERE CATEGORY_NUM = c.CATEGORY_NUM
+)
+</select>
+
+
+
+
+
+
+<!-- 모임 검색 : 검색창에 모임 검색 했을 때 모임 등록한 날짜를 기준으로 최신순으로 보임 -->  
+<select id="selectSearch" resultType="kr.co.haerak.domain.main.ClubSalesDomain" parameterType="String">
+SELECT c.CLUB_NUM, CLUB_NAME, PRICE, CLUB_DATE, CLUB_ADDR, CLUB_IMG, AREA_NAME, NUMBER_PEOPLE, CLUB_STATUS, CATEGORY_NUM
+FROM CLUB c, CLUB_IMG ci, ACTIVITY_AREA aa
+WHERE c.CLUB_NUM = ci.CLUB_NUM AND aa.ACTI_AREA_NUM = c.ACTI_AREA_NUM AND c.CLUB_STATUS = '모집중' 
     AND CLUB_IMG_NUM IN (
       SELECT MIN(CLUB_IMG_NUM) AS CLUB_IMG_NUM
       FROM CLUB_IMG
       GROUP BY CLUB_NUM
-    )
-
-  <choose>
-    <when test="clubType eq 1"><!-- 소셜링 -->
-      AND CATEGORY_NUM = 1
-    </when>
-    <when test="clubType eq 2"><!-- 클럽 -->
-      AND CATEGORY_NUM = 2
-    </when>
-    <when test="clubType eq 3"><!-- 챌린지 -->
-      AND CATEGORY_NUM = 3
-    </when>
-  </choose>
-  ORDER BY INPUT_DATE DESC
+)
+AND CLUB_NAME LIKE '%'||#{searchText}||'%' 
+ORDER BY INPUT_DATE DESC
 </select>
-
-
-
-
 
 
 </mapper>

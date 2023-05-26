@@ -13,6 +13,7 @@ import org.springframework.stereotype.Component;
 import kr.co.haerak.dao.main.ClubDAO;
 import kr.co.haerak.domain.main.ClubSalesDomain;
 import kr.co.haerak.domain.main.UserDomain;
+import kr.co.haerak.vo.main.SeeMoreVO;
 
 @Component
 public class ClubMoreService   {
@@ -25,14 +26,14 @@ public class ClubMoreService   {
 	
 	
 	//카테고리별 더보기 클릭했을 때 리스트 조회
-	public String selectMoreClub(int categoryNum){
+	public String selectMoreClub(SeeMoreVO smVO){
 		
 		List<ClubSalesDomain> list=null;
 		JSONObject jsonObj=new JSONObject();
 		jsonObj.put("resultFlag", false);
 		int i=0;
 		try {
-        list=cDAO.selectMoreClub(categoryNum);
+        list=cDAO.selectMoreClub(smVO);
         jsonObj.put("resultFlag", true);
         jsonObj.put("dataSize", list.size());
 		
@@ -40,7 +41,7 @@ public class ClubMoreService   {
         JSONArray jsonArr1 = new JSONArray();
         JSONObject jsonTemp = null;
         JSONObject jsonTemp1 = null;
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat sdf = new SimpleDateFormat("M.d.(E) a hh시 ");
         
         for(ClubSalesDomain csd : list) {
         	jsonTemp = new JSONObject();
@@ -51,32 +52,23 @@ public class ClubMoreService   {
         	jsonTemp.put("price",csd.getPrice());
         	jsonTemp.put("category_Num",csd.getCategory_Num());
         	jsonTemp.put("club_Date",sdf.format(csd.getClub_Date()));
-        	
-        	
-        	
-//        	if(csd.getUserInfo().size()!=0) {
-        		
+        	jsonTemp.put("USER_COUNT", csd.getUSER_COUNT());
+        	jsonTemp.put("number_People", csd.getNumber_People());
+        	if(!csd.getUserInfo().isEmpty()) {
+        		jsonArr1=new JSONArray();
         		for(UserDomain ud : csd.getUserInfo()) {
         			
         			jsonTemp1 = new JSONObject();
         			jsonTemp1.put("USER_IMG", ud.getUSER_IMG());
         			jsonTemp1.put("USER_ID", ud.getUSER_ID());
-        			jsonTemp1.put("club_Num",csd.getClub_Num());
-        			
         			jsonArr1.add(jsonTemp1);
         		}
         		jsonTemp.put("userInfo",jsonArr1);
-        		/*} 
-				 * else { jsonTemp1 = new JSONObject(); jsonTemp1.put("USER_IMG"," ");
-				 * jsonTemp1.put("USER_ID", " ");
-				 * 
-				 * jsonArr1.add(jsonTemp1); }
-				 */
-        	
+        	}
+        		
         	
         	jsonArr.add(jsonTemp);
         }
-        
         jsonObj.put("data", jsonArr);
         
         
@@ -87,5 +79,8 @@ public class ClubMoreService   {
 		
 		return jsonObj.toJSONString();
 	}
+
+
+
 
 }
