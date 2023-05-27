@@ -20,7 +20,9 @@ top: 150px;
 #search_result_text{
 position: relative;
 left: 550px;
-top: 100px; 	
+top: 100px;
+font-size: 20px;
+font-weight: bold; 	
 }
 
 .category_socialring_text{

@@ -121,7 +121,6 @@ public class ClubDAO {
 	
 	public List<ClubSalesDomain> selectMoreClub(SeeMoreVO smVO) {
 	    List<ClubSalesDomain> clubMore = new ArrayList<ClubSalesDomain>();
-	    System.out.println(smVO);
 	    // 1.
 	    SqlSession ss = MyBatisHandler.getInstance().getMyBatisHandler(false);
 	    
@@ -144,16 +143,17 @@ public class ClubDAO {
 	
 	
 	
-		  public static void main(String[] args) {
-			  
-				
-				 SeeMoreVO smVO = new SeeMoreVO(); smVO.setSearchText("등산");
-			
-			  
-			  
-			  
-		 System.out.println(new ClubDAO().selectMoreClub(smVO));
-		  }
+		/*
+		 * public static void main(String[] args) {
+		 * 
+		 * 
+		 * SeeMoreVO smVO = new SeeMoreVO(); smVO.setSearchText("등산");
+		 * 
+		 * 
+		 * 
+		 * 
+		 * System.out.println(new ClubDAO().selectMoreClub(smVO)); }
+		 */
 		 
 	 
 	 

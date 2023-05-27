@@ -137,7 +137,7 @@ $(function(){
    
    
 <div class="category_container1">
-<span id="search_result_text"></span>
+<span id="search_result_text"  ></span>
 <table id="search_table">
 
 </table>
