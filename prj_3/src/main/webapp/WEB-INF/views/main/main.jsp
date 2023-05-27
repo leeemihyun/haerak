@@ -72,7 +72,7 @@
 
         <td class="prdCol1" colspan="3">
         <div class="prod_div">
-            <a href="http://localhost/prj_3/club_info.do?clubNum=${club.club_Num}">
+            <a href="club/club_info.do?club_Num=${club.club_Num}">
             <img class="prod_img" src="${club.club_Img}" /></a>
           </div> 
         </td>
@@ -85,7 +85,9 @@
                
                
                <c:forEach var="user" items="${club.userInfo}">
-                  <img class="user_profile" src="${user.USER_IMG}" onerror="this.onerror=null; this.src='http://localhost/prj_3/images/a.png';"/>
+                  <a href="">
+                     <img class="user_profile" src="${user.USER_IMG}" onerror="this.onerror=null; this.src='http://localhost/prj_3/images/a.png';"/>
+                  </a>
                </c:forEach>
                <c:out value="${club.USER_COUNT}" />명 / <c:out value="${club.number_People}"/>명
            </div>

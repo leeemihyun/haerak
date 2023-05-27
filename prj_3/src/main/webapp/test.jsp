@@ -20,8 +20,10 @@ $(function() {
 </script>
 </head>
 <body>
+<a href="category.do?category_Num=1&actiArea_Num=1">카테고리 바로가기</a>
 <a href="club/club_info.do?club_Num=1&userId=abcd5">상세페이지 바로가기</a><br>
 <a href="club/clubRegistrationCategoryForm.do">카테고리 설정페이지 바로가기</a><br>
 <a href="club/reviewSeeMoreForm.do?clubNum=1">리뷰 바로가기</a><br>
+<a href="header.do">헤더 바로가기</a><br>
 </body>
 </html>

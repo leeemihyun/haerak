@@ -43,16 +43,21 @@ $(function(){
 		actiArea=$("#area option").index($("#area option:selected"));
 		callClubList(actiArea);
 	});
-	
-
-	if('${searchText}'!=''){
 		
-	}
-	
 	
 	callClubList(0);
 	
 }); 
+
+
+
+
+
+
+
+
+
+
 
 
 	function callClubList(actiArea){
@@ -79,7 +84,7 @@ $(function(){
 						tbody+="</tr><tr>";
 					}
 					cnt ++;
-					tbody+="<td class='prdCol1' colspan='3'><div class='prod_div'><a href='http://localhost/prj_3/club_info.do?clubNum="+ele.club_Num+"'>"+
+					tbody+="<td class='prdCol1' colspan='3'><div class='prod_div'><a href='club/club_info.do?club_Num="+ele.club_Num+"'>"+
 					"<img class='prod_img' src='"+ele.club_Img+"' /></a></div> </td><td class='prdCol2'><div><strong>"+
 					ele.club_name+"</strong><br><br>"+
 					ele.price.toLocaleString()+"원<br>"+
@@ -101,9 +106,15 @@ $(function(){
 				});
 				
 
-				
-				
+				if('${searchText}'==''){
+					
 				$("#socialring_popular_table").append(tbody);
+				}else{
+				$("#search_table").append(tbody);
+				$("#area").hide();
+				$("#search_result_text").html("${searchText} 검색결과 입니다 ");
+				}
+
 			}
 		});
 	}
@@ -125,8 +136,11 @@ $(function(){
 
    
    
-    <div class="category_container1">
+<div class="category_container1">
+<span id="search_result_text"></span>
+<table id="search_table">
 
+</table>
 
  <c:choose>
     <c:when test="${category_Num == 1}">

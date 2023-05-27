@@ -12,14 +12,16 @@
 
 <script type="text/javascript">
 $(function() {
-	$("#seachBtn").click(function() {
-		$("#searchFrm").submit();
+	$("#searchBtn").click(function() {
+		var searchText = $("#searchFrm input[name='searchText']").val(); //searchFrm에 input에 이름이 searchText 인거
+		if(searchText === ""){        //#searchBtn 이 눌러졌을 때 검색어가 없으면 alert 띄우기
+			alert("검색어를 입력해 주세요");
+		}else{
+			$("#searchFrm").submit();  // 검색어가 있으면 폼을 제출함
+		}
+		
 	});
 });
-
- function validateSearchInput(){
-	
-	}//validateSearchInput
 </script>
 
 
@@ -60,7 +62,7 @@ $(function() {
 <!-- 검색창  -->
 <form class="d-flex" role="search" action="category.do?categoryNum=0&actiAreaNum=0" method="get" name="frmheader" id="searchFrm" >
     <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="searchText" >
-    <button class="btn btn-outline-warning" type="button" name="searchInput1" id="seachBtn" >Search</button>
+    <button class="btn btn-outline-warning" type="button" name="searchInput1" id="searchBtn" >Search</button>
 </form><!-- 검색창 -->
 
 
@@ -93,7 +95,7 @@ $(function() {
 
 
 <div class="navi_mypage">
-   <a href="#void" style="color: inherit;"><font size="4px"><strong>마이페이지</strong></font></a><br><br>
+   <a href="hostlist.do" style="color: inherit;"><font size="4px"><strong>마이페이지</strong></font></a><br><br>
 </div><!-- navi_mypage  --> 
 
 
@@ -106,7 +108,7 @@ $(function() {
 <!-- 검색창  -->
 <form class="d-flex" role="search" action="category.do?categoryNum=0&actiAreaNum=0" method="get" name="frmheader" id="searchFrm">
     <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="searchText">
-    <button class="btn btn-outline-warning" type="button" name="searchInput1" id="seachBtn" >Search</button>
+    <button class="btn btn-outline-warning" type="button" name="searchInput1" id="searchBtn" >Search</button>
 </form><!-- 검색창 -->
 
        

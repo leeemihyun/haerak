@@ -9,6 +9,20 @@ height: 450px;
 
 
 
+
+#search_table{
+position: relative;
+left: 550px;
+top: 150px; 
+}
+
+
+#search_result_text{
+position: relative;
+left: 550px;
+top: 100px; 	
+}
+
 .category_socialring_text{
 position: relative;
 top : 100px;
