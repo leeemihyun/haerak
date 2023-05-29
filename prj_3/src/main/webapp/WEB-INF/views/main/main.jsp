@@ -109,7 +109,7 @@
 
      
      <div class="socialring_more">
-      <a href="http://localhost/prj_3/category.do?clubNum=1">
+      <a href="http://localhost/prj_3/category.do?categoryNum=1">
       <input type="button" value="더보기 >" class="btnMore"></a>
      </div><!--socialring_more-->
      
@@ -136,7 +136,7 @@
 
        <td class="prdCol1" colspan="3">
         <div class="prod_div">
-            <a href="http://localhost/prj_3/club_info.do?clubNum=${club.club_Num}">
+            <a href="club/club_info.do?club_Num=${club.club_Num}">
             <img class="prod_img" src="${club.club_Img}" /></a>
           </div> 
         </td>
@@ -198,7 +198,7 @@
 
        <td class="prdCol1" colspan="3">
         <div class="prod_div">
-            <a href="http://localhost/prj_3/club_info.do?clubNum=${club.club_Num}">
+            <a href="club/club_info.do?club_Num=${club.club_Num}">
             <img class="prod_img" src="${club.club_Img}" /></a>
           </div> 
         </td>

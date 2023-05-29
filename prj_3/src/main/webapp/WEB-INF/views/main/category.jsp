@@ -31,7 +31,6 @@
 
 <script type="text/javascript">
 
-
 var actiArea=null;
 var searchInput=null;
 
@@ -48,9 +47,6 @@ $(function(){
 	callClubList(0);
 	
 }); 
-
-
-
 
 
 
@@ -197,37 +193,39 @@ $(function(){
        
        <option value="0" selected>지역을 선택해 주세요</option>
        
-            <option value="1" ${actiArea_Num eq '1'?"selected='selected'":""}>서울</option>
+               <option value="1" ${actiArea_Num eq '1'?"selected='selected'":""}>서울</option>
 
-		    <option value="2" ${actiArea_Num eq '2'?"selected='selected'":""}>강원</option>
+		       <option value="2" ${actiArea_Num eq '2'?"selected='selected'":""}>경기</option>
 
-				<option value="3" ${actiArea_Num eq '3'?"selected='selected'":""}>대전</option>
+				<option value="3" ${actiArea_Num eq '3'?"selected='selected'":""}>인천</option>
 
-				<option value="4" ${actiArea_Num eq '4'?"selected='selected'":""}>충남</option>
+				<option value="4" ${actiArea_Num eq '4'?"selected='selected'":""}>강원</option>
 
 				<option value="5" ${actiArea_Num eq '5'?"selected='selected'":""}>충북</option>
 
-				<option value="6" ${actiArea_Num eq '6'?"selected='selected'":""}>인천</option>
+				<option value="6" ${actiArea_Num eq '6'?"selected='selected'":""}>세종</option>
 
-				<option value="7" ${actiArea_Num eq '7'?"selected='selected'":""}>경기</option>
+				<option value="7" ${actiArea_Num eq '7'?"selected='selected'":""}>충남</option>
 
-				<option value="8" ${actiArea_Num eq '8'?"selected='selected'":""}>광주</option>
+				<option value="8" ${actiArea_Num eq '8'?"selected='selected'":""}>대전</option>
 
-				<option value="9" ${actiArea_Num eq '9'?"selected='selected'":""}>전남</option>
+				<option value="9" ${actiArea_Num eq '9'?"selected='selected'":""}>경북</option>
 
-				<option value="10" ${actiArea_Num eq '10'?"selected='selected'":""}>전북</option>
+				<option value="10" ${actiArea_Num eq '10'?"selected='selected'":""}>대구</option>
 
-				<option value="11" ${actiArea_Num eq '11'?"selected='selected'":""}>부산</option>
+				<option value="11" ${actiArea_Num eq '11'?"selected='selected'":""}>울산</option>
 
-				<option value="12" ${actiArea_Num eq '12'?"selected='selected'":""}>경남</option>
+				<option value="12" ${actiArea_Num eq '12'?"selected='selected'":""}>부산</option>
 
-				<option value="13" ${actiArea_Num eq '13'?"selected='selected'":""}>울산</option>
+				<option value="13" ${actiArea_Num eq '13'?"selected='selected'":""}>경남</option>
 
-				<option value="14" ${actiArea_Num eq '14'?"selected='selected'":""}>제주</option>
+				<option value="14" ${actiArea_Num eq '14'?"selected='selected'":""}>전북</option>
 
-				<option value="15" ${actiArea_Num eq '15'?"selected='selected'":""}>대구</option>
+				<option value="15" ${actiArea_Num eq '15'?"selected='selected'":""}>전남</option>
 
-				<option value="16" ${actiArea_Num eq '16'?"selected='selected'":""}>경북</option>
+				<option value="16" ${actiArea_Num eq '16'?"selected='selected'":""}>광주</option>
+				
+				<option value="17" ${actiArea_Num eq '17'?"selected='selected'":""}>제주</option>
 			</select> 
         
  </div><!--category_container2  -->
