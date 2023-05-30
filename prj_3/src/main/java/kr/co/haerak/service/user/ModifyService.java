@@ -39,6 +39,10 @@ public class ModifyService {
 		return mpDomain;
 	}//ModifyProfileDomain
 	
+	
+	/**
+	 * 프로필 수정
+	 */
 	public int modifyProfileService(ModifyProfileVO mpVO) {
 		int cnt=uDAO.updateProfile(mpVO);
 		
@@ -73,7 +77,6 @@ public class ModifyService {
 	public int modifyPassService(ModifyPassVO mpVO) throws NoSuchAlgorithmException {
 		String dPass = DataEncrypt.messageDigest("MD5", mpVO.getNewPass());
 		mpVO.setNewPass(dPass);
-		
 		int cnt = uDAO.updatePass(mpVO);
 		
 		return cnt;

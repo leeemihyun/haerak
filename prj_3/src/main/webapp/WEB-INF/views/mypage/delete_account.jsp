@@ -16,9 +16,17 @@ a{color: #000000;}
 <!-- jQuery CDN 시작 -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
 <!-- jQuery CDN 끝 -->
-<script type="text/javascript">
-$(function(){
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
+<link rel="stylesheet" type="text/css" href="http://localhost/prj_3/css/headerFooter.css">
 
+<script type="text/javascript">
+
+$(function(){
+	$("#btn").click(function() {
+		alert("삭제 되었습니다.")
+		$("#frm").submit();
+	});//click
 });//ready
 </script>
 
@@ -26,17 +34,19 @@ $(function(){
 <body>
 <div class="wrap">
 <div class="header">
-</div><!-- header -->
-<div id="container">
+	<jsp:include page="/header.do"/>
+</div><!-- header-->
+<div class="container">
 
-<form action="" id="frm" method="post">
+<form action="deleteProcess.do" id="frm" method="get">
 <div id="div"><h2>회원정보 삭제</h2></div>
 <div id="msg">회원님의 정보를 삭제하시겠습니까?</div>
 <input type="button" value="확인" id="btn">
 </form>
 </div><!-- container -->
-<div class="footer">
-</div><!-- footer -->
+<div class="container5">
+	<jsp:include page="/footer.do"/>
+</div><!-- footer-->
 </div><!-- wrap -->
 </body>
 </html>

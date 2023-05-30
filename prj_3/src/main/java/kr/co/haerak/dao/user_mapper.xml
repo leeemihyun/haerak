@@ -104,12 +104,14 @@
   	update  users
   	set 	nickName=#{nickName},
   			user_Img=#{userImg},
-  			personal_Intro=#{personalIntro},
-  	where 	user_id=#{userId}
+  			personal_Intro=#{personalIntro}
+  	where 	user_id=#{user_id}
   </update>
   
   <delete id="deleteUser" parameterType="String">
-  	insert into users(delete_date) values(sysdate)
+  	update users 
+  	set delete_date=sysdate
+  	where user_id = #{userId}
   
   </delete>
   

@@ -9,11 +9,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.SessionAttributes;
 
 import kr.co.haerak.service.user.InquiryService;
 import kr.co.haerak.vo.user.FindIdVO;
 import kr.co.haerak.vo.user.FindPassVO;
-
+@SessionAttributes("lsDomain")
 @Controller
 public class InquiryController {
 	

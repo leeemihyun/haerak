@@ -89,7 +89,7 @@ left: 415px;
 
 border: none;
 border-radius: 5px;
-background-color: #8B6FBD;
+background-color: #F7A144;
 color: white;
 font-size: 22px;
 font-weight: bold;
@@ -127,8 +127,8 @@ a{color: #000000;}
 <link rel="stylesheet" type="text/css" href="http://localhost/prj_3/css/headerFooter.css">
 <script type="text/javascript">
 $(function(){
-	$(".btn_login").click(function() {
-		$("frm").submit();
+	$("#btn").click(function() {
+		$("#frm").submit();
 	})
 });//ready
 </script>
@@ -144,21 +144,18 @@ $(function(){
 	<div class="area_login">
 	
 	<div class="loginTitle">비밀번호 확인</div>
-	<form name="frm" action="passChkProcess.do" method="post">
+	<form name="frm" id="frm" action="passChkProcess.do" method="post">
     <div class="input_login">
-    <input type="text" class="text_input_login"  value="<%-- <%= sessionId %> --%>" id="login_id" readonly> 
+    <input type="text" class="text_input_login"  value="${lsDomain.userId}" id="login_id" readonly> 
     </div>
      
     <div class="input_password">
-    <input type="password"  class="text_input_password" placeholder="비밀번호를 입력해주세요" name="pass" autofocus="autofocus"> 
+    <input type="password"  class="text_input_password" placeholder="비밀번호를 입력해주세요" name="userPassword" autofocus="autofocus"> 
     </div>
      
-    <div class="find_password">
-    <a href="http://localhost/prj_2/ldk/pass_inquiry.jsp" class="a_find" >비밀번호찾기</a>
-    </div>
      
     <div class="div_btn_login">
-	    <input type="button"  value="확인" class="btn_login"  onclick="checkNull()">
+	    <input type="button"  value="확인" class="btn_login" id="btn" >
     </div>
     </form>
 	</div><!-- 회원정보수정 비밀번호 확인 -->

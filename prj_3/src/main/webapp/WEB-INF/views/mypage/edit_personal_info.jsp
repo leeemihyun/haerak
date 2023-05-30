@@ -33,6 +33,10 @@
 <!-- jQuery CDN 시작 -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
 <!-- jQuery CDN 끝 -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
+<link rel="stylesheet" type="text/css" href="http://localhost/prj_3/css/headerFooter.css">
+
 <script type="text/javascript">
 $(function(){
 
@@ -43,7 +47,7 @@ $(function(){
 <body>
 <div class="wrap">
 <div class="header">
-
+	<jsp:include page="/header.do"/>
 </div><!-- header -->
 <div class="container">
 <div id="div0"><h2>개인정보 수정</h2></div>
@@ -51,8 +55,8 @@ $(function(){
 
 <div id="divEmail"> 
 	<font id="font1">이메일</font><br>
-	<input type="text" class="inputBox_email1" value="<%-- <%= email1 %> --%>" name="email" id="email"><strong>@</strong>
-	<input type="text" id="last_email" size="10" class="inputBox_email2" name="email2" id="email2" value="<%-- <%= email2 %> --%>">
+	<input type="text" class="inputBox_email1" value="${ mpDomain.email }" name="email" id="email"><strong>@</strong>
+	<input type="text" id="last_email" size="10" class="inputBox_email2" name="email2" id="email2" value="${ mpDomain.email2} ">
 	<select class="inputBox_email2" id="email_select" name="email_select">
 		<option value="" selected>선택없음</option>
 		<option value="gmail.com">gmail.com</option>
@@ -67,32 +71,35 @@ $(function(){
 
 <div id="divLoc2"> 
 	<font id="font1">주소</font><br>
-	<input type="text" id="zipcode" name="zipcode" id="zipcode" value="<%-- <%= zipcode %> --%>" readonly="readonly"/>
+	<input type="text" id="zipcode" name="zipcode" id="zipcode" value="${ mpDomain.zipcode}>" readonly="readonly"/>
 	<input type="button" class="idBtn" name="addrBtn" value="주소찾기"  onclick="findZip()"/>
 	<div>
-	<input type="text" id="addr" name="addr" readonly="readonly" id="addr" value="<%-- <%= addr %> --%>"/>
+	<input type="text" id="addr" name="addr" readonly="readonly" id="addr" value="${ mpDomain.addr}"/>
 	</div>
-	<input type="text" id="addr2" name="addr2" id="addr2" value="<%-- <%= detailAddr %> --%>">
+	<input type="text" id="addr2" name="addr2" id="addr2" value="${ mpDomain.detailAddr}">
 </div>
 
 <div id="divLoc"> 
 	<font id="font1">활동 지역</font><br>
-	<select class="inputBox" name="actLocalNum" id="location">
-		<option value="동선택">동선택</option>
-		<option value="1">압구정동</option>
-		<option value="2">신사동</option>
-		<option value="3">청담동</option>
-		<option value="4">논현동</option>
-		<option value="5">삼성동</option>
-		<option value="6">역삼동</option>
-		<option value="7">대치동</option>
-		<option value="8">도곡동</option>
-		<option value="9">개포동</option>
-		<option value="10">일원동</option>
-		<option value="11">수서동</option>
-		<option value="12">자곡동</option>
-		<option value="13">율현동</option>
-		<option value="14">세곡동</option>
+	<select id="inputBox" name="actAreaNum">
+		<option value="지역선택" selected="selected">지역선택</option>
+		<option value=1>서울</option>
+		<option value=2>경기</option>
+		<option value=3>인천</option>
+		<option value=4>강원</option>
+		<option value=5>충북</option>
+		<option value=6>세종</option>
+		<option value=7>충남</option>
+		<option value=8>대전</option>
+		<option value=9>경북</option>
+		<option value=10>대구</option>
+		<option value=11>울산</option>
+		<option value=12>부산</option>
+		<option value=13>경남</option>
+		<option value=14>전북</option>
+		<option value=15>전남</option>
+		<option value=16>광주</option>
+		<option value=17>제주</option>
 	</select>
 </div>
 
@@ -103,7 +110,7 @@ $(function(){
 		<option>011</option>
 		<option>017</option>
 	</select>
-	<input type="text" class="inputBox_tel2" value="<%-- <%= tel %> --%>" maxlength="8" name="tel2" id="tel2">
+	<input type="text" class="inputBox_tel2" value="${ mpDomain.tel}" maxlength="8" name="tel2" id="tel2">
 </div>
 <div id="divBtn"> 
 	<input type="button" id="nextBtn" value="개인정보 수정">
@@ -111,7 +118,8 @@ $(function(){
 </form>
 </div>
 <!-- container -->
-<div class="footer">
+<div class="container5">
+	<jsp:include page="/footer.do"/>
 </div><!-- footer-->
 </div><!-- wrap -->
 </body>

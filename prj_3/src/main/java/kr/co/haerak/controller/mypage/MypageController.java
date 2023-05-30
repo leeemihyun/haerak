@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.SessionAttributes;
 
 import kr.co.haerak.domain.mypage.ApprovalDomain;
 import kr.co.haerak.domain.mypage.ClubReviewDomain;
@@ -25,7 +26,7 @@ import kr.co.haerak.vo.mypage.ApprovalVO;
 import kr.co.haerak.vo.mypage.InterestVO;
 import kr.co.haerak.vo.mypage.JoinListVO;
 import kr.co.haerak.vo.mypage.JoinListVO2;
-
+@SessionAttributes("lsDomain")
 @Controller
 public class MypageController {
 	@Autowired(required = false)
@@ -48,9 +49,7 @@ public class MypageController {
 	
 	@GetMapping("/hostlist.do")
 	public String searchHostList(Model model) {
-		//LoginSessionDomain lsDomain = (LoginSessionDomain)model.getAttribute("lsDomain");
-		LoginSessionDomain lsDomain = new LoginSessionDomain("ㅋㅋ", "자소", "../images/a.png", "abcd1", "", 1);
-		model.addAttribute("lsDomain", lsDomain);
+		LoginSessionDomain lsDomain = (LoginSessionDomain)model.getAttribute("lsDomain");
 		String userId = lsDomain.getUserId();
 		
 		List<HostListDomain> list = hls.hostList(userId);
@@ -61,9 +60,7 @@ public class MypageController {
 
 	@GetMapping("/approval.do")
 	public String searchApprovalStatus(int clubNum, Model model) {
-		//LoginSessionDomain lsDomain = (LoginSessionDomain)model.getAttribute("lsDomain");
-		LoginSessionDomain lsDomain = new LoginSessionDomain("ㅋㅋ", "자소", "../images/a.png", "abcd1", "", 1);
-		model.addAttribute("lsDomain", lsDomain);
+		LoginSessionDomain lsDomain = (LoginSessionDomain)model.getAttribute("lsDomain");
 		String userId = lsDomain.getUserId();
 		
 		List<ApprovalDomain> list=as.approval(clubNum);
@@ -76,9 +73,7 @@ public class MypageController {
 	@GetMapping("/interest.do")
 	public String searchInterestList(Model model) {
 		
-		//LoginSessionDomain lsDomain = (LoginSessionDomain)model.getAttribute("lsDomain");
-		LoginSessionDomain lsDomain = new LoginSessionDomain("ㅋㅋ", "자소", "../images/a.png", "abcd5", "", 1);
-		model.addAttribute("lsDomain", lsDomain);
+		LoginSessionDomain lsDomain = (LoginSessionDomain)model.getAttribute("lsDomain");
 		String userId = lsDomain.getUserId();
 				
 		List<InterestDomain> list=is.interest(userId);
@@ -90,9 +85,7 @@ public class MypageController {
 	
 	@GetMapping("/heart.do")
 	public String removeInterest(InterestVO iVO, HttpServletRequest request, Model model) {
-		//LoginSessionDomain lsDomain = (LoginSessionDomain)model.getAttribute("lsDomain");
-		LoginSessionDomain lsDomain = new LoginSessionDomain("ㅋㅋ", "자소", "../images/a.png", "abcd5", "", 1);
-		model.addAttribute("lsDomain", lsDomain);
+		LoginSessionDomain lsDomain = (LoginSessionDomain)model.getAttribute("lsDomain");
 		String userId = lsDomain.getUserId();
 		
 		int clubNum=Integer.parseInt(request.getParameter("pNum"));
@@ -109,9 +102,7 @@ public class MypageController {
 	
 	@GetMapping("/joinList.do")
 	public String searchJoinList(Model model) {
-		//LoginSessionDomain lsDomain = (LoginSessionDomain)model.getAttribute("lsDomain");
-		LoginSessionDomain lsDomain = new LoginSessionDomain("ㅋㅋ", "자소", "../images/a.png", "abcd8", "", 1);
-		model.addAttribute("lsDomain", lsDomain);
+		LoginSessionDomain lsDomain = (LoginSessionDomain)model.getAttribute("lsDomain");
 		String userId = lsDomain.getUserId();
 			
 		List<JoinListDomain> list=js.joinList(userId);
@@ -121,22 +112,17 @@ public class MypageController {
 	
 	@GetMapping("/waitList.do")
 	public String searchWaitList(Model model) {
-		//LoginSessionDomain lsDomain = (LoginSessionDomain)model.getAttribute("lsDomain");
-		LoginSessionDomain lsDomain = new LoginSessionDomain("ㅋㅋ", "자소", "../images/a.png", "abcd5", "", 1);
-		model.addAttribute("lsDomain", lsDomain);
+		LoginSessionDomain lsDomain = (LoginSessionDomain)model.getAttribute("lsDomain");
 		String userId = lsDomain.getUserId();
 		
 		List<JoinListDomain> list=js.waitList(userId);
 		model.addAttribute("list",list);
-		System.out.println(userId);
 		return "/mypage/wait_list";
 	}
 	
 	@GetMapping("/removeJoin.do")
 	public String removeJoinList(Model model, JoinListVO2 jVO) {
-		//LoginSessionDomain lsDomain = (LoginSessionDomain)model.getAttribute("lsDomain");
-		LoginSessionDomain lsDomain = new LoginSessionDomain("ㅋㅋ", "자소", "../images/a.png", "abcd1", "", 1);
-		model.addAttribute("lsDomain", lsDomain);
+		LoginSessionDomain lsDomain = (LoginSessionDomain)model.getAttribute("lsDomain");
 		String userId = lsDomain.getUserId();
 				
 		
@@ -149,9 +135,7 @@ public class MypageController {
 
 	@GetMapping("/removeWaitList.do")
 	public String removeWaitList(Model model, JoinListVO2 jVO) {
-		//LoginSessionDomain lsDomain = (LoginSessionDomain)model.getAttribute("lsDomain");
-		LoginSessionDomain lsDomain = new LoginSessionDomain("ㅋㅋ", "자소", "../images/a.png", "abcd1", "", 1);
-		model.addAttribute("lsDomain", lsDomain);
+		LoginSessionDomain lsDomain = (LoginSessionDomain)model.getAttribute("lsDomain");
 		String userId = lsDomain.getUserId();
 		
 		
@@ -164,9 +148,7 @@ public class MypageController {
 	
 	@GetMapping("/review.do")
 	public String searchReview(Model model) {
-		//LoginSessionDomain lsDomain = (LoginSessionDomain)model.getAttribute("lsDomain");
-		LoginSessionDomain lsDomain = new LoginSessionDomain("ㅋㅋ", "자소", "../images/a.png", "abcd7", "", 1);
-		model.addAttribute("lsDomain", lsDomain);
+		LoginSessionDomain lsDomain = (LoginSessionDomain)model.getAttribute("lsDomain");
 		String userId = lsDomain.getUserId();
 				
 		List<ClubReviewDomain> list=rs.review(userId);
@@ -177,9 +159,7 @@ public class MypageController {
 	
 	@GetMapping("/reply.do")
 	public String searchReviewReply(Model model) {
-		//LoginSessionDomain lsDomain = (LoginSessionDomain)model.getAttribute("lsDomain");
-		LoginSessionDomain lsDomain = new LoginSessionDomain("ㅋㅋ", "자소", "../images/a.png", "abcd1", "", 1);
-		model.addAttribute("lsDomain", lsDomain);
+		LoginSessionDomain lsDomain = (LoginSessionDomain)model.getAttribute("lsDomain");
 		String userId = lsDomain.getUserId();
 				
 				
@@ -190,8 +170,7 @@ public class MypageController {
 	}
 	@GetMapping("/approve.do")
 	public String approve(Model model, int clubNum, String userId) {
-			//LoginSessionDomain lsDomain = (LoginSessionDomain)model.getAttribute("lsDomain");
-			LoginSessionDomain lsDomain = new LoginSessionDomain("ㅋㅋ", "자소", "../images/a.png", "abcd1", "", 1);
+		LoginSessionDomain lsDomain = (LoginSessionDomain)model.getAttribute("lsDomain");
 
 		ApprovalVO aVO=new ApprovalVO();
 		aVO.setUserId(userId);
@@ -206,8 +185,7 @@ public class MypageController {
 	
 	@GetMapping("/decline.do")
 	public String decline(Model model, int clubNum, String userId) {
-		//LoginSessionDomain lsDomain = (LoginSessionDomain)model.getAttribute("lsDomain");
-		LoginSessionDomain lsDomain = new LoginSessionDomain("ㅋㅋ", "자소", "../images/a.png", "abcd1", "", 1);
+		LoginSessionDomain lsDomain = (LoginSessionDomain)model.getAttribute("lsDomain");
 		
 		ApprovalVO aVO=new ApprovalVO();
 		aVO.setClubNum(clubNum);

@@ -273,7 +273,6 @@ public class UserDAO {
 		int cnt=0;
 		// 1. MyBatis Handler 얻기
 		SqlSession ss = MyBatisHandler.getInstance().getMyBatisHandler(false);
-		
 		// 2. Handler사용
 		cnt = ss.update("kr.co.haerak.user_mapper.updateProfile", mpVO);
 		// 3. transaction완료
@@ -302,16 +301,16 @@ public class UserDAO {
 		return cnt;
 	}//deleteUser
 	
-	public static void main(String[] args) {
-//		System.out.println(new UserDAO().idDup("abcd10"));
-//		System.out.println(new UserDAO().selectLogin(new LoginVO("abcd2","XZPOtw4r9dqoTsPQzSxzGg==")));
-//		System.out.println(new UserDAO().selectFindId(new FindIdVO("일단군","trC2y8L4uUhOIy4Y3KcwEa8tGfrmc3m+aaqks9piX2w=")));
-//		System.out.println(new UserDAO().selectChkUserInfo(new ChkIdPassVO("일단군","trC2y8L4uUhOIy4Y3KcwEa8tGfrmc3m+aaqks9piX2w=")));
-//		System.out.println(new UserDAO().selectChkUserInfo(new ChkIdPassVO("일단군","trC2y8L4uUhOIy4Y3KcwEa8tGfrmc3m+aaqks9piX2w=")));
-//		System.out.println(new UserDAO().updatePass(new ModifyPassVO("abcd2","XZPOtw4r9dqoTsPQzSxzGg==")));
-//		System.out.println(new UserDAO().selectInfo("abcd2"));
-//		System.out.println(new UserDAO().selectProfile("abcd2"));
-		System.out.println(new UserDAO().updateInfo(new ModifyInfoVO("","","","","","abcd2",5)));
-		
-	}// main
+//	public static void main(String[] args) {
+////		System.out.println(new UserDAO().idDup("abcd10"));
+////		System.out.println(new UserDAO().selectLogin(new LoginVO("abcd2","XZPOtw4r9dqoTsPQzSxzGg==")));
+////		System.out.println(new UserDAO().selectFindId(new FindIdVO("일단군","trC2y8L4uUhOIy4Y3KcwEa8tGfrmc3m+aaqks9piX2w=")));
+////		System.out.println(new UserDAO().selectChkUserInfo(new ChkIdPassVO("일단군","trC2y8L4uUhOIy4Y3KcwEa8tGfrmc3m+aaqks9piX2w=")));
+////		System.out.println(new UserDAO().selectChkUserInfo(new ChkIdPassVO("일단군","trC2y8L4uUhOIy4Y3KcwEa8tGfrmc3m+aaqks9piX2w=")));
+////		System.out.println(new UserDAO().updatePass(new ModifyPassVO("abcd2","XZPOtw4r9dqoTsPQzSxzGg==")));
+////		System.out.println(new UserDAO().selectInfo("abcd2"));
+////		System.out.println(new UserDAO().selectProfile("abcd2"));
+////		System.out.println(new UserDAO().updateInfo(new ModifyInfoVO("","","","","","abcd2",5)));
+//		
+//	}// main
 }// class

@@ -14,6 +14,10 @@ a { text-decoration: none; color: #333;}
 <!-- jQuery CDN 시작 -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
 <!-- jQuery CDN 끝 -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
+<link rel="stylesheet" type="text/css" href="http://localhost/prj_3/css/headerFooter.css">
+
 <script type="text/javascript">
 $(function(){
 
@@ -24,13 +28,13 @@ $(function(){
 <body>
 <div class="wrap">
 <div class="header">
-
+	<jsp:include page="/header.do"/>
 </div><!-- header-->
    
    
 	<div class="container">
 	<div class="info">
-	<h2>내 계정</h2>
+	<h2>내 계정정보를 수정하거나 삭제할수 있습니다.</h2>
 	
 	</div>
 	<div class="div">
@@ -55,8 +59,8 @@ $(function(){
 
 	</div><!-- container -->
      
-<div class="footer">
-
+<div class="container5">
+	<jsp:include page="/footer.do"/>
 </div><!-- footer-->
 </div><!-- wrap -->
 

@@ -13,7 +13,7 @@ import org.springframework.web.bind.support.SessionStatus;
 import kr.co.haerak.domain.user.LoginSessionDomain;
 import kr.co.haerak.service.user.LoginService;
 import kr.co.haerak.vo.user.LoginVO;
-
+@SessionAttributes("lsDomain")
 @Controller
 public class LoginController {
 
@@ -42,7 +42,6 @@ public class LoginController {
 	public String logoutProcess(Model model, SessionStatus ss) {
 		
 		ss.setComplete();
-		System.out.println(model.getAttribute("lsDomain"));
 		
 		return "main/main";
 	}//logoutProcess
