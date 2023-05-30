@@ -73,7 +73,7 @@
 
         <td class="prdCol1" colspan="3">
         <div class="prod_div">
-            <a href="club/club_info.do?club_Num=${club.club_Num}">
+            <a href="club_info.do?club_Num=${club.club_Num}">
             <img class="prod_img" src="${club.club_Img}" /></a>
           </div> 
         </td>
@@ -136,7 +136,7 @@
 
        <td class="prdCol1" colspan="3">
         <div class="prod_div">
-            <a href="club/club_info.do?club_Num=${club.club_Num}">
+            <a href="club_info.do?club_Num=${club.club_Num}">
             <img class="prod_img" src="${club.club_Img}" /></a>
           </div> 
         </td>
@@ -198,7 +198,7 @@
 
        <td class="prdCol1" colspan="3">
         <div class="prod_div">
-            <a href="club/club_info.do?club_Num=${club.club_Num}">
+            <a href="club_info.do?club_Num=${club.club_Num}">
             <img class="prod_img" src="${club.club_Img}" /></a>
           </div> 
         </td>

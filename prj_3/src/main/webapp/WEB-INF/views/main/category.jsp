@@ -80,7 +80,7 @@ $(function(){
 						tbody+="</tr><tr>";
 					}
 					cnt ++;
-					tbody+="<td class='prdCol1' colspan='3'><div class='prod_div'><a href='club/club_info.do?club_Num="+ele.club_Num+"'>"+
+					tbody+="<td class='prdCol1' colspan='3'><div class='prod_div'><a href='club_info.do?club_Num="+ele.club_Num+"'>"+
 					"<img class='prod_img' src='"+ele.club_Img+"' /></a></div> </td><td class='prdCol2'><div><strong>"+
 					ele.club_name+"</strong><br><br>"+
 					ele.price.toLocaleString()+"원<br>"+

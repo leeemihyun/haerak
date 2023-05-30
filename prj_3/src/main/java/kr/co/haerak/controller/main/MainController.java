@@ -56,7 +56,7 @@ public class MainController {
 	
 	
 	
-	//메인에서 모임 순위
+	//메인 카테고리별 인기모임
 	@RequestMapping(value="/main.do", method= {RequestMethod.GET,RequestMethod.POST})
 	public String mainRank(Model model) {
 		
@@ -73,7 +73,6 @@ public class MainController {
 	// 모임 더보기 ajax 요청 url
 	@ResponseBody
 	@RequestMapping(value="/categoryAjax.do", method= {RequestMethod.GET})
-//	public String categoryMoreAjax(Model model, @RequestParam(value="categoryNum",defaultValue = "1") String categoryNum, @RequestParam(value="actiAreaNum", defaultValue = "1") String actiAreaNum) {
 	public String categoryMoreAjax(Model model, SeeMoreVO smVO) {
 		model.addAttribute(cms.selectMoreClub(smVO));
 		String jsonObj =cms.selectMoreClub(smVO);

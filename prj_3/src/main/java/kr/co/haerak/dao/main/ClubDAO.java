@@ -48,7 +48,7 @@ public class ClubDAO {
 	
 	
 	/**
-	 * 메인에서 보이는 카테고리별 순위
+	 * 메인 카테고리별 인기모임
 	 */
 	public List<ClubSalesDomain>selectRankClub(int categoryNum){
 		List<ClubSalesDomain>clubRank = new ArrayList<ClubSalesDomain>();
@@ -84,41 +84,6 @@ public class ClubDAO {
 	/**
 	 * 카테고리별 더보기
 	 */
-	/*
-	public List<ClubSalesDomain>selectMoreClub(int categoryNum, int actiAreaNum){
-		List<ClubSalesDomain>clubMore = new ArrayList<ClubSalesDomain>();
-		
-		//1.
-		SqlSession ss = MyBatisHandler.getInstance().getMyBatisHandler(false);
-		
-		//2.
-		clubMore = ss.selectList("kr.co.haerak.dao.main_mapper.selectMoreClub",categoryNum);
-		clubMore = ss.selectList("kr.co.haerak.dao.main_mapper.selectMoreClub",actiAreaNum);
-		
-		
-		
-		
-		for(ClubSalesDomain csd : clubMore) {
-			
-			List<UserDomain> ud = null;
-			ud=ss.selectList("kr.co.haerak.dao.main_mapper.selectUserImg", csd.getClub_Num());
-			
-			csd.setUserInfo(ud);
-		}
-		
-		
-		//3.
-		if(ss != null) {ss.close();}
-		
-		
-		return clubMore;
-	}
-
-*/	
-
-	
-	
-	
 	public List<ClubSalesDomain> selectMoreClub(SeeMoreVO smVO) {
 	    List<ClubSalesDomain> clubMore = new ArrayList<ClubSalesDomain>();
 	    // 1.
@@ -140,22 +105,6 @@ public class ClubDAO {
 	       
 	    }
 	    
-	
-	
-	
-		/*
-		 * public static void main(String[] args) {
-		 * 
-		 * 
-		 * SeeMoreVO smVO = new SeeMoreVO(); smVO.setSearchText("등산");
-		 * 
-		 * 
-		 * 
-		 * 
-		 * System.out.println(new ClubDAO().selectMoreClub(smVO)); }
-		 */
-		 
-	 
 	 
 
 }

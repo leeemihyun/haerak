@@ -25,7 +25,7 @@ public class ClubMoreService   {
 	
 	
 	
-	//카테고리별 더보기 클릭했을 때 리스트 조회
+	//카테고리별 더보기, 검색 했을 때 리스트 조회
 	public String selectMoreClub(SeeMoreVO smVO){
 		
 		List<ClubSalesDomain> list=null;
