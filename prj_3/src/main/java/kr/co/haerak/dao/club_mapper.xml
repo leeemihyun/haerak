@@ -22,6 +22,14 @@
 	where	u.user_id=p.user_id and p.CATEGORY_NUM=pc.CATEGORY_NUM and p.ACTI_AREA_NUM=aa.ACTI_AREA_NUM and club_num=#{club_Num}
   </select>
   
+  <!-- 모임상세 볼때마다 1씩 추가하기  -->
+  <update id="riviewCntAdd" parameterType="int">
+  	update CLUB
+	set view_cnt=view_cnt+1
+	where club_num=#{club_Num}
+  </update>
+  
+  
   <!-- 모임 이미지를 리스트로 가져오는 SQL  -->
   <select id="selectClubImg" resultType="String" parameterType="int">
   	select		club_IMG
@@ -30,21 +38,29 @@
   </select>
   
   <!-- 모임 리뷰 글을 가져오는 SQL  -->
-	<select id="clubInfoSelectReview" resultType="String" parameterType="int">
+	<select id="clubInfoSelectReview" resultType="kr.co.haerak.domain.club.SetReviewDomain" parameterType="int">
 	
-<!-- 	SELECT REVIEW_NUM,CLUB_REVIEW,reply_num,REVIEW_REPLY,write_date,user_id,CLUB_NUM
-	FROM
-		( 	SELECT REVIEW_NUM, CLUB_REVIEW, 0 AS REPLY_NUM, '' AS REVIEW_REPLY, WRITE_DATE, USER_ID, CLUB_NUM
-			FROM CLUB_REVIEW
-	UNION ALL
-	SELECT REVIEW_NUM, '', REPLY_NUM, REVIEW_REPLY, WRITE_DATE,'',
-				(
-				SELECT CLUB_NUM
-				FROM CLUB_REVIEW
-				WHERE REVIEW_NUM = REVIEW_REPLY.REVIEW_NUM) AS CLUB_NUM
-	FROM REVIEW_REPLY )
-	where club_num=#{club_Num}
-	ORDER BY REVIEW_NUM,CLUB_REVIEW -->
+SELECT replyCheck,r.reviewNum, r.clubReview, r.replyNum, r.reviewReply, r.writeDate, r.userId, r.clubNum, u.nickname as nickName, u.user_img as userImg
+FROM
+(
+    SELECT REPLY_CHECK as replyCheck,REVIEW_NUM AS reviewNum, CLUB_REVIEW AS clubReview, reply_num AS replyNum, REVIEW_REPLY AS reviewReply, write_date AS writeDate, user_id AS userId, CLUB_NUM AS clubNum
+    FROM
+   			 (
+        SELECT REPLY_CHECK,REVIEW_NUM, CLUB_REVIEW, 0 AS REPLY_NUM, '' AS REVIEW_REPLY, WRITE_DATE, USER_ID, CLUB_NUM
+        FROM CLUB_REVIEW
+        UNION ALL
+        SELECT 0,REVIEW_NUM, '', REPLY_NUM, REVIEW_REPLY, WRITE_DATE, user_id,
+								(
+                SELECT CLUB_NUM
+                FROM CLUB_REVIEW
+                WHERE REVIEW_NUM = REVIEW_REPLY.REVIEW_NUM
+            		) AS CLUB_NUM
+        FROM REVIEW_REPLY
+   				 )
+    WHERE club_num =#{club_num}
+) r
+LEFT JOIN users u ON r.userId = u.user_id
+ORDER BY r.reviewNum, r.clubReview
 	
 	</select>
   
@@ -66,14 +82,28 @@
 	where user_id=#{user_id} and club_num=#{club_Num}
   	</delete>
   	
+  	<!-- 조인리스트 확인 -->
+  <select id="joinListCheck" resultType="String" parameterType="kr.co.haerak.vo.club.ClubSearchVO">
+	select user_id
+	from JOIN_LIST
+	where user_id=#{user_id} and club_num=#{club_Num}
+  </select>	
+  
+  <!-- 승인리스트 확인  -->
+  <select id="approvallistCheck" resultType="String" parameterType="kr.co.haerak.vo.club.ClubSearchVO">
+  	select user_id
+	from APPROVAL_STATUS
+	where user_id=#{user_id} and club_num=#{club_Num}
+  </select>
+  	
   <!-- 모임신청하기  -->
 	<insert id="clubApprovalInsert" parameterType="kr.co.haerak.vo.club.ClubSearchVO">
-	insert into APPROVAL_STATUS(APPROVAL_DATE, APPROVAL_SATUS, USER_ID, CLUB_NUM) values(sysdate,'승인대기',#{user_id},#{club_Num})
+	insert into APPROVAL_STATUS values(sysdate,'승인대기',#{user_id},#{club_Num})
 	</insert>
   <!-- 후기글 작성하기  -->
-	<insert id="insertReview" parameterType="int">
+	<insert id="insertReview" parameterType="kr.co.haerak.vo.club.ReviewVO">
 		insert into CLUB_REVIEW(REVIEW_NUM,CLUB_REVIEW, WRITE_DATE, USER_ID, CLUB_NUM)
-		values(HAERAK.CLUB_REVIEW_SEQ.NEXTVAL,#{CLUB_REVIEW},sysdate,#{USER_ID},#{CLUB_NUM})
+		values(HAERAK.CLUB_REVIEW_SEQ.NEXTVAL,#{clubReview},sysdate,#{userId},#{clubNum})
 	</insert>
   <!-- 답변글 작성하기  -->
 	<insert id="insertReply" parameterType="int">
@@ -97,7 +127,7 @@
   <!-- 모임 정보수정하기   -->
 	<update id="updateClub" parameterType="kr.co.haerak.vo.club.ClubInsertVO">
 		update 	club
-		set		
+		set input_date=sysdate		
 		<if test="CLUB_NAME !=null and CLUB_NAME != ''">
 			,CLUB_NAME=#{CLUB_NAME}
 		</if>
@@ -125,8 +155,9 @@
 		where 	club_num=#{club_num}
 	</update>
   <!-- 수정할 정보를 수정페이지에서 세팅  -->
-	<select id="setSelectClub" parameterType="int">
-		select 	CLUB_NAME, DETAIL_TXT, NUMBER_PEOPLE, PRICE, CLUB_DATE, CLUB_ADDR, LONGITUDE, LATITUDE
+	<select id="setSelectClub" resultType="kr.co.haerak.domain.club.ClubInsertDomain" parameterType="int">
+		select 	CLUB_NAME as clubName, DETAIL_TXT as detailTxt, NUMBER_PEOPLE as numberPeople, PRICE, CLUB_DATE as clubDate ,
+						CLUB_ADDR as clubAddr, LONGITUDE, LATITUDE,CLUB_TIME as clubTime,club_Num as clubNum
 		from  	club
 		where 	club_num=#{club_num}
 	</select>

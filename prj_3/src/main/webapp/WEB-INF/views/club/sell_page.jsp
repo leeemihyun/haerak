@@ -452,7 +452,16 @@ function countTextLength() {
   countElement.innerHTML = textLength + "/20"; // 글자 수 표시
 }
 
+
+
 $(function() {
+	
+	if('${pageInfo}'=="모임정보 수정"){
+		$("#complete_button").val("수정완료");
+		$("#complete_button").attr("id","ModificationsCompleted");
+		$("#form").attr("action","clubModifyProcess.do");
+	}//end if
+	
 	
 	/* 달력 */
     $( "#datepicker" ).datepicker();
@@ -463,6 +472,14 @@ $(function() {
 		
 		
 	$("#input_price").hide();
+	
+	if('${setClubInfo.price}'!=''){
+		$("#input_price").show();
+		 $("#price_button").css("background-color", "#F7A144");
+		 $("#price_button").css("color", "white");
+		 $("#price_none_button").css("background-color", "#E0E0E0");
+		 $("#price_none_button").css("color", "black");
+	}
 	
 	$("#price_button").click(function() { //참가비 있음
 		$("#input_price").show();
@@ -492,13 +509,14 @@ $(function() {
 			return;
 		}//end if
 		
+		if('${pageInfo}'!="모임정보 수정"){
 		/* 상품 이미지 */
  		if($("#clubImg").attr('src')==""){
 			alert("이미지를 넣어주세요."); 
 			$("#clubImg").focus();
 			return;	
 		}//end if 
-		
+		}
 		
 		/* 자세한 설명 */
 	 	if(!$("#detaiTxt").val()){
@@ -587,7 +605,7 @@ $(function() {
 
 <label class="info_title" style="font-size:30pt; margin-top:30px;"><strong>${pageInfo}</strong></label>
 
-<form id="form" name="form" action="../clubRegistrationProcess.do" method="post" enctype="multipart/form-data"> 
+<form id="form" name="form" action="clubRegistrationProcess.do" method="post" enctype="multipart/form-data"> 
 	<input type="hidden" name="latitude" id="latitude" 	>
 	<input type="hidden" name="longitude" id="longitude" >
 	<input type="hidden" name="categoryNum" value="${categoryNum}" >
@@ -596,7 +614,7 @@ $(function() {
   <hr class="hrsty1"/>
   <div class="title_area">
   <label for="input_title" style="font-size:15pt"><strong>*모임명</strong></label>
-  	<input type="text"  id="input_title" oninput="countTextLength()" maxlength="19"  name="clubName"  value="" >
+  	<input type="text"  id="input_title" oninput="countTextLength()" maxlength="19"  name="clubName"  value="${setClubInfo.clubName}" >
  
   <span id="text-count">0/20</span>
   </div>
@@ -627,7 +645,7 @@ $(function() {
 <hr class="hrsty3" />
 <span style="font-size:15pt" id="detail1"><strong>*자세한 설명</strong></span>
 <div class="explain_area">
-   	<textarea  id="detaiTxt" name="detailTxt"></textarea>
+   	<textarea  id="detaiTxt" name="detailTxt">${setClubInfo.detailTxt}</textarea>
 </div>
 
 
@@ -638,7 +656,7 @@ $(function() {
 <select id="input_member" name="numberPeople">
 <option value="0" selected="selected">선택</option>
 <c:forEach var="i"  begin="1" end="10">
-<option value="${i}">${i}명</option>
+<option value="${i}" ${setClubInfo.numberPeople eq i ? 'selected="selected"':''}>${i}명</option>
 </c:forEach>
 </select>
 </div>
@@ -648,8 +666,8 @@ $(function() {
 <div class="price_area">
 <label style="font-size:15pt"><strong>*참가비</strong></label><br/>
 <input type="button" value="없음" class="price_none_button" id="price_none_button"/>
-<input type="button" value="있음" class="price_button" id="price_button"/>
-<input type="text" id="input_price" placeholder="가격을 입력해주세요" name="price" >
+<input type="button" value="있음" class="price_button" id="price_button" />
+<input type="text" id="input_price" placeholder="가격을 입력해주세요" name="price" value="${setClubInfo.price}" >
 </div>
 
 <!-- 만나는 날짜&시간 영역 -->
@@ -659,7 +677,7 @@ $(function() {
 
 <br/>
 <label>날짜</label>
-<input type="text" id="datepicker" name="clubDate">
+<input type="text" id="datepicker" name="clubDate" value="${setClubInfo.clubDate}">
 <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
 <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js">
 
@@ -667,7 +685,7 @@ $(function() {
 
 
 <label>시간</label>
-<input type="text" id="timepicker" name="clubTime">
+<input type="text" id="timepicker" name="clubTime" value="${setClubInfo.clubTime}">
 <script src="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.js">
 $('#timepicker').timepicker({
     timeFormat: 'h:mm p',
@@ -713,7 +731,7 @@ $('#timepicker').timepicker({
 <script>
 var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
     mapOption = { 
-        center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
+        center: new kakao.maps.LatLng(${empty setClubInfo.longitude ? '126.570667':setClubInfo.longitude},${empty setClubInfo.latitude ? '33.450701':setClubInfo.latitude}), // 지도의 중심좌표
         level: 3 // 지도의 확대 레벨
     };
 

@@ -33,7 +33,7 @@
 #club_introduce_textArea_more_button_div{ width: 1200px; height: 40px;  top: 1630px; left: 350px; position: absolute;  }
 #club_member_info{ width: 1200px; height: 100px;  top: 1700px; left: 350px; position: absolute;}
 #club_date_info{ width: 1200px; height: 150px;  top: 1850px; left: 350px; position: absolute;}
-#club_place{ width: 1200px; height: 500px; border: 1px solid #333; top: 2050px; left: 350px; position: absolute;}
+#club_place{ width: 1200px; height: 500px;  top: 2050px; left: 350px; position: absolute;}
 hr{border: 1px solid #333;}
 #seller_profile_img{
 	position:absolute;
@@ -103,8 +103,23 @@ a{text-decoration: none; color: #333;}
 <script type="text/javascript">
 $(function() {
 	
+
+	
+	
+	if('${clubInfo.categoryName}'!=''){
+		if('${clubInfo.categoryName}'=='소셜링'){
+			$("#changeLabelColor").css("color","red");
+		}else if('${clubInfo.categoryName}'=='클럽'){
+			$("#changeLabelColor").css("color","green");			
+		}else if('${clubInfo.categoryName}'=='챌린지'){			
+			$("#changeLabelColor").css("color","blue");			
+		}
+	}
+	
+	
+	
 	/* 모임판매자 경우 바꾸기  */
-	if(${clubInfo.userId eq sessionScope.mId }){
+	if(${clubInfo.userId eq lsDomain.userId }){
 		$("#apply_button").val('수정하기');
 		$("#apply_button").removeAttr("onclick");
 		$("#apply_button").attr("onclick","clubChangeInfo()");
@@ -113,9 +128,8 @@ $(function() {
 	
 	
 	/*관심목록 추가기능  */
-	$("#heart").click(function() {
-		/* ${not empty sessionScope.mId} */	
-		if(true) {
+	$("#heart").click(function() {	
+		if( ${not empty lsDomain.userId} ) {
 		$("#heart").fadeOut(250).fadeIn(200);
 		var src=$(this).attr('src');
 		
@@ -140,21 +154,20 @@ $(function() {
 });
 
 function approvalrequest() {
-	//${not empty sessionScope.mId}
-	if(true){
-		//${interFlag==true}
-		if(false){
-		window.location.href="approvalrequest.do?club_Num=1";				
+	
+	if(${not empty lsDomain.userId}){
+		if(${approvalFlag}){
+		window.location.href="approvalrequest.do?club_Num=${clubNum}";				
 		}else{
 			alert("이미 신청한 모임입니다.");
-		}//end else
+		}
 	}else{
 		alert("로그인 후 이용해주세요");
 	}//end else
 }
 
 function clubChangeInfo() {
-	alert("ddddd");
+	location.href="clubModifyForm.do?clubNum=${clubNum}";
 }
 
 function interCallAjax(flagcnt) {
@@ -239,7 +252,7 @@ marker.setMap(map);
 	
 	</div><!-- 캐러셀  -->
 	<div id="club_detail">
-	<div id="club_detail_text1"><label style="font-weight: bold; font-size: 18px; color: red">▶${clubInfo.categoryName}</label></div>
+	<div id="club_detail_text1"><label style="font-weight: bold; font-size: 18px; " id="changeLabelColor" >▶${clubInfo.categoryName}</label></div>
 	<div style="font-size: 30px; font-weight: bold;" id="club_detail_text2">${clubInfo.clubName}</div>
 	<img src="${interFlag ? 'http://localhost/prj_3/images/heart_on.svg':'http://localhost/prj_3/images/heart_off.png'}" class="bookmark" id="heart">
 	<div style="font-size: 30px; font-weight: bold;" id="club_detail_text3"><fmt:formatNumber value="${clubInfo.price}" pattern="#,###" />원</div>
@@ -295,14 +308,13 @@ marker.setMap(map);
 </div>
 
 </div><!-- club_review_info_text  -->
-<div id="club_review_info_more"><a href=""><span style="font-weight: bold; font-size: 20px;">150개 후기 더보기</span></a></div>
+<div id="club_review_info_more"><a href="reviewSeeMoreForm.do?clubNum=${clubNum}"><span style="font-weight: bold; font-size: 20px;">150개 후기 더보기</span></a></div>
 	</div><!-- club_review_info  -->
 	<div id="hr2"><hr></div>
 	<div id="club_introduce">
 	<span style="font-weight: bold; font-size: 25px;" id="club_introduce_title">모임소개</span>
 	<div id="club_introduce_textArea">
 	${clubInfo.detailTxt}
-	<img src="http://localhost/test_mvc/common/images/see_more_test.jpg">
 	</div>
 	</div><!-- club_introduce -->
 	<div id="club_introduce_textArea_more_button_div">
@@ -321,8 +333,8 @@ marker.setMap(map);
 	<div id="hr5"><hr></div>
 	<div id="club_place">
 	<div id="map" style="width:100%;height:350px;"></div>
-	<div>장소명</div>
-	<div>${clubInfo.clubAddr}</div>
+	<div style="font-weight: bold; font-size: 25px;">장소명</div>
+	<div style="font-weight: bold; font-size: 20px;">${clubInfo.clubAddr}</div>
 	</div><!-- club_place -->
 	<div id="hr6"><hr></div>
 	</div><!-- container  -->

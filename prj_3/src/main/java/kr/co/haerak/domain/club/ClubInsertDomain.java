@@ -6,14 +6,14 @@ import java.util.List;
 public class ClubInsertDomain {
 
 	private int price,categoryNum,ActiAreaNum,numberPeople,clubNum;
-	private String clubName,detailTxt,clubAddr,userId,latitude,longitude;
+	private String clubName,detailTxt,clubAddr,userId,latitude,longitude,detailAddr,zipcode,clubTime;
 	private List<String> clubImg;
 	private Date clubDate;
+	
 	
 	public int getPrice() {
 		return price;
 	}
-	
 	public void setPrice(int price) {
 		this.price = price;
 	}
@@ -77,6 +77,24 @@ public class ClubInsertDomain {
 	public void setLongitude(String longitude) {
 		this.longitude = longitude;
 	}
+	public String getDetailAddr() {
+		return detailAddr;
+	}
+	public void setDetailAddr(String detailAddr) {
+		this.detailAddr = detailAddr;
+	}
+	public String getZipcode() {
+		return zipcode;
+	}
+	public void setZipcode(String zipcode) {
+		this.zipcode = zipcode;
+	}
+	public String getClubTime() {
+		return clubTime;
+	}
+	public void setClubTime(String clubTime) {
+		this.clubTime = clubTime;
+	}
 	public List<String> getClubImg() {
 		return clubImg;
 	}
@@ -96,8 +114,11 @@ public class ClubInsertDomain {
 		return "ClubInsertDomain [price=" + price + ", categoryNum=" + categoryNum + ", ActiAreaNum=" + ActiAreaNum
 				+ ", numberPeople=" + numberPeople + ", clubNum=" + clubNum + ", clubName=" + clubName + ", detailTxt="
 				+ detailTxt + ", clubAddr=" + clubAddr + ", userId=" + userId + ", latitude=" + latitude
-				+ ", longitude=" + longitude + ", clubImg=" + clubImg + ", clubDate=" + clubDate + "]";
+				+ ", longitude=" + longitude + ", detailAddr=" + detailAddr + ", zipcode=" + zipcode + ", clubTime="
+				+ clubTime + ", clubImg=" + clubImg + ", clubDate=" + clubDate + "]";
 	}
+	
+
 	
 	
 	

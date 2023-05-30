@@ -36,6 +36,8 @@ public class ShowClubDAO {
 		result=ss.selectOne("selectClubInfoDetail",clubNum); //상품목록
 		clubImg=ss.selectList("selectClubImg",clubNum); //상품이미지
 		result.setClubImg(clubImg);
+		ss.update("riviewCntAdd",clubNum);
+		ss.commit();
 		//3. MyBatis Handler 닫기
 		if(ss !=null) {ss.close();} //end if
 		
@@ -51,6 +53,14 @@ public class ShowClubDAO {
 	public List<SetReviewDomain> showReviewService(int clubNum) {
 		
 		List<SetReviewDomain> result=new ArrayList<SetReviewDomain>();
+		
+		//1. Mybatis Handler 얻기
+		SqlSession ss=MyBatisHandler.getInstance().getMyBatisHandler(false);
+		//2. handler 사용 
+		result=ss.selectList("clubInfoSelectReview",clubNum);
+		//parameterType이 없으므로 매개변수 하나인 method를 사용한다.
+		//3. MyBatis Handler 닫기
+		if(ss !=null) {ss.close();} //end if
 		
 		
 		return result;
@@ -120,24 +130,54 @@ public class ShowClubDAO {
 		SqlSession ss=MyBatisHandler.getInstance().getMyBatisHandler(false);
 		//2. handler 사용 
 		//parameterType이 없으므로 매개변수 하나인 method를 사용한다.
-		cnt=ss.insert("clubApprovalInsert",csVO); //관심체크
+		
+		if(approvalCheck(csVO)) {
+		cnt=ss.insert("clubApprovalInsert",csVO); //전에 했었는지
 		if(cnt==1) {
 			ss.commit();
-			approvalFlag=true;
+			approvalFlag=true; //성공
 		}else {
 			ss.rollback();
 		}//end else
+		}
 		//3. MyBatis Handler 닫기
 		if(ss !=null) {ss.close();} //end if
 
 		return approvalFlag;
 	}//clubapprovalInsert
 	
+	public boolean approvalCheck(ClubSearchVO csVO) {
+		
+		boolean approvalFlag=false;
+		//1. Mybatis Handler 얻기
+		SqlSession ss=MyBatisHandler.getInstance().getMyBatisHandler(false);
+		//2. handler 사용 
+		//parameterType이 없으므로 매개변수 하나인 method를 사용한다.
+		String joinCheck=ss.selectOne("joinListCheck",csVO);
+		String approvalCheck=ss.selectOne("approvallistCheck",csVO);
+		if(joinCheck==null) {
+			if(approvalCheck==null) {
+				approvalFlag=true;
+			}//end if
+		}//end if
+		
+		
+		//3. MyBatis Handler 닫기
+		if(ss !=null) {ss.close();} //end if
+		
+		
+		return approvalFlag;
+	}
+	
 	public static void main(String[] args) {
 		//System.out.println(new ShowClubDAO().showClubService(1));
-		//ClubSearchVO sVO=new ClubSearchVO("abcd4",1);
+		ClubSearchVO sVO=new ClubSearchVO();
+		sVO.setClub_Num(1);
+		sVO.setUser_id("abcd12");
+		System.out.println(sVO.getUser_id());
 		//System.out.println(new ShowClubDAO().updateInterList(sVO,2));
 		//new ShowClubDAO().clubApprovalInsert(sVO);
+		//new ShowClubDAO().showReviewService(1);
 	}//main
 	
 	

@@ -9,6 +9,8 @@ public class ClubInsertVO {
 	private String clubName,detailTxt,clubAddr,detailAddr,userId,latitude,longitude,clubTime,zipcode;
 	private List<String> clubImg;
 	private Date clubDate;
+
+	
 	
 	
 	public String getDetailAddr() {

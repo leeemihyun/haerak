@@ -1,8 +1,11 @@
 package kr.co.haerak.service.club;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -40,12 +43,50 @@ public class ShowClubService {
 	 * @param clubNum
 	 * @return
 	 */
-	public List<SetReviewDomain> showReviewService(int clubNum) {
+	public String showReviewService(int clubNum,int currentPage1) {
+		double limitdata=6.0; //한화면에 보여줄 최대 데이터 개수 
+		int currentPage=currentPage1; //현재 페이지
+		double pageCount=5; //최대 페이지 개수
+		double pageGroup=Math.ceil(currentPage / pageCount); //페이지 그룹
+		double lastNum=pageGroup*pageCount;
+		double firstNum=lastNum-(pageCount - 1);
+
 		
 		List<SetReviewDomain> result=new ArrayList<SetReviewDomain>();
 		
+		JSONObject jsonObj=new JSONObject();
+		jsonObj.put("resultFlag", false);
+		result=scDAO.showReviewService(clubNum);
 		
-		return result;
+		
+		jsonObj.put("resultFlag", true);
+		jsonObj.put("totaldata", result.size()); //총 데이터 개수
+		jsonObj.put("pageCnt", Math.ceil(result.size()/limitdata)); //페이지개수
+		jsonObj.put("currentPage",currentPage ); //현재페이지
+		jsonObj.put("pageGroup", pageGroup); //페이지그룹
+		jsonObj.put("lastNum", lastNum); //페이지개수
+		jsonObj.put("firstNum",firstNum ); //페이지개수
+		JSONArray jsonArr=new JSONArray();
+		JSONObject jsonTemp=null;
+		SimpleDateFormat sdf=new SimpleDateFormat("yyyy년-mm월-dd일 a hh시mm분");
+		for(SetReviewDomain srd : result) {
+			jsonTemp=new JSONObject();
+			jsonTemp.put("userId", srd.getUserId());
+			jsonTemp.put("clubNum", srd.getClubNum());
+			jsonTemp.put("clubReview", srd.getClubReview());
+			jsonTemp.put("nickName", srd.getNickName());
+			jsonTemp.put("replyNum", srd.getReplyNum());
+			jsonTemp.put("reviewNum", srd.getReviewNum());
+			jsonTemp.put("reviewReply", srd.getReviewReply());
+			jsonTemp.put("userImg", srd.getUserImg());
+			jsonTemp.put("writeDate", sdf.format(srd.getWriteDate()));
+			jsonTemp.put("replyCheck",srd.getReplyCheck());
+			jsonArr.add(jsonTemp);
+		}
+		
+		jsonObj.put("data", jsonArr);
+		
+		return jsonObj.toJSONString();
 	}//showReviewService
 	
 	/**
@@ -92,6 +133,12 @@ public class ShowClubService {
 		return approvalFlag;
 	}//clubapprovalInsert
 	
+	public boolean approvalCheck(String userId,int clubNum) {
+		ClubSearchVO csVO=new ClubSearchVO(userId, clubNum);
+		boolean approvalFlag=scDAO.approvalCheck(csVO);
+		
+		return approvalFlag;
+	}
 	
 	
 }//ShowClubService

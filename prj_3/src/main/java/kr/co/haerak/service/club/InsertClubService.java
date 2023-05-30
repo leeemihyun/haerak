@@ -65,6 +65,7 @@ public class InsertClubService {
 	public ClubInsertDomain setSelectClub(int clubNum) {
 		
 		ClubInsertDomain result=new ClubInsertDomain();
+		result=icDAO.setSelectClub(clubNum);
 		
 		return result;
 	}//setSelectClub

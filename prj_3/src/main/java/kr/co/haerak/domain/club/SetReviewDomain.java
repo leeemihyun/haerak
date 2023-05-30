@@ -4,8 +4,9 @@ import java.sql.Date;
 
 public class SetReviewDomain {
 	private String userId,clubReview,reviewReply,userImg,nickName;
-	private int reviewNum,clubNum,replyNum;
+	private int reviewNum,clubNum,replyNum,replyCheck;
 	private Date writeDate;
+	
 	
 	public String getUserId() {
 		return userId;
@@ -55,6 +56,12 @@ public class SetReviewDomain {
 	public void setReplyNum(int replyNum) {
 		this.replyNum = replyNum;
 	}
+	public int getReplyCheck() {
+		return replyCheck;
+	}
+	public void setReplyCheck(int replyCheck) {
+		this.replyCheck = replyCheck;
+	}
 	public Date getWriteDate() {
 		return writeDate;
 	}
@@ -62,14 +69,12 @@ public class SetReviewDomain {
 		this.writeDate = writeDate;
 	}
 	
-	
 	@Override
 	public String toString() {
 		return "SetReviewDomain [userId=" + userId + ", clubReview=" + clubReview + ", reviewReply=" + reviewReply
 				+ ", userImg=" + userImg + ", nickName=" + nickName + ", reviewNum=" + reviewNum + ", clubNum="
-				+ clubNum + ", replyNum=" + replyNum + ", writeDate=" + writeDate + "]";
+				+ clubNum + ", replyNum=" + replyNum + ", replyCheck=" + replyCheck + ", writeDate=" + writeDate + "]";
 	}
-	
 	
 	
 	
