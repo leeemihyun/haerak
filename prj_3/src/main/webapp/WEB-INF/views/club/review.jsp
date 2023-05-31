@@ -8,6 +8,7 @@
 <title>리뷰더보기</title>
 <link rel="stylesheet" type="text/css" href="http://localhost/prj_3/css/headerFooter.css">
 <style type="text/css">
+a{text-decoration: none; color: #333;}
 
 #wrap{width: 1900px; min-heigh:100px; margin: 0px auto;  }
 #body{width:1900px; min-heigh:100px; position: relative; padding-bottom: 250px; }
@@ -85,6 +86,10 @@ background-color: #F6F6F6;
 resize: none; width: 1197px; height: 200px; position: relative; top: 5px; border: 0px; outline: none;
 }
 
+#clubReplyArea{
+resize: none; width: 1197px; height: 200px; position: relative; top: 5px; border: 0px; outline: none;
+}
+
 #reviewListDiv{
 width:1197px;
 height:270px;
@@ -125,10 +130,11 @@ resize: none; outline: none; position: relative; top: 20px; border: 0px; width: 
 
 <script type="text/javascript">
 $(function() {
-	
+	$("#clubReview").val("");
 	
 	ajaxCall(1);
 	
+	/* 후기글 */
 	$("#reviewInsert").click(function() {
 		if(${not empty lsDomain}){
 			if($("#clubReview").val().length!=0){
@@ -140,6 +146,7 @@ $(function() {
 			alert("로그인 후 이용해주세요.");
 		}
 	});
+	
 	
 });
 
@@ -204,8 +211,8 @@ function ajaxCall(index) {
 							+"<span style='position: relative; top: 0px; left: 10px; font-weight: bold; font-size: 25px;'>"+ele.nickName+"</span>"
 							+"<span style='position: relative; top: 0px; left: 20px; font-weight: bold; font-size: 15px;'>"+ele.writeDate+"</span>"
 							+"<textarea placeholder='리뷰글' readonly='readonly' id='reviewListComment'>"+ele.clubReview+"</textarea>";
-							if(ele.replyCheck==0){
-								output+="<input type='button' value='답변' id='replybtn"+idx+"' style='position: relative; top: 18px; left:1130px;' class='btn btn-warning' onclick='replyframeInput("+idx+")'>"							
+							if(ele.replyCheck==0 && '${lsDomain.userId}'=='${selluserId}'){
+								output+="<input type='button' value='답변' id='replybtn"+idx+"' style='position: relative; top: 18px; left:1130px;' class='btn btn-warning' onclick='replyframeInput("+idx+", "+ele.reviewNum+")'>"							
 							}//end if
 							output+="</div>"
 							+"</td>"
@@ -225,7 +232,7 @@ function ajaxCall(index) {
 							+"<img src='"+ele.userImg+"' onerror='this.onerror=null; this.src='http://localhost/prj_3/images/profile.png';' id='host_review_list_profile_img'/>"
 							+"<span style='position: relative; top: 0px; left: 10px; font-weight: bold; font-size: 25px;'>"+ele.nickName+"</span>"
 							+"<span style='position: relative; top: 0px; left:20px; font-weight: bold; font-size: 15px;'>"+ele.writeDate+"</span>"
-							+"<textarea placeholder='답변글' readonly='readonly' id='replyListComment'>"+ele.reviewReply+"</textarea>"
+							+"<textarea placeholder='답변글' readonly='readonly' id='replyListComment'>"+ele.reviewReply+"</textarea>"							
 							+"</div>"
 							+"</td>"
 							+"</tr>";
@@ -254,24 +261,46 @@ function pageselect(selectPage) {
 	ajaxCall(selectPage);
 }
 
-function replyframeInput(idx){
-		tbody="<div id='replyinputFrame'>"
-		+"<img src=''onerror='this.onerror=null; this.src='http://localhost/prj_3/images/profile.png';' id='review_list_profile_img'/>"
-		+"<span style='position: relative; top: 5px; left: 10px; font-weight: bold; font-size: 25px;'>구매자 명</span>"
-		+"<textarea id='clubReview' placeholder='값을 입력해주세요' ></textarea>"
-		+"<input type='button' value='작성완료' style='position: relative; top: 0px; left:1100px;' class='btn btn-warning'>"
-		+"</div>";
-	
+function replyframeInput(idx,reviewNum){
+
+		tbody="<form action='replyInsert.do' method='post' id='replyInsertFrm' name='replyInsertFrm'>"
+		+"<input type='hidden' name='reviewNum' value='"+reviewNum+"'>"
+		+"<input type='hidden' name='clubNum' value='${clubNum}'>"
+		+"<input type='hidden' name='userId' value='${selluserId}'>"
+		+"<div id='replyinputFrame'>"
+		+"<img src='${lsDomain.userImg}' onerror='this.onerror=null; this.src='http://localhost/prj_3/images/profile.png';' id='review_list_profile_img'/>"
+		+"<span style='position: relative; top: 5px; left: 10px; font-weight: bold; font-size: 25px;'>${lsDomain.nickName}</span>"
+		+"<textarea id='clubReplyArea' placeholder='값을 입력해주세요' name='reviewReply' ></textarea>"
+		+"<input type='button' value='작성완료' style='position: relative; top: 0px; left:1100px;' class='btn btn-warning' id='replyInsertbtn' onclick='replybtn()' >"
+		+"</div>"
+		+"</form>";
+		
 	$('.replyclick'+idx).append(tbody);
 	$('.replyclick'+idx).attr('class','reviewTdadd');
 }
+
+function replybtn(){
+	/* 답변 */
+
+		if(${not empty lsDomain}){
+			if($("#clubReplyArea").val().length!=0){
+					$("#replyInsertFrm").submit();
+			}else{
+				alert("답변글을 작성 후 다시 시도해주세요.");
+			}
+		}else{
+			alert("로그인 후 이용해주세요.");
+		}//end else
+
+}//replybtn
+
 
 </script>
 </head>
 <body style="overflow-x:hidden; overflow-y:auto;">
 <div id="wrap">
-	<div class="header">
-	<jsp:include page="/header.do" />
+	<div class="header" style="text-decoration: none;">
+	<jsp:include page="/header.do"/>
 	</div><!-- header -->
 	<div id="body">
 	<div id="reviewTitle">
@@ -282,7 +311,7 @@ function replyframeInput(idx){
 	<span style="font-weight: bold; font-size: 30px;">후기를 작성해주세요.!</span>
 	</div><!-- reviewTitle  -->
 	<div id="inputReview" >
-	<form action="reviewInsert.do" method="get" id="reviewInserFrm" name="reviewInserFrm">
+	<form action="reviewInsert.do" method="post" id="reviewInserFrm" name="reviewInserFrm">
 	<input type="hidden" name="clubNum" value="${clubNum}">
 	<input type="hidden" name="userId" value="${lsDomain.userId}">
 	<img src="${lsDomain.userImg}" onerror="this.onerror=null; this.src='http://localhost/prj_3/images/profile.png';" id="review_profile_img"/>

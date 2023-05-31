@@ -34,6 +34,8 @@ public class RegReviewService {
 	 */
 	public void insertReplyService(ReplyVO rpVO) {
 		
+		rrDAO.insertReplyService(rpVO);
+		
 	}//insertReplyService
 	
 	

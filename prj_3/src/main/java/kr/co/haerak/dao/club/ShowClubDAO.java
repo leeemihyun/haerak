@@ -44,9 +44,28 @@ public class ShowClubDAO {
 		return result;
 	}//showClubService
 	
+	/**
+	 * 모임 상세페이지에서 댓글 4개 가져오기
+	 * @param clubNum
+	 * @return
+	 */
+	public List<SetReviewDomain> inforeviewListSelect(int clubNum) {
+		List<SetReviewDomain> result=null;
+		
+		//1. Mybatis Handler 얻기
+		SqlSession ss=MyBatisHandler.getInstance().getMyBatisHandler(false);
+		//2. handler 사용 <select id="subquery" resultMap="cdResult">
+		//parameterType이 없으므로 매개변수 하나인 method를 사용한다.
+		result=ss.selectList("InforeviewListSelect",clubNum); //상품목록
+		System.out.println(result);
+		//3. MyBatis Handler 닫기
+		if(ss !=null) {ss.close();} //end if
+		
+		return result;
+	}//inforeviewListSelect
 	
 	/**
-	 *  모임상세 페이지에서 리뷰를 가져오는 service
+	 *  모임더보기 페이지에서 리뷰를 가져오는 service
 	 * @param clubNum
 	 * @return
 	 */
@@ -171,13 +190,14 @@ public class ShowClubDAO {
 	
 	public static void main(String[] args) {
 		//System.out.println(new ShowClubDAO().showClubService(1));
-		ClubSearchVO sVO=new ClubSearchVO();
-		sVO.setClub_Num(1);
-		sVO.setUser_id("abcd12");
-		System.out.println(sVO.getUser_id());
+		//ClubSearchVO sVO=new ClubSearchVO();
+		//sVO.setClub_Num(1);
+		//sVO.setUser_id("abcd12");
+		//System.out.println(sVO.getUser_id());
 		//System.out.println(new ShowClubDAO().updateInterList(sVO,2));
 		//new ShowClubDAO().clubApprovalInsert(sVO);
 		//new ShowClubDAO().showReviewService(1);
+		new ShowClubDAO().inforeviewListSelect(1);
 	}//main
 	
 	

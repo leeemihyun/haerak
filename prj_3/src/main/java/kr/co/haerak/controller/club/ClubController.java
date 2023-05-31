@@ -16,6 +16,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
@@ -27,7 +29,10 @@ import kr.co.haerak.service.club.InsertClubService;
 import kr.co.haerak.service.club.RegReviewService;
 import kr.co.haerak.service.club.ShowClubService;
 import kr.co.haerak.vo.club.ClubInsertVO;
+import kr.co.haerak.vo.club.ClubUpdateVO;
+import kr.co.haerak.vo.club.ReplyVO;
 import kr.co.haerak.vo.club.ReviewVO;
+import oracle.sql.DATE;
 
 /**
  * 민수 페이지 (모임 상세, 등록, 수정, 후기글 페이지)
@@ -52,24 +57,30 @@ public class ClubController {
 		 * @param clubNum
 		 * @return
 		 */
-		@GetMapping("/club_info.do")
+		@RequestMapping(value = "/club_info.do", method = {RequestMethod.GET,RequestMethod.POST})
 		public String showClubInfoForm(int club_Num,Model model) {
-			String userId="";
-			userId=(String)model.getAttribute("userId");
+			//LoginSessionDomain lsDomain = new LoginSessionDomain("박존", "안녕하세요", "../images/a.png", "abcd1", "", 1);
+			LoginSessionDomain lsDomain=null;
+			String userId=null;
+			try {
+				lsDomain = (LoginSessionDomain)model.getAttribute("lsDomain");				
+				userId=lsDomain.getUserId();
+			}catch (NullPointerException e) {
+			}
+			
+			if(lsDomain!=null) {				
+				model.addAttribute("lsDomain", lsDomain);
+			}
+			
 			if(userId==null) {
 				userId="틀린아이디";
 			}
-			//LoginSessionDomain lsDomain = new LoginSessionDomain("박존", "안녕하세요", "../images/a.png", "abcd1", "", 1);
-			
-			//LoginSessionDomain lsDomain=(LoginSessionDomain)model.getAttribute("lsDomain");
-			
-			//model.addAttribute("lsDomain", lsDomain);
-			
 			
 			model.addAttribute("clubNum",club_Num);
+			model.addAttribute("reviewList",scs.inforeviewListSelectService(club_Num));
 			model.addAttribute("clubInfo",scs.showClubService(club_Num));
 			model.addAttribute("interFlag",scs.selectInterService(userId, club_Num));
-			model.addAttribute("approvalFlag",scs.approvalCheck("abcd12", club_Num)); //이미 신청한 모임인지 확인
+			model.addAttribute("approvalFlag",scs.approvalCheck(userId, club_Num)); //이미 신청한 모임인지 확인
 			
 			return "club/club_info";
 		}//ShowClubInfoForm
@@ -101,14 +112,14 @@ public class ClubController {
 		 */
 		@GetMapping("/approvalrequest.do")
 		public String insertapprovalList(Model model,int club_Num) {
-			
+			LoginSessionDomain lsDomain = (LoginSessionDomain)model.getAttribute("lsDomain");
+			model.addAttribute("lsDomain", lsDomain);
 			String userId="";
-			LoginSessionDomain ls=(LoginSessionDomain)model.getAttribute("lsDomain");
-			System.out.println(ls);
+			userId=lsDomain.getUserId();
 			if(userId==null) {
 				userId="틀린아이디";
 			}
-			model.addAttribute("approvalFlag",scs.clubApprovalInsert("abcd12", club_Num));
+			model.addAttribute("approvalFlag",scs.clubApprovalInsert(userId, club_Num));
 				
 			return "forward:club_info.do";
 		}
@@ -120,12 +131,14 @@ public class ClubController {
 		 * @param clubNum
 		 * @return
 		 */
-		@GetMapping("/reviewSeeMoreForm.do")
-		public String reviewSeeMoreForm(Model model,int clubNum) {
-			LoginSessionDomain lsDomain = new LoginSessionDomain("일단", "안녕하세요", "../images/a.png", "abcd2", "", 1);
+		@RequestMapping(value = "/reviewSeeMoreForm.do", method = {RequestMethod.GET,RequestMethod.POST})
+		public String reviewSeeMoreForm(Model model,int clubNum,String selluserId) {
+			//LoginSessionDomain lsDomain = new LoginSessionDomain("일단", "안녕하세요", "../images/a.png", "abcd1", "", 1);
+			LoginSessionDomain lsDomain = (LoginSessionDomain)model.getAttribute("lsDomain");
 			model.addAttribute("lsDomain", lsDomain);
 			
 			
+			model.addAttribute("selluserId",selluserId);
 			model.addAttribute("clubNum",clubNum);
 			
 			return "club/review";
@@ -143,12 +156,11 @@ public class ClubController {
 		/**
 		 *  후기 작성하기(do_chain으로 리뷰더보기페이지가기)
 		 */
-		@GetMapping("/reviewInsert.do")
-		public String reviewInsert(Model model,ReviewVO rVO) {
+		@PostMapping("/reviewInsert.do")
+		public String reviewInsert(ReviewVO rVO) {
 			System.out.println(rVO);
 			
 			rrs.insertReviewService(rVO);
-			model.addAttribute("clubNum",rVO.getClubNum());
 			
 			return "forward:reviewSeeMoreForm.do";
 		}//reviewInsert	
@@ -156,9 +168,13 @@ public class ClubController {
 		/**
 		 *  답변 작성하기(do_chain으로 리뷰더보기페이지가기)
 		 */
-		@GetMapping("/replyInsert.do")
-		public void replyInsert() {
+		@PostMapping("/replyInsert.do")
+		public String replyInsert(ReplyVO rpVO) {
+			System.out.println(rpVO);
 			
+			rrs.insertReplyService(rpVO);
+		
+			return "forward:reviewSeeMoreForm.do";
 		}//replyInsert	
 		
 		
@@ -170,9 +186,12 @@ public class ClubController {
 		 */
 		@GetMapping("/clubModifyForm.do")
 		public String clubModifyForm(Model model,int clubNum) {
+			LoginSessionDomain lsDomain = (LoginSessionDomain)model.getAttribute("lsDomain");
+			model.addAttribute("lsDomain", lsDomain);
 			
 			model.addAttribute("pageInfo","모임정보 수정");
 			model.addAttribute("setClubInfo",ics.setSelectClub(clubNum));
+			model.addAttribute("clubNum",clubNum);
 			
 			return "club/sell_page";
 		}//clubModifyForm
@@ -190,7 +209,8 @@ public class ClubController {
 		 */
 		@GetMapping("/clubRegistrationCategoryForm.do")
 		public String clubRegistrationCategoryForm(Model model) {
-			
+			LoginSessionDomain lsDomain = (LoginSessionDomain)model.getAttribute("lsDomain");
+			model.addAttribute("lsDomain", lsDomain);
 			
 			return "club/select_category_page";
 		}//clubRegistrationCategoryForm
@@ -205,6 +225,9 @@ public class ClubController {
 		@GetMapping("/clubRegistrationForm.do")
 		public String clubRegistrationForm(Model model, int categoryNum) {
 			
+			LoginSessionDomain lsDomain = (LoginSessionDomain)model.getAttribute("lsDomain");
+			model.addAttribute("lsDomain", lsDomain);
+			
 			model.addAttribute("categoryNum",categoryNum);
 			model.addAttribute("pageInfo","모임 등록");
 			
@@ -217,7 +240,7 @@ public class ClubController {
 		 * @param model
 		 * @return
 		 */
-		@GetMapping("/clubModifyProcess.do")
+		@PostMapping("/clubModifyProcess.do")
 		public String clubModifyProcess(Model model, HttpServletRequest request) throws IOException {
 			System.out.println("컨트롤러");
 			File file=new File("C:/Users/user/git/prj_3/prj_3/src/main/webapp/club_images");
@@ -226,8 +249,8 @@ public class ClubController {
 			
 			LoginSessionDomain lsDomain = (LoginSessionDomain) model.getAttribute("lsDomain");
 			String userId = lsDomain.getUserId();
+			//String userId = "abcd1";
 			int price= Integer.parseInt(mr.getParameter("price"));
-			int categoryNum= Integer.parseInt(mr.getParameter("categoryNum"));
 			int actiAreaNum= 1;
 			int numberPeople= Integer.parseInt(mr.getParameter("numberPeople"));
 			int clubNum=Integer.parseInt(mr.getParameter("clubNum"));
@@ -257,12 +280,21 @@ public class ClubController {
 			} catch (ParseException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
+			} catch (NullPointerException e) {
+				date=null;
 			}
-			Date clubDate = new java.sql.Date(date.getTime());
-			ClubInsertVO ciVO = new ClubInsertVO(price, categoryNum, actiAreaNum, numberPeople, clubName, detailTxt, clubAddr, detailAddr, userId, latitude, longitude, clubTime, zipcode, clubImg, clubDate);
+			if(date!=null) {
+				Date clubDate = new java.sql.Date(date.getTime());				
+				ClubUpdateVO cuVO=new ClubUpdateVO(price, clubNum, actiAreaNum, numberPeople, clubName, detailTxt, clubAddr, detailAddr, userId, latitude, longitude, clubTime, zipcode, clubImg,clubDate);
+				System.out.println(cuVO);
+				ics.updateClubInfo(cuVO);
+			}else {				
+				ClubUpdateVO cuVO=new ClubUpdateVO(price, clubNum, actiAreaNum, numberPeople, clubName, detailTxt, clubAddr, detailAddr, userId, latitude, longitude, clubTime, zipcode, clubImg);
+				System.out.println(cuVO);
+				ics.updateClubInfo(cuVO);
+			}
 			
-			
-			return "result";
+			return "forward:club_info.do?club_Num="+clubNum;
 		}//clubModifyProcess
 		
 		/**
@@ -280,8 +312,8 @@ public class ClubController {
 			MultipartRequest mr = new MultipartRequest(request, file.getAbsolutePath(), max, "UTF-8", new DefaultFileRenamePolicy());
 			
 			LoginSessionDomain lsDomain = (LoginSessionDomain) model.getAttribute("lsDomain");
-			//String userId = lsDomain.getUserId();
-			String userId = "abcd1";
+			String userId = lsDomain.getUserId();
+			//String userId = "abcd1";
 			int price= Integer.parseInt(mr.getParameter("price"));
 			int categoryNum= Integer.parseInt(mr.getParameter("categoryNum"));
 			int actiAreaNum= 1;
@@ -313,7 +345,7 @@ public class ClubController {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			Date clubDate = new java.sql.Date(date.getTime());;
+			Date clubDate = new java.sql.Date(date.getTime());
 			ClubInsertVO ciVO = new ClubInsertVO(price, categoryNum, actiAreaNum, numberPeople, clubName, detailTxt, clubAddr, detailAddr, userId, latitude, longitude, clubTime, zipcode, clubImg, clubDate);
 			ics.insertClubInfo(ciVO);
 			

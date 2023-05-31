@@ -39,6 +39,17 @@ public class ShowClubService {
 	
 	
 	/**
+	 * 상세페이지에서 댓글 4개 가져오기
+	 * @param clubNum
+	 * @return
+	 */
+	public List<SetReviewDomain> inforeviewListSelectService(int clubNum){
+		List<SetReviewDomain> result=scDAO.inforeviewListSelect(clubNum);
+		return result;
+	}//inforeviewListSelectService
+	
+	
+	/**
 	 *  모임상세 페이지에서 리뷰를 가져오는 service
 	 * @param clubNum
 	 * @return
@@ -68,7 +79,7 @@ public class ShowClubService {
 		jsonObj.put("firstNum",firstNum ); //페이지개수
 		JSONArray jsonArr=new JSONArray();
 		JSONObject jsonTemp=null;
-		SimpleDateFormat sdf=new SimpleDateFormat("yyyy년-mm월-dd일 a hh시mm분");
+		SimpleDateFormat sdf=new SimpleDateFormat("yyyy년-MM월-dd일 a hh시mm분");
 		for(SetReviewDomain srd : result) {
 			jsonTemp=new JSONObject();
 			jsonTemp.put("userId", srd.getUserId());

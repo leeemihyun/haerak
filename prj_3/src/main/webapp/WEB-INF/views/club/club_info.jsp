@@ -28,7 +28,7 @@
 #hr5{ width:1200px; height:30px; top: 2000px; left: 350px; position: absolute;}
 #hr6{ width:1200px; height:30px; top: 2600px; left: 350px; position: absolute;}
 #club_review_info{ width: 1200px; height: 400px;  top: 650px; left: 350px; position: absolute;}
-#club_review_info_text{ background-color: #F3F3F3; height: 250px;}
+#club_review_info_text{ background-color: #F3F3F3; height: 250px; width: 1200px;}
 #club_introduce{ width: 1200px; height: 500px;  top: 1120px; left: 350px; position: absolute;  }
 #club_introduce_textArea_more_button_div{ width: 1200px; height: 40px;  top: 1630px; left: 350px; position: absolute;  }
 #club_member_info{ width: 1200px; height: 100px;  top: 1700px; left: 350px; position: absolute;}
@@ -71,7 +71,7 @@ hr{border: 1px solid #333;}
 }
 .club_seller_info2{
 	position:absolute;
-	top:140px;
+	top:170px;
 	left:0px;
 }
 a{text-decoration: none; color: #333;}
@@ -89,10 +89,10 @@ a{text-decoration: none; color: #333;}
 #club_date_info_text2{ position:absolute; top: 60px; left:0PX;}
 #club_date_info_text3{ position:absolute; top: 100px; left:0PX;}
 #club_detail_text1{	position:absolute; top:0px; left:0px;}
-#club_detail_text2{	position:absolute; top:30px; left:0px;}
-#club_detail_text3{	position:absolute; top:80px; left:0px;}
+#club_detail_text2{	position:absolute; top:30px; left:0px; width: 480px;}
+#club_detail_text3{	position:absolute; top:130px; left:0px;}
 #apply_button{	position:absolute; top:250px; left:40px; width: 500px; height: 90px; }
-#club_sellerInformation{position:absolute; top:380px; left:5px; width:590px; height:120px; }
+#club_sellerInformation{position:relative; top:380px; left:5px; width:590px; height:120px; }
 #club_introduce_title{ position:absolute; top: 0px; left:0PX;}
 #club_introduce_textArea{ position:absolute; top: 50px; left:0PX; width: 1200px; height: 400px; overflow: hidden;}
 #club_introduce_textArea_more{ position:absolute; top: 0px; left:480PX; width: 200px; height: 40px; }
@@ -268,47 +268,19 @@ marker.setMap(map);
 	</div><!-- club_info_div  -->
 	<div id="hr1"><hr></div>
 	<div id="club_review_info">
-	<div style="font-weight: bold; font-size: 30px;" id="club_review_info_title"><strong>150개 후기</strong></div>
+	<div style="font-weight: bold; font-size: 30px;" id="club_review_info_title"><strong>${clubInfo.reviewCnt}개 후기</strong></div>
+	
 	<div id="club_review_info_text" >
-<div class="card text-bg-light mb-3 h-100" style="max-width: 18rem; float: left; margin-left: 10px;">
-  <div class="card-header">
-  <img src="" onerror="this.onerror=null; this.src='http://localhost/test_mvc/common/images/profile.png';" id="review_profile_img"/>
-  사용자명
-  </div>
-  <div class="card-body">
-    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-  </div>
+	
+<c:forEach var="review" items="${reviewList}" varStatus="i" begin="0">
+<div style="width: 250px; height: 250px; float: left; margin-left: 20px; ">
+<div><img src="${review.userImg}" onerror="this.onerror=null; this.src='http://localhost/test_mvc/common/images/profile.png';" id="review_profile_img"/>${review.nickName} </div>
+<textarea style="width: 250px; resize: none; height: 200px; outline: none; border: 0px solid #333; background-color: #F3F3F3;" readonly="readonly">${review.clubReview }</textarea>
 </div>
-<div class="card text-bg-light mb-3 h-100" style="max-width: 18rem; float: left; margin-left: 10px;">
-  <div class="card-header">
-  <img src="" onerror="this.onerror=null; this.src='http://localhost/test_mvc/common/images/profile.png';" id="review_profile_img"/>
-  사용자명
-  </div>
-  <div class="card-body">
-    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-  </div>
-</div>
-<div class="card text-bg-light mb-3 h-100" style="max-width: 18rem; float: left; margin-left: 10px;">
-  <div class="card-header">
-  <img src="" onerror="this.onerror=null; this.src='http://localhost/test_mvc/common/images/profile.png';" id="review_profile_img"/>
-  사용자명
-  </div>
-  <div class="card-body">
-    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-  </div>
-</div>
-<div class="card text-bg-light mb-3 h-100" style="max-width: 18rem; float: left; margin-left: 10px;">
-  <div class="card-header">
-  <img src="" onerror="this.onerror=null; this.src='http://localhost/test_mvc/common/images/profile.png';" id="review_profile_img"/>
-  사용자명
-  </div>
-  <div class="card-body">
-    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-  </div>
-</div>
+</c:forEach>
 
 </div><!-- club_review_info_text  -->
-<div id="club_review_info_more"><a href="reviewSeeMoreForm.do?clubNum=${clubNum}"><span style="font-weight: bold; font-size: 20px;">150개 후기 더보기</span></a></div>
+<div id="club_review_info_more"><a href="reviewSeeMoreForm.do?clubNum=${clubNum}&selluserId=${clubInfo.userId}"><span style="font-weight: bold; font-size: 20px;">${clubInfo.reviewCnt}개 후기 더보기</span></a></div>
 	</div><!-- club_review_info  -->
 	<div id="hr2"><hr></div>
 	<div id="club_introduce">
@@ -317,9 +289,9 @@ marker.setMap(map);
 	${clubInfo.detailTxt}
 	</div>
 	</div><!-- club_introduce -->
-	<div id="club_introduce_textArea_more_button_div">
+<!-- 	<div id="club_introduce_textArea_more_button_div">
 	<input type="button" id="club_introduce_textArea_more" class="btn btn-outline-warning" value="모임소개 더보기" />	
-	</div><!-- club_introduce_textArea_more_button_div -->
+	</div>club_introduce_textArea_more_button_div -->
 	<div id="hr3"><hr></div>
 	<div id="club_member_info">
 	<div id="club_member_info_text"><span style="font-weight: bold; font-size: 20px;"> 인원수: ${clubInfo.numberPeople}명 </span></div>

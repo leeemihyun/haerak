@@ -458,8 +458,8 @@ $(function() {
 	
 	if('${pageInfo}'=="모임정보 수정"){
 		$("#complete_button").val("수정완료");
-		$("#complete_button").attr("id","ModificationsCompleted");
 		$("#form").attr("action","clubModifyProcess.do");
+		$("#clubNum").val(${clubNum});
 	}//end if
 	
 	
@@ -610,6 +610,7 @@ $(function() {
 	<input type="hidden" name="longitude" id="longitude" >
 	<input type="hidden" name="categoryNum" value="${categoryNum}" >
 	<input type="hidden" id="imageNames" name="imageNames" value="" >
+	<input type="hidden" id="clubNum" name="clubNum" value="" >
 <!-- 제목영역 -->
   <hr class="hrsty1"/>
   <div class="title_area">
@@ -731,7 +732,7 @@ $('#timepicker').timepicker({
 <script>
 var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
     mapOption = { 
-        center: new kakao.maps.LatLng(${empty setClubInfo.longitude ? '126.570667':setClubInfo.longitude},${empty setClubInfo.latitude ? '33.450701':setClubInfo.latitude}), // 지도의 중심좌표
+        center: new kakao.maps.LatLng(${empty setClubInfo.longitude ? 33.450701:setClubInfo.longitude},${empty setClubInfo.latitude ? 126.570667:setClubInfo.latitude}), // 지도의 중심좌표
         level: 3 // 지도의 확대 레벨
     };
 

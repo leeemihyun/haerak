@@ -29,6 +29,16 @@
 	where club_num=#{club_Num}
   </update>
   
+  <select id="InforeviewListSelect" parameterType="int" resultType="kr.co.haerak.domain.club.SetReviewDomain">
+	select REVIEW_NUM as reviewNum , CLUB_REVIEW as clubReview,USER_IMG as userImg, WRITE_DATE as writeDate, USER_ID as userId, CLUB_NUM as clubNum, NICKNAME as nickName
+	from
+	(select NICKNAME,REVIEW_NUM, CLUB_REVIEW, WRITE_DATE, cr.USER_ID,USER_IMG, CLUB_NUM, REPLY_CHECK,ROW_NUMBER() over(order by write_date desc) rnum
+	from CLUB_REVIEW cr,USERS u
+	where club_num=#{clubNum} and cr.USER_ID=u.USER_ID
+	)
+	where rnum &lt;=4
+  </select>
+  
   
   <!-- 모임 이미지를 리스트로 가져오는 SQL  -->
   <select id="selectClubImg" resultType="String" parameterType="int">
@@ -106,10 +116,19 @@ ORDER BY r.reviewNum, r.clubReview
 		values(HAERAK.CLUB_REVIEW_SEQ.NEXTVAL,#{clubReview},sysdate,#{userId},#{clubNum})
 	</insert>
   <!-- 답변글 작성하기  -->
-	<insert id="insertReply" parameterType="int">
-		insert into REVIEW_REPLY(REPLY_NUM, REVIEW_REPLY, WRITE_DATE, REVIEW_NUM)
-		values(HAERAK.REVIEW_REPLY_SEQ.NEXTVAL,#{REVIEW_REPLY},sysdate,#{REVIEW_NUM});
+	<insert id="insertReply" parameterType="kr.co.haerak.vo.club.ReplyVO">
+		insert into REVIEW_REPLY(REPLY_NUM, REVIEW_REPLY, WRITE_DATE, REVIEW_NUM,USER_ID)
+		values(HAERAK.REVIEW_REPLY_SEQ.NEXTVAL,#{reviewReply},sysdate,#{reviewNum},#{userId})
 	</insert>
+	
+	<!-- 답변글 달리면 후기글 답변체크  -->
+	<update id="replyCheckUpdate" parameterType="int">
+	update CLUB_REVIEW
+	set reply_check=1
+	where review_num=#{reviewNum}
+	</update>
+	
+	
   <!-- 모임 등록하기   -->
 	<insert id="insertClubInfo" parameterType="kr.co.haerak.vo.club.ClubInsertVO">
 		insert into CLUB(CLUB_NUM, CLUB_NAME, INPUT_DATE, VIEW_CNT, PRICE, DETAIL_TXT,CLUB_ADDR,
@@ -125,35 +144,22 @@ ORDER BY r.reviewNum, r.clubReview
 		
 	</insert>
   <!-- 모임 정보수정하기   -->
-	<update id="updateClub" parameterType="kr.co.haerak.vo.club.ClubInsertVO">
+	<update id="updateClub" parameterType="kr.co.haerak.vo.club.ClubUpdateVO">
 		update 	club
-		set input_date=sysdate		
-		<if test="CLUB_NAME !=null and CLUB_NAME != ''">
-			,CLUB_NAME=#{CLUB_NAME}
+		set CLUB_NAME=#{clubName},DETAIL_TXT=#{detailTxt},NUMBER_PEOPLE=#{numberPeople},PRICE=#{price}
+		,CLUB_ADDR=#{clubAddr},LONGITUDE=#{longitude},LATITUDE=#{latitude},ACTI_AREA_NUM=#{actiAreaNum},CLUB_TIME=#{clubTime}
+		<if test="clubDate !=null"> 
+		,CLUB_DATE=#{clubDate}
 		</if>
-		<if test="DETAIL_TXT !=null and DETAIL_TXT != ''">
-			,DETAIL_TXT=#{DETAIL_TXT}
-		</if>
-		<if test="NUMBER_PEOPLE !=null and NUMBER_PEOPLE != ''">
-			,NUMBER_PEOPLE={NUMBER_PEOPLE}
-		</if>
-		<if test="PRICE !=null and PRICE != ''">
-			,PRICE like=#{PRICE}
-		</if>
-		<if test="CLUB_DATE !=null and CLUB_DATE != ''">
-			,CLUB_DATE like=#{CLUB_DATE}
-		</if>
-		<if test="CLUB_ADDR !=null and CLUB_ADDR != ''">
-			,CLUB_ADDR like=#{CLUB_ADDR}
-		</if>
-		<if test="LONGITUDE !=null and LONGITUDE != ''">
-			,LONGITUDE like=#{LONGITUDE}
-		</if>
-		<if test="LATITUDE !=null and LATITUDE != ''">
-			,LATITUDE like=#{LATITUDE}
-		</if>		
-		where 	club_num=#{club_num}
+		where club_num=#{clubNum}
 	</update>
+	
+	<delete id="imgDelete" parameterType="int">
+	delete CLUB_IMG
+	where CLUB_NUM=#{clubNum}
+	</delete>
+	
+
   <!-- 수정할 정보를 수정페이지에서 세팅  -->
 	<select id="setSelectClub" resultType="kr.co.haerak.domain.club.ClubInsertDomain" parameterType="int">
 		select 	CLUB_NAME as clubName, DETAIL_TXT as detailTxt, NUMBER_PEOPLE as numberPeople, PRICE, CLUB_DATE as clubDate ,

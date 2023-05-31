@@ -9,6 +9,7 @@ import org.springframework.stereotype.Component;
 import kr.co.haerak.dao.MyBatisHandler;
 import kr.co.haerak.domain.club.ClubInsertDomain;
 import kr.co.haerak.vo.club.ClubInsertVO;
+import kr.co.haerak.vo.club.ClubUpdateVO;
 
 /**
  * 모임관련 DAO
@@ -43,9 +44,32 @@ public class InsertClubDAO {
 	 * 모임 수정 method
 	 * @param cVO
 	 */
-	public void updateClubInfo(ClubInsertVO cVO) {
+	public void updateClubInfo(ClubUpdateVO cuVO) {
 		
+		int cnt=0;
+		SqlSession ss = MyBatisHandler.getInstance().getMyBatisHandler(false);
 		
+		cnt=ss.update("updateClub",cuVO);
+		
+		if(cnt==1) {
+			ss.commit();
+		}else {
+			ss.rollback();
+		}
+		
+		List<String> list = cuVO.getClubImg();
+		System.out.println(list);
+		if(list != null && !list.isEmpty()) {
+			System.out.println("null이 아님");
+				//ss.delete("imgDelete",cuVO.getClubNum());
+			for(String clubImg : list) { 
+				//ss.insert("insertClubImg","http://localhost/prj_3/club_images/"+clubImg);   
+			}//end for			
+		}
+		
+		ss.commit();
+		
+		if(ss!=null) {ss.close();}
 		
 	}//updateClubInfo
 	
