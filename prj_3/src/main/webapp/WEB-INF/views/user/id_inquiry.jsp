@@ -103,7 +103,7 @@ $(function(){
 <div id="container">
 	<input type="hidden" id="flag"value="${flag}"/>
 	<input type="button" id="colorBtn" value="아이디찾기" >
-	<a href="#void"">
+	<a href="find_pass.do">
 	<input type="button" id="whiteBtn" value="비밀번호찾기" >
 	</a>
 	<div id="div1">

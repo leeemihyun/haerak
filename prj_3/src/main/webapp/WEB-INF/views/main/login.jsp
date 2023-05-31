@@ -86,11 +86,11 @@
      </div>
      
      <div class="find_id">
-     <a href="http://localhost/prj_2/ldk/id_inquiry.jsp" class="a_find" >아이디찾기</a>
+     <a href="find_id.do" class="a_find" >아이디찾기</a>
      </div>
      
       <div class="find_password">
-      <a href="http://localhost/prj_2/ldk/pass_inquiry.jsp" class="a_find" >비밀번호찾기</a>
+      <a href="find_pass.do" class="a_find" >비밀번호찾기</a>
      </div>
      
      

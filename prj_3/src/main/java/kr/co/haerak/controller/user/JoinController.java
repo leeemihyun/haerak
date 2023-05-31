@@ -59,8 +59,10 @@ public class JoinController {
 	@PostMapping("/user_dup_process.do")
 	public String userDupProcess(UserDupVO udVO, Model model) throws UnsupportedEncodingException, NoSuchAlgorithmException, GeneralSecurityException {
 		String uri="user/join";
-		if(js.userDupService(udVO)!=null) {//값이 있다면?
-			model.addAttribute("userId",js.userDupService(udVO));
+		String userId=js.userDupService(udVO);
+		if(userId!=null) {//값이 있다면?
+			model.addAttribute("userId",userId);
+			System.out.println(userId);
 			uri= "user/show_joined_id";
 			return uri;
 		}else {

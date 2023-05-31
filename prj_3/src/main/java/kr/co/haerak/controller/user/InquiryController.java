@@ -21,13 +21,13 @@ public class InquiryController {
 	@Autowired
 	private InquiryService is;
 	
-	@GetMapping("/test_find_id.do")
+	@GetMapping("/find_id.do")
 	public String findIdForm() {
 		
 		return "user/id_inquiry";
 	}//findIdForm
 	
-	@GetMapping("/test_find_pass.do")
+	@GetMapping("/find_pass.do")
 	public String findPassForm() {
 		
 		return "user/pass_inquiry";
@@ -38,11 +38,11 @@ public class InquiryController {
 		String uri="user/succ_id_inquiry";
 		
 		String userId=is.idInquiryService(fiVO);
-		if(!"".equals(userId)){// 결과가 있을시
-			model.addAttribute("userId", userId);
-		}else {
+		if("".equals(userId)||userId==null){// 결과가 없을시
 			model.addAttribute("flag", 1);
 			uri="user/id_inquiry";
+		}else {
+			model.addAttribute("userId", userId);
 		}//end else
 		
 		
@@ -54,11 +54,11 @@ public class InquiryController {
 		String uri="mypage/pass";
 		
 		String userId=is.passInquiryService(fpVO);
-		if(userId!=null){// 결과가 있을시
-			model.addAttribute("userId", userId);
-		}else {
+		if("".equals(userId)||userId==null){// 결과가 있을시
 			model.addAttribute("flag", 1);
 			uri="user/pass_inquiry";
+		}else {
+			model.addAttribute("userId", userId);
 		}//end else
 		
 		
