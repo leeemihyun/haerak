@@ -5,7 +5,11 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
+<link rel="stylesheet" type="text/css" href="http://localhost/prj_3/css/headerFooter.css">
 <style type="text/css">
+
 #nick_result1 {
 	font-size: 8px;
 	color: green;
@@ -15,7 +19,7 @@
 	font-size: 8px;
 	color: red;
 }
-.h1{margin: 0 auto; margin-top:100px; width:250px;}
+.h1{margin: 0 auto; margin-top:100px; width:250px; text-align:center;}
 .pic{margin: auto; margin-top:50px; width:120px;}
 .profile_img{width:120px;height:120px;border-radius:50%;}
 .editInfo{margin: 10px auto; width:350px;font-size:20px;font-weight:bold; color: #333333; }
@@ -29,6 +33,7 @@
 <!-- jQuery CDN 시작 -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
 <!-- jQuery CDN 끝 -->
+
 <script type="text/javascript">
 $(function(){
 	$("#nickBtn").click(function() {
@@ -106,11 +111,11 @@ function changeProfileImage() {
 <body>
 <div class="wrap">
 <div class="header">
-
+	<jsp:include page="/header.do"/>
 </div>
 <div class="container">
 <form name="frm" id="frm" action="profileProcess.do" method="post" enctype="multipart/form-data">
-	<div class="h1"><h1>프로필 수정</h1></div>
+	<div class="h1"><h1 style='text-align:center;'>프로필 수정</h1></div>
 	<div class="pic">
 		<img src="${lsDomain.userImg}" onerror="this.onerror=null; this.src='http://localhost/prj_3/images/profile.png';" id="profileImg" class="profile_img">
 		 <input id="profileInput"
@@ -123,7 +128,7 @@ function changeProfileImage() {
 	<div class="editInfo">
 	<label>닉네임</label><br>
 	<input type="text" id="nickName" name="nickName" value="${lsDomain.nickName}"/>
-	<input type="button" id="nickBtn" value="중복확인" /><br>
+	<input type="button" id="nickBtn" class="btn btn-warning" value="중복확인" /><br>
 	<div id="nick_result1"></div>
 	<div id="nick_result2"></div>
 	<br>
@@ -135,9 +140,9 @@ function changeProfileImage() {
 
 </form>
 </div><!-- container -->
-<div class="footer">
-
-</div><!-- footer -->
+	<div class="container5">
+   <jsp:include page="/footer.do"/>
+</div><!--container5  -->
 </div><!-- wrap  -->
 </body>
 </html>
