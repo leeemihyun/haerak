@@ -280,7 +280,7 @@ marker.setMap(map);
 <c:forEach var="review" items="${reviewList}" varStatus="i" begin="0">
 <div style="width: 250px; height: 250px; float: left; margin-left: 20px; ">
 <div style="font-weight: bold; font-size: 15px;"><a href="othersMypageHost.do?userId=${review.userId}"><img src="${review.userImg}" onerror="this.onerror=null; this.src='http://localhost/test_mvc/common/images/profile.png';" id="review_profile_img"/>${review.nickName}</a></div>
-<textarea style="width: 250px; resize: none; height: 200px; outline: none; border: 0px solid #333; background-color: #F3F3F3;" readonly="readonly">${review.clubReview }</textarea>
+<textarea style="width: 250px; resize: none; height: 200px; outline: none; border: 0px solid #333; background-color: #F3F3F3; font-size: 20px;" readonly="readonly">${review.clubReview }</textarea>
 </div>
 </c:forEach>
 

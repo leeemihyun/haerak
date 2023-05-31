@@ -28,7 +28,10 @@
 #idBtn{width:100px;height: 40px;border-radius: 10px;font-size: 15px;
 		border: 1px solid #F7A144;cursor: pointer;background-color: #F7A144;color:#FFF;font-weight: bold;cursor: pointer;}
 #nickname{width:200px;height:30px;}
-#intro{width:300px;height:200px;}
+#intro{width:340px;height:200px;}
+.btncheck{border: 1px solid #F7A144;cursor: pointer;background-color: #F7A144;color:#FFF;font-weight: bold;cursor: pointer;
+width:100px;height: 40px;border-radius: 10px;font-size: 15px;
+}
 </style>
 <!-- jQuery CDN 시작 -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
@@ -109,11 +112,11 @@ function changeProfileImage() {
 
 </head>
 <body>
-<div class="wrap">
+<div class="wrap" style="height: 1500px;">
 <div class="header">
 	<jsp:include page="/header.do"/>
 </div>
-<div class="container">
+<div class="container" style="height: 800px;">
 <form name="frm" id="frm" action="profileProcess.do" method="post" enctype="multipart/form-data">
 	<div class="h1"><h1 style='text-align:center;'>프로필 수정</h1></div>
 	<div class="pic">
@@ -128,12 +131,12 @@ function changeProfileImage() {
 	<div class="editInfo">
 	<label>닉네임</label><br>
 	<input type="text" id="nickName" name="nickName" value="${lsDomain.nickName}"/>
-	<input type="button" id="nickBtn" class="btn btn-warning" value="중복확인" /><br>
+	<input type="button" id="nickBtn" class="btncheck" value="중복확인" /><br>
 	<div id="nick_result1"></div>
 	<div id="nick_result2"></div>
 	<br>
 	<label>자기소개</label><br>
-	<textarea id="intro" name="personalIntro" >${lsDomain.personalIntro}</textarea><br>
+	<textarea id="intro" name="personalIntro" style="resize: none;" >${lsDomain.personalIntro}</textarea><br>
 	</div>
 
 	<div><input type="button" value="수정" class="editBtn" id="editBtn" /></div>
