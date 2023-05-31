@@ -171,7 +171,7 @@ function clubChangeInfo() {
 }
 
 function interCallAjax(flagcnt) {
-	var param={club_Num:1,userId:'abcd4',flag:flagcnt}	
+	var param={club_Num:${clubNum},userId:'${lsDomain.userId}',flag:flagcnt}	
 	$.ajax({
 		url:"updateInterestList.do",
 		data : param,
@@ -180,7 +180,12 @@ function interCallAjax(flagcnt) {
 			alert("문제발생");
 			console.log(xhr.status);
 		},
-		success: function(jsonObj) {		
+		success: function(jsonObj) {
+			if(flagcnt==1){
+				alert("관심목록에 추가되었습니다.");
+			}else{
+				alert("관심목록에 삭제되었습니다.");				
+			}
 		}//success			
 	});//ajax	
 }//interCallAjax
@@ -259,8 +264,8 @@ marker.setMap(map);
 	<span style="font-weight: bold; font-size: 20px;" class="club_seller_info2">후기 ${clubInfo.reviewCnt} | 찜 ${clubInfo.interCnt} | 조회수 ${clubInfo.viewCnt}</span>
 	<input type="button" value="신청하기" class="btn btn-outline-dark" id="apply_button" onclick="approvalrequest()" >
 	<div id="club_sellerInformation">
-	<img src="${clubInfo.userImg}" onerror="this.onerror=null; this.src='http://localhost/test_mvc/common/images/profile.png';" id="seller_profile_img"/>
-	<a href=""><span style="font-weight: bold; font-size: 20px;" class="club_seller_info1"> ${clubInfo.nickName} ></span></a>
+	<a href="othersMypageHost.do?userId=${clubInfo.userId}"><img src="${clubInfo.userImg}" onerror="this.onerror=null; this.src='http://localhost/test_mvc/common/images/profile.png';" id="seller_profile_img"/></a>
+	<a href="othersMypageHost.do?userId=${clubInfo.userId}"><span style="font-weight: bold; font-size: 20px;" class="club_seller_info1">${clubInfo.nickName} ></span></a>
 	<span style="font-weight: bold; font-size: 17px;" class="club_seller_info_addr">${clubInfo.addr} </span>
 	<span style="font-weight: bold; font-size: 17px;" class="club_seller_info_aboutMe">${clubInfo.personalIntro}</span>
 	</div><!-- club_sellerInformation  -->	
@@ -274,7 +279,7 @@ marker.setMap(map);
 	
 <c:forEach var="review" items="${reviewList}" varStatus="i" begin="0">
 <div style="width: 250px; height: 250px; float: left; margin-left: 20px; ">
-<div><img src="${review.userImg}" onerror="this.onerror=null; this.src='http://localhost/test_mvc/common/images/profile.png';" id="review_profile_img"/>${review.nickName} </div>
+<div style="font-weight: bold; font-size: 15px;"><a href="othersMypageHost.do?userId=${review.userId}"><img src="${review.userImg}" onerror="this.onerror=null; this.src='http://localhost/test_mvc/common/images/profile.png';" id="review_profile_img"/>${review.nickName}</a></div>
 <textarea style="width: 250px; resize: none; height: 200px; outline: none; border: 0px solid #333; background-color: #F3F3F3;" readonly="readonly">${review.clubReview }</textarea>
 </div>
 </c:forEach>

@@ -232,7 +232,7 @@ function ajaxCall(index) {
 							+"<td class='reviewTd' >"
 							+"<div id='reviewListDiv'>"
 							+"<img src='"+ele.userImg+"' onerror='this.onerror=null; this.src='http://localhost/prj_3/images/profile.png';' id='review_list_profile_img'/>"
-							+"<span style='position: relative; top: 0px; left: 10px; font-weight: bold; font-size: 25px;'>"+ele.nickName+"</span>"
+							+"<a href='othersMypageHost.do?userId="+ele.userId+"'><span style='position: relative; top: 0px; left: 10px; font-weight: bold; font-size: 25px;'>"+ele.nickName+"</span></a>"
 							+"<span style='position: relative; top: 0px; left: 20px; font-weight: bold; font-size: 15px;'>"+ele.writeDate+"</span>"
 							+"<textarea placeholder='리뷰글' readonly='readonly' id='reviewListComment'>"+ele.clubReview+"</textarea>";
 							if(ele.replyCheck==0 && '${lsDomain.userId}'=='${selluserId}'){
@@ -254,7 +254,7 @@ function ajaxCall(index) {
 							+"<div id='reviewListDiv'>"
 							+"<img src='http://localhost/prj_3/images/rightarrow.png' style='position: relative; top: 0px; width: 40px; height: 40px;'/>"
 							+"<img src='"+ele.userImg+"' onerror='this.onerror=null; this.src='http://localhost/prj_3/images/profile.png';' id='host_review_list_profile_img'/>"
-							+"<span style='position: relative; top: 0px; left: 10px; font-weight: bold; font-size: 25px;'>"+ele.nickName+"</span>"
+							+"<a href='othersMypageHost.do?userId="+ele.userId+"'><span style='position: relative; top: 0px; left: 10px; font-weight: bold; font-size: 25px;'>"+ele.nickName+"</span></a>"
 							+"<span style='position: relative; top: 0px; left:20px; font-weight: bold; font-size: 15px;'>"+ele.writeDate+"</span>"
 							+"<textarea placeholder='답변글' readonly='readonly' id='replyListComment'>"+ele.reviewReply+"</textarea>"							
 							+"</div>"
