@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" %><%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+    <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -106,14 +107,20 @@ $(function() {
 	<div class="likedItem">
 		<div class="itemBox">
 		<form action="heart.do" id="frm${status.index}">
-		<a href="">
+		<c:set var="shortenedName" value="${list.clubName}" />
+		<c:choose>
+		  <c:when test="${fn:length(list.clubName) > 13}">
+		    <c:set var="shortenedName" value="${fn:substring(list.clubName, 0, 13)}..." />
+		  </c:when>
+		</c:choose>	
 		<input type="hidden" value="${list.clubNum}" name="pNum" id="pNum"/>
 		<input type="hidden" value="${status.index}" name="index" id="index"/>
 	</form>
+	<a href="club_info.do?club_Num=${list.clubNum}">
 		<img src="${ list.clubImg }" class="ThumbNail" id="prdImg"></a>
 			<div class="ThumbNailType__ItemInfoBox-sc-1invua-7 fDnSDy">
 				<div><!-- info -->
-					<div class="ThumbNailTitle"> ${ list.clubName }${list.clubNum} ...</div>
+					<div class="ThumbNailTitle"> ${shortenedName}</div>
 						<div class="price">${ list.clubDate }</div>
 				</div>
 				<input type="hidden">
