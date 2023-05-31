@@ -79,10 +79,22 @@
 		from club_review c, REVIEW_REPLY r, club b
 		where r.REVIEW_NUM=c.REVIEW_NUM and b.club_num=c.club_num and b.user_id=#{sessionId}	
 	</select>
-<!--
-	<select id="mypage" resultType="kr.co.haerak.domain.mypage.MypageDomain" >
-		select		
-		from		
+	
+	<select id="othersHostList" parameterType="String" resultType="kr.co.haerak.domain.mypage.OthersMyPageDomain">
+		select DISTINCT c.club_name clubName, c.club_num clubNum, u.nickname nickName, ci.club_img clubImg
+		from club c, users u, club_img ci, APPROVAL_STATUS a ,HOST_LIST h
+		where c.user_id=u.user_id and h.user_id='abcd1' and h.user_id=c.user_id and c.club_num=ci.club_num
 	</select>
-	 -->
+	
+	<select id="othersJoinList" parameterType="String" resultType="kr.co.haerak.domain.mypage.OthersMyPageDomain">
+		select DISTINCT c.club_name clubName, c.club_num clubNum, u.nickname nickName, c.club_date clubDate, ci.club_img clubImg
+		from club c, users u, club_img ci, APPROVAL_STATUS a ,join_list j
+		where c.user_id=u.user_id and j.user_id='abcd5' and j.user_id=c.user_id and c.club_num=ci.club_num
+	</select>
+	
+	<select id="myProfile" parameterType="String" resultType="kr.co.haerak.domain.mypage.MyProfileDomain">
+		select nickname nickName, user_img userImg, PERSONAL_INTRO personalIntro
+		from users
+		where user_id = #{user_id}
+	</select>
 </mapper>

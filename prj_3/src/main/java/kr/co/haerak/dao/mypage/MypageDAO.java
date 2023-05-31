@@ -1,5 +1,6 @@
 package kr.co.haerak.dao.mypage;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.ibatis.exceptions.PersistenceException;
@@ -12,10 +13,11 @@ import kr.co.haerak.domain.mypage.ClubReviewDomain;
 import kr.co.haerak.domain.mypage.HostListDomain;
 import kr.co.haerak.domain.mypage.InterestDomain;
 import kr.co.haerak.domain.mypage.JoinListDomain;
+import kr.co.haerak.domain.mypage.MyProfileDomain;
+import kr.co.haerak.domain.mypage.OthersMyPageDomain;
 import kr.co.haerak.domain.mypage.ReviewReplyDomain;
 import kr.co.haerak.vo.mypage.ApprovalVO;
 import kr.co.haerak.vo.mypage.InterestVO;
-import kr.co.haerak.vo.mypage.JoinListVO;
 import kr.co.haerak.vo.mypage.JoinListVO2;
 
 
@@ -264,4 +266,51 @@ public class MypageDAO {
 		return list;
 	}
 	
+	public List<OthersMyPageDomain> myPageJoin(String userId){
+		List<OthersMyPageDomain> list = null;
+		
+		//1. MyBatis Handler 얻기
+		SqlSession ss=MyBatisHandler.getInstance().getMyBatisHandler(false);
+		
+		//2. Handler 사용
+		list=ss.selectList("othersJoinList", userId);
+		//3. 조회결과 처리
+		if(ss!=null) { ss.close(); }//end if
+		
+		return list;
+	}
+	
+	public List<OthersMyPageDomain> myPageHost(String userId){
+		List<OthersMyPageDomain> list = null;
+		
+		//1. MyBatis Handler 얻기
+		SqlSession ss=MyBatisHandler.getInstance().getMyBatisHandler(false);
+		
+		//2. Handler 사용
+		list=ss.selectList("othersHostList", userId);
+		
+		//3. 조회결과 처리
+		if(ss!=null) { ss.close(); }//end if
+		
+		return list;
+	}
+	
+	public MyProfileDomain myProfile(String userId){
+		MyProfileDomain list =null;
+		//1. MyBatis Handler 얻기
+		SqlSession ss=MyBatisHandler.getInstance().getMyBatisHandler(false);
+		
+		//2. Handler 사용
+		list=ss.selectOne("myProfile", userId);
+		
+		//3. 조회결과 처리
+		if(ss!=null) { ss.close(); }//end if
+		
+		return list;
+	}
+	/*
+	 * public static void main(String[] args) { System.out.println(new
+	 * MypageDAO().myPageJoin("abcd1")); System.out.println(new
+	 * MypageDAO().myPageHost("abcd5")); }
+	 */
 }
