@@ -275,7 +275,7 @@ public class MypageController {
 		MyProfileDomain profile = ms.myProfileService(userId);
 		model.addAttribute("userId",userId);
 		model.addAttribute("nickName",profile.getNickName());
-		model.addAttribute("nickuserImg",profile.getUserImg());
+		model.addAttribute("userImg",profile.getUserImg());
 		model.addAttribute("personalIntro",profile.getPersonalIntro());
 		model.addAttribute("list",list);
 		

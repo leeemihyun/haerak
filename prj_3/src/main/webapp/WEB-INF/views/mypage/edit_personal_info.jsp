@@ -51,7 +51,7 @@ $(function(){
 </div><!-- header -->
 <div class="container">
 <div id="div0"><h2>개인정보 수정</h2></div>
-<form name="frm" id="frm" action="edit_personal_only_process.jsp" method="post">
+<form name="frm" id="frm" action="editPersonalProcess.do" method="post">
 
 <div id="divEmail"> 
 	<font id="font1">이메일</font><br>

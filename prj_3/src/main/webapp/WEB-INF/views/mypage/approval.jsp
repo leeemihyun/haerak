@@ -47,7 +47,7 @@ $(function(){
 			</ul>
 		</div>
 		<div class="right">
-			<div class="profileImg"><img src=${ lsDomain.userImg } onerror="this.onerror=null; this.src='http://localhost/prj_3/images/profile.png'" class="profile_img"></div>
+			<div class="profileImg"><img src="${ lsDomain.userImg }" onerror="this.onerror=null; this.src='http://localhost/prj_3/images/profile.png'" class="profile_img"></div>
 			<div class="nickname">${ lsDomain.nickName }님</div>
 			<div class="intro">${ lsDomain.personalIntro }</div>
 		</div>
