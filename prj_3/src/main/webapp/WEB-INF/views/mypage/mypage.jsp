@@ -7,21 +7,26 @@
 <head>
 <meta charset="UTF-8">
 <style type="text/css">
-.wrap{width: 1400px;min-height: 600px;margin: 0px auto;}
+.wrap{width: 1400px;min-heigh:100px;margin: 0px auto;}
 .header{height: 200px}
-.container{min-height: 900px; position: relative;}
-.left{left:50px; width: 150px; min-height: 300px;position: absolute;}
+.container{min-heigh:100px; position: relative; padding-bottom: 250px;}
+.container5{
+height: 300px; 
+position: relative;
+bottom: 0; 
+}
+.left{left:50px; width: 150px; min-height: 300px;position: relative; background-color: #ff0000; }
 ul li{list-style: none; text-align: center; margin-top: 10px}
 a{ text-decoration: none; color: #333; text-align: center}
-.right{ position: absolute;left:260px; width: 900px; height: 300px; }
-.btns{ position: absolute;top:200px ;left:300px; width: 900px; height: 300px; }
-.content{ position: absolute;top:300px;left:260px; width: 1000px; height: 300px; }
-.profile_img{width:120px;height:120px;border-radius:50%; position: absolute; top:25px; left: 100px;}
-.nickname{position: absolute; top: 45px; left: 300px;}
-.intro{position: absolute; top: 65px; left: 300px;}
+.right{ position: relative; left:450px; width: 400px; height: 150px; top: 100px;  }
+.btns{ position: relative;top:160px ;left:510px; width: 500px; height: 70px;   }
+.content{ position: relative;top:300px;left:260px; width: 1000px; height: 300px; }
+.profile_img{width:120px; height:120px; border-radius:50%; position: relative; top:20px; left: 20px; float: left}
+.nickname{position: relative; top: 40px; left: 100px; }
+.intro{position: relative; top: 75px; left: 100px;}
 .footer{height: 100px}
 .socialring_popular_table{  /*소셜링 4개 테이블*/
-position: absolute; 
+position: relative; 
 top : 300px; 
 left: 270px;
 border-collapse: collapse;
@@ -39,7 +44,7 @@ height: 130px;
 
 
 .prod_img{    /*소셜링인기매물사진사이즈  */
-position: absolute;
+position: relative;
 width: 160px;
 height: 160px;
 object-fit: cover;
@@ -74,39 +79,18 @@ border-radius: 30px;
 <link rel="stylesheet" type="text/css" href="http://localhost/prj_3/css/headerFooter.css">
 <script type="text/javascript">
 $(function(){
+	
+	hostAjax();
+	
 	$("#hostBtn").click(function() {
-		var output ="";
-		var userId = $("#userId").val();
-		$.ajax({
-			url: "mypageHost.do",
-			data : "userId=" + userId,
-			dataType : "JSON",
-			error : function(xhr) {
-				console.log(xhr.status);
-			},
-			success : function(jsonObj) {
-				output+="<table class='socialring_popular_table'>";
-				if(!jsonObj.resultFlag){
-					output+="<tr><td>문제발생</td></tr>";
-				}else{
-					if(jsonObj.dataSize==0){output+="<tr><td>문제발생</td></tr>";}
-					$.each(jsonObj.data, function(idx, ele){
-						output+="<tr><td class='prdCol1' colspan='3'>";
-						output+="<div class='prod_div'>";
-						output+="<a href='club_info.do?club_Num="+ele.clubNum+"'>";
-						output+="<img class='prod_img' src='"+ele.clubImg+"'/></a></div></td>";
-						output+="<td class='prdCol2'><div>";
-						output+="<strong>"+ele.clubName+"</strong> <br><br></div> </td></tr>";
-					})
-				}//end else  
-				    output+=" </tr></table>" 
-				    $("#output").html(output);
-			}//success
-			
-		});//ajax
+		$("#hostBtn").attr('class','btn btn-warning');
+		$("#joinBtn").attr('class','btn btn-secondary');
+		hostAjax();
 	});//click
 	
 	$("#joinBtn").click(function() {
+		$("#joinBtn").attr('class','btn btn-warning');
+		$("#hostBtn").attr('class','btn btn-secondary');
 		var output ="";
 		var userId = $("#userId").val();
 		$.ajax({
@@ -123,12 +107,20 @@ $(function(){
 				}else{
 					if(jsonObj.dataSize==0){output+="<tr><td>문제발생</td></tr>";}
 					$.each(jsonObj.data, function(idx, ele){
-						output+="<tr><td class='prdCol1' colspan='3'>";
+						if(idx%2==0){
+							output+="<tr>";
+						}
+						
+						output+="<td class='prdCol1' colspan='3'>";
 						output+="<div class='prod_div'>";
 						output+="<a href='club_info.do?club_Num="+ele.clubNum+"'>";
 						output+="<img class='prod_img' src='"+ele.clubImg+"'/></a></div></td>";
 						output+="<td class='prdCol2'><div>";
-						output+="<strong>"+ele.clubName+"</strong> <br><br></div> </td></tr>";
+						output+="<strong>"+ele.clubName+"</strong> <br><br></div> </td>";
+						
+						if(idx%2==1){
+							output+='</tr>';
+						}
 					})
 				}//end else  
 				    output+=" </tr></table>" 
@@ -139,6 +131,47 @@ $(function(){
 	});//click
 	
 });//ready
+
+function hostAjax() {
+	var output ="";
+	var userId = $("#userId").val();
+	$.ajax({
+		url: "mypageHost.do",
+		data : "userId=" + userId,
+		dataType : "JSON",
+		error : function(xhr) {
+			console.log(xhr.status);
+		},
+		success : function(jsonObj) {
+			output+="<table class='socialring_popular_table'>";
+			if(!jsonObj.resultFlag){
+				output+="<tr><td>문제발생</td></tr>";
+			}else{
+				if(jsonObj.dataSize==0){output+="<tr><td>문제발생</td></tr>";}
+				$.each(jsonObj.data, function(idx, ele){
+					if(idx%2==0){
+						output+="<tr>";
+					}
+					
+					output+="<td class='prdCol1' colspan='3'>";
+					output+="<div class='prod_div'>";
+					output+="<a href='club_info.do?club_Num="+ele.clubNum+"'>";
+					output+="<img class='prod_img' src='"+ele.clubImg+"'/></a></div></td>";
+					output+="<td class='prdCol2'><div>";
+					output+="<strong>"+ele.clubName+"</strong> <br><br></div> </td>";
+					
+					if(idx%2==1){
+						output+="</tr>";
+					}
+				})
+			}//end else  
+			    output+=" </tr></table>" 
+			    $("#output").html(output);
+		}//success
+		
+	});//ajax
+}
+
 </script>
 
 </head>
@@ -148,22 +181,23 @@ $(function(){
 	<jsp:include page="/header.do"/>
 	</div><!-- header -->
 	<div class="container">
-		<div class="left">
-		</div>
 		<div class="right">
 			<input type="hidden" id="userId" value="${userId}"/>
-			<div class="profileImg"><img src="${userImg}" onerror="this.onerror=null; this.src='http://localhost/prj_3/images/profile.png'" class="profile_img"></div>
-			<div class="nickname">${nickName}</div>
-			<div class="intro">${personalIntro}</div>
+			<img src="${userImg}" onerror="this.onerror=null; this.src='http://localhost/prj_3/images/profile.png'" class="profile_img">
+			<div class="nickname" style="font-weight: bold; font-size: 20px;">${nickName}</div>
+			<div class="intro" style="font-weight: bold; font-size: 20px;">${personalIntro}</div>
+		</div><!-- right  -->
+		<hr style="width:1500px; position: relative; left: 0px; top: 130px; border-color:#000000;">
 		<div class="btns">
-			<button type="button" class="btn btn-warning" id="hostBtn">주최한 모임</button>
+			<button type="button" class="btn btn-secondary" id="hostBtn" style="margin-right: 30px;">주최한 모임</button>
 			<button type="button" class="btn btn-secondary" id="joinBtn">참여한 모임</button>
-		</div>
-		</div>
+		</div><!-- btns  -->
+		
 		<div id="output">
 		
 		</div><!-- output -->
-		</div>
+		
+		</div><!-- container  -->
 	<div class="container5">
    <jsp:include page="/footer.do"/>
 </div><!--container5  -->
