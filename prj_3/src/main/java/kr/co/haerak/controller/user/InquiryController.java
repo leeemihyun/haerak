@@ -54,7 +54,6 @@ public class InquiryController {
 		String uri="mypage/pass";
 		
 		String userId=is.passInquiryService(fpVO);
-		System.out.println(userId);
 		if(userId!=null){// 결과가 있을시
 			model.addAttribute("userId", userId);
 		}else {

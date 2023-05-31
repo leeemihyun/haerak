@@ -158,7 +158,6 @@ public class ClubController {
 		 */
 		@PostMapping("/reviewInsert.do")
 		public String reviewInsert(ReviewVO rVO) {
-			System.out.println(rVO);
 			
 			rrs.insertReviewService(rVO);
 			
@@ -170,7 +169,6 @@ public class ClubController {
 		 */
 		@PostMapping("/replyInsert.do")
 		public String replyInsert(ReplyVO rpVO) {
-			System.out.println(rpVO);
 			
 			rrs.insertReplyService(rpVO);
 		
@@ -242,7 +240,6 @@ public class ClubController {
 		 */
 		@PostMapping("/clubModifyProcess.do")
 		public String clubModifyProcess(Model model, HttpServletRequest request) throws IOException {
-			System.out.println("컨트롤러");
 			File file=new File("C:/Users/user/git/prj_3/prj_3/src/main/webapp/club_images");
 			int max=1024*1024*5;
 			MultipartRequest mr = new MultipartRequest(request, file.getAbsolutePath(), max, "UTF-8", new DefaultFileRenamePolicy());
@@ -267,7 +264,6 @@ public class ClubController {
 			//String[] clubImgs = mr.getParameterValues("clubImg");
 			//System.out.println(clubImgs.toString());
 			String imageNames = mr.getParameter("imageNames");
-			System.out.println("컨트롤러 이미지명 파라미터 찍어보기 : "+imageNames);
 			String[] clubImgs= imageNames.split(",");
 			
 			for(int i=0; i<clubImgs.length;i++ ) {
@@ -306,7 +302,6 @@ public class ClubController {
 		 */
 		@PostMapping("/clubRegistrationProcess.do")
 		public String clubRegistrationProcess(Model model, HttpServletRequest request) throws IOException {
-			System.out.println("컨트롤러");
 			File file=new File("C:/Users/user/git/prj_3/prj_3/src/main/webapp/club_images");
 			int max=1024*1024*5;
 			MultipartRequest mr = new MultipartRequest(request, file.getAbsolutePath(), max, "UTF-8", new DefaultFileRenamePolicy());
@@ -331,7 +326,6 @@ public class ClubController {
 			//String[] clubImgs = mr.getParameterValues("clubImg");
 			//System.out.println(clubImgs.toString());
 			String imageNames = mr.getParameter("imageNames");
-			System.out.println("컨트롤러 이미지명 파라미터 찍어보기 : "+imageNames);
 			String[] clubImgs= imageNames.split(",");
 			
 			for(int i=0; i<clubImgs.length;i++ ) {
@@ -349,7 +343,7 @@ public class ClubController {
 			ClubInsertVO ciVO = new ClubInsertVO(price, categoryNum, actiAreaNum, numberPeople, clubName, detailTxt, clubAddr, detailAddr, userId, latitude, longitude, clubTime, zipcode, clubImg, clubDate);
 			ics.insertClubInfo(ciVO);
 			
-			return "forward:main.do";
+			return "main/main";
 		}//clubRegistrationProcess
 		
 		

@@ -49,7 +49,6 @@ function heartClick(index) {
 		$("#index").val(elementId);
 		 
 		$('#'+index).fadeOut(250).fadeIn(200);
-		alert(src);
 		if(src=='http://localhost/prj_3/images/heart_on.svg'){
 	   $("#pic").val(src);
 	   $(frm).submit();
@@ -97,7 +96,7 @@ $(function() {
 			</ul>
 		</div>
 		<div class="right">
-			<div class="profileImg"><img src=${ lsDomain.userImg } onerror="this.onerror=null; this.src='http://localhost/prj3/mypage/images/profile.png'" class="profile_img"></div>
+			<div class="profileImg"><img src=${ lsDomain.userImg } onerror="this.onerror=null; this.src='http://localhost/prj_3/images/profile.png'" class="profile_img"></div>
 			<div class="nickname">${ lsDomain.nickName }님</div>
 			<div class="intro">${ lsDomain.personalIntro }</div>
 		</div>

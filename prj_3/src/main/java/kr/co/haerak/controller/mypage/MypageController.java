@@ -273,7 +273,6 @@ public class MypageController {
 		
 		List<OthersMyPageDomain> list =null;
 		MyProfileDomain profile = ms.myProfileService(userId);
-		System.out.println(profile);
 		model.addAttribute("userId",userId);
 		model.addAttribute("nickName",profile.getNickName());
 		model.addAttribute("nickuserImg",profile.getUserImg());

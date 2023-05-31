@@ -101,10 +101,8 @@ public class JoinController {
 	@GetMapping("/nick_dup.do")
 	public String nickDupProcess(String nickName) {
 		String result="0";
-		System.out.println(nickName);
 		int cnt=js.nickDupService(nickName);
 		if(cnt==1)result="1";
-		System.out.println(result);
 		return result;
 	}
 	

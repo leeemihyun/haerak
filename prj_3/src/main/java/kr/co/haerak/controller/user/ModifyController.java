@@ -52,7 +52,6 @@ public class ModifyController {
 		LoginSessionDomain lsDomain = (LoginSessionDomain) model.getAttribute("lsDomain");
 		ChkIdPassVO cipVO = new ChkIdPassVO(lsDomain.getUserId(), userPassword);
 		boolean flag = ms.passChkService(cipVO);
-		System.out.println(flag);
 		if (!flag) {
 			return "forward:passChk.do";
 		}

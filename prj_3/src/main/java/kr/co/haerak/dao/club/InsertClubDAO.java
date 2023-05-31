@@ -45,7 +45,6 @@ public class InsertClubDAO {
 	 * @param cVO
 	 */
 	public void updateClubInfo(ClubUpdateVO cuVO) {
-		
 		int cnt=0;
 		SqlSession ss = MyBatisHandler.getInstance().getMyBatisHandler(false);
 		
@@ -60,10 +59,9 @@ public class InsertClubDAO {
 		List<String> list = cuVO.getClubImg();
 		System.out.println(list);
 		if(list != null && !list.isEmpty()) {
-			System.out.println("null¿Ã æ∆¥‘");
-				//ss.delete("imgDelete",cuVO.getClubNum());
+			//ss.delete("imgDelete",cuVO.getClubNum());
 			for(String clubImg : list) { 
-				//ss.insert("insertClubImg","http://localhost/prj_3/club_images/"+clubImg);   
+			//ss.insert("insertClubImg","http://localhost/prj_3/club_images/"+clubImg);   
 			}//end for			
 		}
 		
@@ -97,9 +95,9 @@ public class InsertClubDAO {
 		return result;
 	}//setSelectClub
 	
-	public static void main(String[] args) {
-		new InsertClubDAO().setSelectClub(1);
-	}//main
+//	public static void main(String[] args) {
+//		new InsertClubDAO().setSelectClub(1);
+//	}//main
 	
 	
 }//InsertClubDAO

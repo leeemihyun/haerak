@@ -34,10 +34,11 @@
 	<select id="interest" resultType="kr.co.haerak.domain.mypage.InterestDomain" >
 		select club_num clubNum, club_name clubName, interest_date interestDate, club_img clubImg, img
 		from(
-		select i.user_id, i.CLUB_NUM, c.club_name, i.INTEREST_DATE,m.CLUB_IMG, row_number() over(PARTITION BY i.club_num order by m.CLUB_IMG) img
+		select i.user_id, i.CLUB_NUM, c.club_name, i.INTEREST_DATE,m.CLUB_IMG, row_number() over(PARTITION BY i.club_num order by c.user_id) img
 			from CLUB_IMG m, INTEREST_LIST i, club c
-			where m.club_num=i.club_num and c.club_num=i.club_num)
-		where img=1 and user_id=#{sessionId}
+			where m.club_num=i.club_num and c.club_num=i.club_num
+			group by i.user_id, i.CLUB_NUM, c.club_name, i.INTEREST_DATE,m.CLUB_IMG,c.user_id)
+		where  user_id=#{sessionId}
 	</select>
 
 	<delete id="deleteInterest" parameterType="kr.co.haerak.vo.mypage.InterestVO" >

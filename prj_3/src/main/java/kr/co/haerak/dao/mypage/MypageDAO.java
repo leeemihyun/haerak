@@ -129,10 +129,8 @@ public class MypageDAO {
 
 		// 3. transaction 완료
 		if (cnt == 1) {
-			System.out.println("추가성공 => commit");
 			ss.commit();
 		}else {
-			System.out.println("추가 실패");
 		}
 
 		// 4. 연결 끊기
