@@ -73,9 +73,8 @@ public class MainController {
 	// 모임 더보기 ajax 요청 url
 	@ResponseBody
 	@RequestMapping(value="/categoryAjax.do", method= {RequestMethod.GET})
-	public String categoryMoreAjax(Model model, SeeMoreVO smVO) {
-		model.addAttribute(cms.selectMoreClub(smVO));
-		String jsonObj =cms.selectMoreClub(smVO);
+	public String categoryMoreAjax(Model model, SeeMoreVO smVO,int currentPage1) {
+		String jsonObj =cms.selectMoreClub(smVO,currentPage1);
 		
 		return jsonObj;
 	}

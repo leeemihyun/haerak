@@ -40,11 +40,11 @@ $(function(){
 	
 	$("#area").change(function(){		
 		actiArea=$("#area option").index($("#area option:selected"));
-		callClubList(actiArea);
+		callClubList(actiArea,1);
 	});
 		
 	
-	callClubList(0);
+	callClubList(0,1);
 	
 }); 
 
@@ -56,8 +56,9 @@ $(function(){
 
 
 
-	function callClubList(actiArea){
-		var jsonParam={"searchText": "${searchText}", "categoryNum" : ${category_Num}, "actiAreaNum" : actiArea};
+	function callClubList(actiArea,pageNum){
+		
+		var jsonParam={"searchText": "${searchText}", "categoryNum" : ${category_Num}, "actiAreaNum" : actiArea ,"currentPage1":pageNum};
 		$.ajax({
 			url : "categoryAjax.do",
 			data : jsonParam,
@@ -67,8 +68,36 @@ $(function(){
 				console.log( "에러코드 : " +xhr.status); //개발자가봄
 			},
 			success : function(jsonObj){
+				/* alert(jsonObj.pageCnt+"/"+jsonObj.currentPage+"/"+jsonObj.pageGroup+"/"+jsonObj.lastNum+"/"+jsonObj.firstNum); */
+				$("#paginationUL").children().remove();
 				var tbody="";
 				let cnt=0;
+				var pageoutput="";
+				var datacnt=0;
+				var reviewCnt=0;
+				var startDateCnt=(8*(jsonObj.currentPage-1));
+				var endDateCnt=(8*jsonObj.currentPage)-1;
+				/* 페이지네이션 영역 */
+				if(jsonObj.firstNum>5){						
+					pageoutput+="<li class='page-item'>"
+      					+"<a class='page-link' href='#' aria-label='Previous' onclick='pageselect("+(jsonObj.firstNum-1)+")'>"
+        				+"<span aria-hidden='true'>&laquo;</span>"
+      					+"</a>"
+    					+"</li>";
+					}//end if
+    					for(var i = jsonObj.firstNum; i <= jsonObj.lastNum; i++){
+    					pageoutput+="<li class='page-item'><a class='page-link' href='#' onclick='pageselect("+i+")'>"+i+"</a></li>";
+    					}//end for
+    				if(jsonObj.lastNum!=jsonObj.pageCnt){
+    					pageoutput+="<li class='page-item'>"
+      					+"<a class='page-link' href='#' aria-label='Next' onclick='pageselect("+(jsonObj.lastNum+1)+")'>"
+        				+"<span aria-hidden='true'>&raquo;</span>"
+     					+"</a>"
+    					+"</li>";   
+    				}
+    					$("#paginationUL").append(pageoutput);
+				/* 페이지네이션 영역 */
+				
 				
 				if($("#socialring_popular_table tr").length > 0){
 					$("#socialring_popular_table > tbody").empty();
@@ -76,6 +105,8 @@ $(function(){
 								
 				
 				$.each(jsonObj.data, function(idx, ele){
+					
+					if(datacnt>=startDateCnt && datacnt<=endDateCnt){
 					if(cnt%2==0){
 						tbody+="</tr><tr>";
 					}
@@ -89,7 +120,7 @@ $(function(){
 					
 				    $.each(ele.userInfo, function(i, ele1){
 				   
-				        tbody+="<img class='user_profile' src='"+ele1.USER_IMG+"' onerror='this.onerror=null; this.src='http://localhost/prj_3/images/a.png';'/> ";
+				        tbody+="<a href='othersMypageHost.do?userId="+ele1.USER_ID+"'><img class='user_profile' src='"+ele1.USER_IMG+"' onerror='this.onerror=null; this.src='http://localhost/prj_3/images/a.png';'/></a>";
 				    });
 					
 				    
@@ -99,6 +130,8 @@ $(function(){
 				    
 				    
 				    tbody+="</div></td>";
+					}//end if
+					datacnt++;
 				});
 				
 
@@ -114,7 +147,11 @@ $(function(){
 			}
 		});
 	}
-
+	
+function pageselect(selectPage) {
+	actiArea=$("#area option").index($("#area option:selected"));
+	callClubList(actiArea,selectPage);
+}
 
 </script>
 
@@ -248,20 +285,8 @@ $(function(){
 <div class="category_container4">
 
 <nav aria-label="Page navigation example" class="category_container4_nav">
-  <ul class="pagination">
-    <li class="page-item">
-      <a class="page-link" href="#" aria-label="Previous">
-        <span aria-hidden="true">&laquo;</span>
-      </a>
-    </li>
-    <li class="page-item"><a class="page-link" href="#">1</a></li>
-    <li class="page-item"><a class="page-link" href="#">2</a></li>
-    <li class="page-item"><a class="page-link" href="#">3</a></li>
-    <li class="page-item">
-      <a class="page-link" href="#" aria-label="Next">
-        <span aria-hidden="true">&raquo;</span>
-      </a>
-    </li>
+  <ul class="pagination" id="paginationUL">
+
   </ul>
 </nav>
 

@@ -19,19 +19,22 @@ where userNumber &lt; 4
 
 
 
-<!--메인 인기모임2222 : 메인 화면에서 카테고리별로 조회수 높은 순서 대로 4개씩 보임  -->  
+<!--메인 인기모임 : 메인 화면에서 카테고리별로 조회수 높은 순서 대로 4개씩 보임  -->  
 <select id="selectRankClub" resultType="kr.co.haerak.domain.main.ClubSalesDomain" parameterType="String">
-SELECT c.CLUB_NUM, COALESCE(COUNT(jl.USER_ID), 0) AS USER_COUNT, CLUB_NAME, PRICE, CLUB_DATE, CLUB_ADDR, CLUB_IMG, AREA_NAME, NUMBER_PEOPLE, CLUB_STATUS, CATEGORY_NUM
-FROM CLUB c
-LEFT JOIN JOIN_LIST jl ON c.CLUB_NUM = jl.CLUB_NUM
-JOIN CLUB_IMG ci ON c.CLUB_NUM = ci.CLUB_NUM
-JOIN ACTIVITY_AREA aa ON aa.ACTI_AREA_NUM = c.ACTI_AREA_NUM
-WHERE c.CLUB_STATUS = '모집중'
-  AND CLUB_IMG_NUM IN (
-    SELECT MIN(CLUB_IMG_NUM) AS CLUB_IMG_NUM
-    FROM CLUB_IMG
-    GROUP BY CLUB_NUM
-  )
+
+select CLUB_NUM, CLUB_NAME, VIEW_CNT, PRICE,CLUB_DATE,NUMBER_PEOPLE,CATEGORY_NUM,AREA_NAME,CLUB_STATUS,
+			(	select COALESCE(count(user_id),0)
+				from JOIN_LIST jl
+				where jl.CLUB_NUM=c.CLUB_NUM
+			) AS USER_COUNT,
+			(
+				select CLUB_IMG
+				from CLUB_IMG
+				where
+				CLUB_IMG_NUM=(select min(CLUB_IMG_NUM) from CLUB_IMG ci where ci.CLUB_NUM=c.CLUB_NUM group by CLUB_NUM)
+			) as CLUB_IMG
+from club c, ACTIVITY_AREA aa
+where aa.ACTI_AREA_NUM=c.ACTI_AREA_NUM and CLUB_STATUS = '모집중' 
   <choose>
     <when test="clubType eq 1"><!-- 소셜링 -->
       AND CATEGORY_NUM = 1
@@ -43,13 +46,8 @@ WHERE c.CLUB_STATUS = '모집중'
       AND CATEGORY_NUM = 3
     </when>
   </choose>
-  
-GROUP BY c.CLUB_NUM, CLUB_NAME, PRICE, CLUB_DATE, CLUB_ADDR, CLUB_IMG, AREA_NAME, NUMBER_PEOPLE, CLUB_STATUS, CATEGORY_NUM
-ORDER BY (
-  SELECT MAX(VIEW_CNT)
-  FROM CLUB
-  WHERE CATEGORY_NUM = c.CATEGORY_NUM
-)
+order by VIEW_CNT desc
+
 </select>
 
 
@@ -62,19 +60,21 @@ ORDER BY (
 
 
 
-<!-- 모임 더보기222 : 카테고리별로 더보기 클릭시 모임 등록한 날짜를 기준으로 최신순으로 보임  -->
+<!-- 모임 더보기 : 카테고리별로 더보기 클릭시 모임 등록한 날짜를 기준으로 최신순으로 보임  -->
 <select id="selectMoreClub" resultType="kr.co.haerak.domain.main.ClubSalesDomain" parameterType="kr.co.haerak.vo.main.SeeMoreVO">
-SELECT c.CLUB_NUM, COALESCE(COUNT(jl.USER_ID), 0) AS USER_COUNT, CLUB_NAME, PRICE, CLUB_DATE, CLUB_ADDR, CLUB_IMG, AREA_NAME, NUMBER_PEOPLE, CLUB_STATUS, CATEGORY_NUM as category_Num , c.ACTI_AREA_NUM
-FROM CLUB c
-LEFT JOIN JOIN_LIST jl ON c.CLUB_NUM = jl.CLUB_NUM
-JOIN CLUB_IMG ci ON c.CLUB_NUM = ci.CLUB_NUM
-JOIN ACTIVITY_AREA aa ON aa.ACTI_AREA_NUM = c.ACTI_AREA_NUM
-WHERE c.CLUB_STATUS = '모집중'
-  AND CLUB_IMG_NUM IN (
-    SELECT MIN(CLUB_IMG_NUM) AS CLUB_IMG_NUM
-    FROM CLUB_IMG
-    GROUP BY CLUB_NUM
-)
+select CLUB_NUM, CLUB_NAME, VIEW_CNT, PRICE,CLUB_DATE,NUMBER_PEOPLE,CATEGORY_NUM,AREA_NAME,CLUB_STATUS,
+			(	select COALESCE(count(user_id),0)
+				from JOIN_LIST jl
+				where jl.CLUB_NUM=c.CLUB_NUM
+			) AS USER_COUNT,
+			(
+				select CLUB_IMG
+				from CLUB_IMG
+				where
+				CLUB_IMG_NUM=(select min(CLUB_IMG_NUM) from CLUB_IMG ci where ci.CLUB_NUM=c.CLUB_NUM group by CLUB_NUM)
+			) as CLUB_IMG
+from club c, ACTIVITY_AREA aa
+where aa.ACTI_AREA_NUM=c.ACTI_AREA_NUM and CLUB_STATUS = '모집중' 
 
  <choose>
  <when test="searchText !=null">
@@ -153,32 +153,13 @@ AND CLUB_NAME LIKE '%'||#{searchText}||'%'
      </when>
   </choose>
   
-GROUP BY c.CLUB_NUM, CLUB_NAME, PRICE, CLUB_DATE, CLUB_ADDR, CLUB_IMG, AREA_NAME, NUMBER_PEOPLE, CLUB_STATUS, CATEGORY_NUM, c.ACTI_AREA_NUM
-ORDER BY (
-SELECT MAX(VIEW_CNT)
-FROM CLUB
-WHERE CATEGORY_NUM = c.CATEGORY_NUM
-)
+
+order by INPUT_DATE desc
+
 </select>
 
 
 
-
-
-
-<!-- 모임 검색 : 검색창에 모임 검색 했을 때 모임 등록한 날짜를 기준으로 최신순으로 보임 -->  
-<select id="selectSearch" resultType="kr.co.haerak.domain.main.ClubSalesDomain" parameterType="String">
-SELECT c.CLUB_NUM, CLUB_NAME, PRICE, CLUB_DATE, CLUB_ADDR, CLUB_IMG, AREA_NAME, NUMBER_PEOPLE, CLUB_STATUS, CATEGORY_NUM
-FROM CLUB c, CLUB_IMG ci, ACTIVITY_AREA aa
-WHERE c.CLUB_NUM = ci.CLUB_NUM AND aa.ACTI_AREA_NUM = c.ACTI_AREA_NUM AND c.CLUB_STATUS = '모집중' 
-    AND CLUB_IMG_NUM IN (
-      SELECT MIN(CLUB_IMG_NUM) AS CLUB_IMG_NUM
-      FROM CLUB_IMG
-      GROUP BY CLUB_NUM
-)
-AND CLUB_NAME LIKE '%'||#{searchText}||'%' 
-ORDER BY INPUT_DATE DESC
-</select>
 
 
 </mapper>

@@ -26,7 +26,18 @@ public class ClubMoreService   {
 	
 	
 	//카테고리별 더보기, 검색 했을 때 리스트 조회
-	public String selectMoreClub(SeeMoreVO smVO){
+	public String selectMoreClub(SeeMoreVO smVO, int currentPage1){
+		double limitdata=8.0; //한화면에 보여줄 최대 데이터 개수 
+		
+		int currentPage=currentPage1; //현재 페이지
+		double pageCount=5; //최대 페이지 개수
+		double pageGroup=Math.ceil(currentPage / pageCount); //페이지 그룹
+		double lastNum=pageGroup*pageCount;
+		double firstNum=lastNum-(pageCount - 1);
+		
+		
+		
+		
 		
 		List<ClubSalesDomain> list=null;
 		JSONObject jsonObj=new JSONObject();
@@ -35,8 +46,16 @@ public class ClubMoreService   {
 		try {
         list=cDAO.selectMoreClub(smVO);
         jsonObj.put("resultFlag", true);
-        jsonObj.put("dataSize", list.size());
+        jsonObj.put("totaldata", list.size()); //총 데이터 개수
+        jsonObj.put("pageCnt", Math.ceil(list.size()/limitdata)); //페이지개수
 		
+		jsonObj.put("currentPage",currentPage ); //현재페이지
+		jsonObj.put("pageGroup", pageGroup); //페이지그룹
+		jsonObj.put("lastNum", lastNum); //페이지개수
+		jsonObj.put("firstNum",firstNum ); //페이지개수
+        
+        
+        
         JSONArray jsonArr = new JSONArray();
         JSONArray jsonArr1 = new JSONArray();
         JSONObject jsonTemp = null;
