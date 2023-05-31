@@ -3,7 +3,131 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kr.co.haerak.admin_Mapper">
-  <select id="selectEmp" resultType="String">
-    select ename from emp
-  </select>
+
+<!-- 관리자로그인 mapper -->
+<select id="adminLog" resultType="kr.co.haerak.domain.admin.AdminDomain" parameterType="kr.co.haerak.vo.admin.AdminVO">
+	select *
+    from admin_member 
+	where id=#{	id	} and password=#{	password	}
+</select>
+
+
+<!-- 대쉬보드 mapper -->
+<!-- users테이블 쿼리문 -->
+<!-- 총 방문 수 -->
+<select id="totalVisit" resultType="int">
+	select	count(*) as count
+	from	users		 			  							
+	where	trunc(delete_date)=trunc(sysdate)
+</select>
+<!-- 총 회원수 -->
+<select id="memberCnt" resultType="int">
+	select	count(*) as count
+	from	users	
+	where	delete_date is null
+</select>
+<!-- 오늘 신규가입 회원 수 -->
+<select id="newMemberCnt" resultType="int">
+	select	count(*) as count
+	from	users	
+	where 	trunc(create_date)=trunc(sysdate)
+</select>
+<!-- 오늘 탈퇴회원 수 -->
+<select id="withdrawalMembers" resultType="int">
+	select	count(*) as count
+	from	users	
+	where	trunc(delete_date)=trunc(sysdate)
+</select>
+
+<!-- 오늘 승인완료 수 -->
+<select id="tradingStatusCnt" resultType="int">
+	select  count(*) as count
+ 	from 	club
+	where	club_status='모집완료' and trunc(club_date)=trunc(sysdate)
+</select>
+
+<!-- 승인완료  현황 수 -->
+<select id="tradingStatus" resultType="kr.co.haerak.domain.admin.TradingStatusDomain">
+	SELECT TRUNC(dates.DATE_COL) trunc, COUNT(CLUB.CLUB_NUM) as count
+	FROM ( SELECT TRUNC(SYSDATE - level) AS DATE_COL FROM dual CONNECT BY level <![CDATA[<=]]> 7) dates
+					LEFT JOIN CLUB
+	ON TRUNC(club.club_DATE) = TRUNC(dates.DATE_COL)
+	AND club.CLUB_STATUS = '모집완료'
+	GROUP BY TRUNC(dates.DATE_COL)
+	ORDER BY TRUNC(dates.DATE_COL) DESC																					
+</select>
+
+<!-- 카테고리별 모임 수 -->
+<select id="categoryCnt" resultType="kr.co.haerak.domain.admin.CategoryCntDomain">
+	select 	SUM(CASE WHEN CATEGORY_NUM = 1 THEN 1 ELSE 0 END) AS socialCnt,
+			SUM(CASE WHEN CATEGORY_NUM = 2 THEN 1 ELSE 0 END) AS clubCnt,
+			SUM(CASE WHEN CATEGORY_NUM = 3 THEN 1 ELSE 0 END) AS challengeCnt
+	from 	club
+	where 	club_status='모집중'
+</select>
+<!-- 지역별 모임현황 -->
+<select id="regionCnt" resultType="kr.co.haerak.domain.admin.ClubStatusCntDomain">
+	select 	aa.AREA_NAME, NVL(count,0) count
+	from 	(select aa.AREA_NAME, count(c.club_num) as count
+			from club c,  ACTIVITY_AREA aa
+			where aa.ACTI_AREA_NUM=c.ACTI_AREA_NUM and club_STATUS='모집중'
+			group by aa.AREA_NAME) ab, ACTIVITY_AREA aa
+	where 	aa.AREA_NAME=ab.AREA_NAME(+) 
+</select>
+<!-- 신규&탈퇴 현황 -->
+<select id="newAndWithdrawallCnt" resultType="kr.co.haerak.domain.admin.NewAndWithdrawallCntDomain">
+	SELECT 	TO_CHAR(months.month, 'yyyy-mm') AS month,								
+			NVL(COUNT(TO_CHAR(CREATE_DATE, 'yyyy-mm')), 0) AS CREATE_DATE,		
+			NVL(COUNT(TO_CHAR(DELETE_DATE, 'yyyy-mm')), 0) AS DELETE_DATE		
+	FROM 	(SELECT ADD_MONTHS(TRUNC(SYSDATE, 'MM'), - LEVEL + 1) AS month		
+			 FROM DUAL CONNECT BY LEVEL <![CDATA[<=]]> MONTHS_BETWEEN(TRUNC(SYSDATE, 'MM'), 
+			 TO_DATE('20230101', 'YYYYMMDD')) + 1) months	
+			 LEFT JOIN USERS ON TO_CHAR(CREATE_DATE, 'yyyy-mm') = TO_CHAR(months.month, 'yyyy-mm')		
+	GROUP BY TO_CHAR(months.month, 'yyyy-mm') ORDER BY TO_CHAR(months.month, 'yyyy-mm')	
+</select>
+<!-- 월별 총 회원 수 -->
+<select id="monthTotalCnt" resultType="kr.co.haerak.vo.admin.TotalMemberCntVO">
+	select  TO_CHAR(CREATE_DATE,'mm') AS Month,
+			COUNT(*)+NVL(LAG(COUNT(*)) OVER (ORDER BY TO_CHAR(CREATE_DATE,'mm')),0) as userCount	 	
+	FROM USERS 																																			
+	where DELETE_DATE is null 																														
+	GROUP BY TO_CHAR(CREATE_DATE,'mm') 
+</select>
+
+<!-- 모임, 후기, 회원 목록 테이블 sql문입니다. -->
+<!-- 모임 목록 페이지  mapper -->
+<select id="clubList" resultType="kr.co.haerak.domain.admin.ClubDomain" parameterType="java.lang.String">
+	select 	CLUB_NAME, CLUB_NUM, INPUT_DATE, CATEGORY_NAME, USER_ID
+	from 	CLUB_CATEGORY cc, club c
+	where	cc.CATEGORY_NUM=c.CATEGORY_NUM
+	<if test="CLUB_NAME !='na' "> and CLUB_NAME like '%'||#{CLUB_NAME}||'%'</if>			   	
+	
+</select>
+<!-- 모임 삭제 -->
+<delete id="clubDelete" parameterType="Int">
+	delete from club
+	where club_num=#{ club_num }
+</delete>
+<!-- 회원 목록 페이지  mapper -->
+<select id="memberList" resultType="kr.co.haerak.domain.admin.MemberDomain" parameterType="java.lang.String">
+	select 	user_id, nickname, addr,  create_date
+	from 		users us, ACTIVITY_AREA aa
+	where		aa.ACTI_AREA_NUM=us.ACTI_AREA_NUM 
+	<if test="user_id !='na'"> and user_id like '%'||#{user_id}||'%'</if>
+</select>
+
+<!-- 후기 목록 페이지  mapper -->
+<select id="reviewList" resultType="kr.co.haerak.domain.admin.ReviewDomain" parameterType="java.lang.String">
+	select 	review_num, user_id, club_review, write_date, club_num
+	from 	CLUB_REVIEW
+	<if test="user_id != 'na'">where user_id  like '%'||#{user_id}||'%'</if>
+</select>
+
+<!-- 후기 삭제 -->
+<delete id="reviewDelete" parameterType="Int">
+	delete from club_review
+	where review_num=#{ review_num }
+</delete>
+
+
 </mapper>
