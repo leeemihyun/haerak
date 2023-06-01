@@ -51,7 +51,7 @@ public class InquiryController {
 
 	@PostMapping("pass_inquiry_process.do")
 	public String findpassProcess(FindPassVO fpVO, Model model) throws UnsupportedEncodingException, NoSuchAlgorithmException, GeneralSecurityException {
-		String uri="mypage/pass";
+		String uri="mypage/edit_pass";
 		
 		String userId=is.passInquiryService(fpVO);
 		if("".equals(userId)||userId==null){// 결과가 있을시
