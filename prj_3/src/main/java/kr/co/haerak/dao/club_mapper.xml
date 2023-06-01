@@ -131,9 +131,9 @@ ORDER BY r.reviewNum, r.clubReview
 	
   <!-- 모임 등록하기   -->
 	<insert id="insertClubInfo" parameterType="kr.co.haerak.vo.club.ClubInsertVO">
-		insert into CLUB(CLUB_NUM, CLUB_NAME, INPUT_DATE, VIEW_CNT, PRICE, DETAIL_TXT,CLUB_ADDR,
+		insert into CLUB(CLUB_NUM, CLUB_NAME, INPUT_DATE, VIEW_CNT, PRICE, DETAIL_TXT,CLUB_ADDR, detail_addr,zipcode,
  		CLUB_DATE,CLUB_TIME ,LONGITUDE, LATITUDE, NUMBER_PEOPLE, CLUB_STATUS, ACTI_AREA_NUM, CATEGORY_NUM, USER_ID)
- 		values(club_seq.NEXTVAL,#{clubName},sysdate,0,#{price},#{detailTxt},#{clubAddr},
+ 		values(club_seq.NEXTVAL,#{clubName},sysdate,0,#{price},#{detailTxt},#{clubAddr}, #{detailAddr},#{zipcode},
  		#{clubDate},#{clubTime},#{longitude},#{latitude},#{numberPeople},'모집중',#{actiAreaNum},#{categoryNum},#{userId})
 	</insert>
 	<!-- 모임 이미지테이블에도 등록

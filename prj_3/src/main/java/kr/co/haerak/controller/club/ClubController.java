@@ -38,7 +38,7 @@ import oracle.sql.DATE;
  * 민수 페이지 (모임 상세, 등록, 수정, 후기글 페이지)
  * @author user
  */
-@SessionAttributes("lsDomain")
+@SessionAttributes({"lsDomain","clubRegiFlag"})
 @Controller
 public class ClubController {
 	
@@ -228,6 +228,7 @@ public class ClubController {
 			
 			model.addAttribute("categoryNum",categoryNum);
 			model.addAttribute("pageInfo","모임 등록");
+			model.addAttribute("clubRegiFlag", false);
 			
 			return "club/sell_page";
 		}//clubRegistrationForm
@@ -340,8 +341,16 @@ public class ClubController {
 				e.printStackTrace();
 			}
 			Date clubDate = new java.sql.Date(date.getTime());
-			ClubInsertVO ciVO = new ClubInsertVO(price, categoryNum, actiAreaNum, numberPeople, clubName, detailTxt, clubAddr, detailAddr, userId, latitude, longitude, clubTime, zipcode, clubImg, clubDate);
-			ics.insertClubInfo(ciVO);
+			Object reigFlag=model.getAttribute("clubRegiFlag");
+			
+			if(reigFlag == null ||  !((Boolean)reigFlag)) {
+			
+			
+				ClubInsertVO ciVO = new ClubInsertVO(price, categoryNum, actiAreaNum, numberPeople, clubName, detailTxt, clubAddr, detailAddr, userId, latitude, longitude, clubTime, zipcode, clubImg, clubDate);
+				ics.insertClubInfo(ciVO);
+				model.addAttribute("clubRegiFlag", true);
+			}
+			
 			
 			return "forward:main.do";
 		}//clubRegistrationProcess
