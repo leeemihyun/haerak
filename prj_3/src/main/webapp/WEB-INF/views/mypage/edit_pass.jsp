@@ -100,6 +100,7 @@ $(function(){
 <div class="container">
 <div id="div0"><h2>비밀번호 수정</h2></div>
 <form name="frm" action="editPassProcess.do" method="post">
+<input type="hidden" name="userId" value="${userId}">
 <div id="divPass"> 
 	<font id="font1">비밀번호</font><br>
 	<input type="password" id="inputBox" name="pass1" placeholder="비밀번호 입력" onkeyup="passValid1()" value="">

@@ -57,7 +57,7 @@ public class InquiryController {
 		if("".equals(userId)||userId==null){// 결과가 있을시
 			model.addAttribute("flag", 1);
 			uri="user/pass_inquiry";
-		}else {
+		}else {//없으면 userId를 담아서 pass_inqury로
 			model.addAttribute("userId", userId);
 		}//end else
 		

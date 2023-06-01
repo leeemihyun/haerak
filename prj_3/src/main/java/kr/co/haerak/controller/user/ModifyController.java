@@ -108,10 +108,12 @@ public class ModifyController {
 	 * 비번 수정
 	 */
 	@PostMapping("editPassProcess.do")
-	public String ModifyPassProcess(Model model, String pass1) throws NoSuchAlgorithmException {
-
+	public String ModifyPassProcess(Model model, String pass1, String userId) throws NoSuchAlgorithmException {
+		
 		LoginSessionDomain lsDomain = (LoginSessionDomain) model.getAttribute("lsDomain");
-		String userId = lsDomain.getUserId();
+		if(lsDomain!=null) {
+			userId = lsDomain.getUserId();
+		}
 		
 		ModifyPassVO mpVO = new ModifyPassVO(userId, pass1);
 		
