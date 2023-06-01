@@ -20,7 +20,7 @@ position: relative;
 .loginTitle{
 position: absolute;
 top : 115px;
-left: 800px;
+left: 900px;
 font-weight: bold;
 font-size: 25px;
 }
@@ -35,7 +35,7 @@ width: 350px;
 height : 60px;
 position: absolute;
 top : 185px;
-left: 705px;
+left: 805px;
 font-size: 16px;
 border-radius: 5px;
 border-color: #dcdcde;
@@ -51,7 +51,7 @@ width: 350px;
 height : 60px;
 position: absolute;
 top : 265px;
-left: 705px;
+left: 805px;
 font-size: 16px;
 border-radius: 5px;
 border-color: #dcdcde;
@@ -79,7 +79,7 @@ color: #000
 .div_btn_login{
 width: 350px;
 height : 60px;
-left:705px;
+left:805px;
 }
 
 .btn_login{
@@ -87,7 +87,7 @@ width: 355px;
 height : 65px;
 position: absolute;
 top : 360px;
-left: 705px;
+left: 805px;
 
 border: none;
 border-radius: 5px;
@@ -121,7 +121,7 @@ font-weight: bold;
 .div_notice{
 position: absolute;
 top : 440px;
-left: 780px;
+left: 880px;
 width: 260px;
 height : 160px;
 background-color: #FCE487;
