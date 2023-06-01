@@ -43,7 +43,7 @@ public class LoginController {
 		
 		ss.setComplete();
 		
-		return "forward:main.do";
+		return "redirect:main.do";
 	}//logoutProcess
 	
 	
