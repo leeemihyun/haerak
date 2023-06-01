@@ -483,6 +483,7 @@ $(function() {
 	
 	$("#price_button").click(function() { //참가비 있음
 		$("#input_price").show();
+		$("#input_price").val("");
 		 $(this).css("background-color", "#F7A144");
 		 $(this).css("color", "white");
 		 $("#price_none_button").css("background-color", "#E0E0E0");
