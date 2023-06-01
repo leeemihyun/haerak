@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8"
+    isELIgnored="false"
+    %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
@@ -152,6 +154,12 @@ color:#0055FF;
 line-height:15pt;
 margin-left:30px;
 margin-top:60px
+}
+
+
+input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
 }
 
 /* 자세한 설명(summernote) */
@@ -669,7 +677,7 @@ $(function() {
 <label style="font-size:15pt"><strong>*참가비</strong></label><br/>
 <input type="button" value="없음" class="price_none_button" id="price_none_button"/>
 <input type="button" value="있음" class="price_button" id="price_button" />
-<input type="text" id="input_price" placeholder="가격을 입력해주세요" name="price" value="${setClubInfo.price}" >
+<input type="number" id="input_price" placeholder="가격을 입력해주세요" name="price" value="${setClubInfo.price}" >
 </div>
 
 <!-- 만나는 날짜&시간 영역 -->
@@ -731,12 +739,20 @@ $('#timepicker').timepicker({
 <div id="clickLatlng"></div>
 <br/>
 <script>
+if(${empty setClubInfo}){
+var longitude1=${ empty setClubInfo.longitude ? 33.450701:setClubInfo.longitude};
+var latitude1=${ empty setClubInfo.latitude ? 126.570667:setClubInfo.latitude};
+}else{
+	var longitude1=${ empty setClubInfo.latitude ? 126.570667:setClubInfo.latitude};
+	var latitude1=${ empty setClubInfo.longitude ? 33.450701:setClubInfo.longitude};
+}
+
 var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
     mapOption = { 
-        center: new kakao.maps.LatLng(${empty setClubInfo.longitude ? 33.450701:setClubInfo.longitude},${empty setClubInfo.latitude ? 126.570667:setClubInfo.latitude}), // 지도의 중심좌표
+        center: new kakao.maps.LatLng(longitude1,latitude1), // 지도의 중심좌표
         level: 3 // 지도의 확대 레벨
     };
-
+    
 var map = new kakao.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
 
 // 지도를 클릭한 위치에 표출할 마커입니다
