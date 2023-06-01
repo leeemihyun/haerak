@@ -343,7 +343,7 @@ public class ClubController {
 			ClubInsertVO ciVO = new ClubInsertVO(price, categoryNum, actiAreaNum, numberPeople, clubName, detailTxt, clubAddr, detailAddr, userId, latitude, longitude, clubTime, zipcode, clubImg, clubDate);
 			ics.insertClubInfo(ciVO);
 			
-			return "main/main";
+			return "forward:main.do";
 		}//clubRegistrationProcess
 		
 		
