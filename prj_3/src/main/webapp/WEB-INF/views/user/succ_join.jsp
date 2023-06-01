@@ -69,7 +69,7 @@ loginBox는 container의 시작점이 loginBox의 시작좌표가된다.
 	</div>
 	<a href="main.do">
 	<input type="button" id="whiteBtn2" value="메인으로 이동"></a>
-	<a href="#void">
+	<a href="lofin_form.do">
 	<input type="button" id="colorBtn2" value="로그인 하기">
 	</a>
 </form>
