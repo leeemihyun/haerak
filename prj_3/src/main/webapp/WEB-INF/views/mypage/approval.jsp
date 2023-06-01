@@ -67,8 +67,8 @@ $(function(){
 				<c:forEach var="list" items="${ list }">
 					<tr>
 						<td>${ list.clubNum }</td>
-						<td>${ list.clubName }</td>
-						<td><a href="">${list.userId }</a></td>
+						<td><a href="club_info.do?club_Num=${list.clubNum }">${ list.clubName }</a></td>
+						<td><a href="othersMypageHost.do?userId=${list.userId}">${list.userId }</a></td>
 						<td><a href="approve.do?clubNum=${list.clubNum }&userId=${list.userId}">승인</a></td>
 						<td><a href="decline.do?clubNum=${list.clubNum }&userId=${list.userId}">거절</a></td>
 						<td>${ list.approvalStatus }</td>

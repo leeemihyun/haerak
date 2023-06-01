@@ -72,7 +72,7 @@ $(function(){
 				<c:forEach var="list" items="${ list }" varStatus="status">
 					<tr>
 						<td>${ list.categoryName }</td>
-						<td>${ list.clubName }</td>
+						<td><a href="club_info.do?club_Num=${list.clubNum}">${ list.clubName }</a></td>
 						<td>${ list.clubDate }</td>
 						<td>${ list.numberPeople }</td>
 						<td><a href="approval.do?clubNum=${list.clubNum }">승인대기 목록</a></td>

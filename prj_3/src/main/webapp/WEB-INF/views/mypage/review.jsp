@@ -81,7 +81,7 @@ $(function(){
 				<c:forEach var="list" items="${ list }">
 					<tr>
 						<td>${ list.writeDate }</td>
-						<td><a href="club/club_info.do?club_Num=${ list.clubNum }">${ list.clubReview }</a></td>
+						<td><a href="club_info.do?club_Num=${ list.clubNum }">${ list.clubReview }</a></td>
 					</tr>
 				</c:forEach>
 				</tbody>

@@ -82,7 +82,9 @@ public class ModifyController {
 		MultipartRequest mr = new MultipartRequest(request, file.getAbsolutePath(), maxSize, "UTF-8",
 				new DefaultFileRenamePolicy());
 		String nickName = (String) mr.getParameter("nickName");
-		String userImg = "http://localhost/prj_3/images/"+mr.getOriginalFileName("userImgFile");
+		String userImg = mr.getOriginalFileName("userImgFile");
+		if(userImg==null)userImg="profile.png";
+		userImg = "http://localhost/prj_3/images/"+userImg;
 		String personalIntro = (String) mr.getParameter("personalIntro");
 		LoginSessionDomain lsDomain = (LoginSessionDomain) model.getAttribute("lsDomain");
 		String userId = lsDomain.getUserId();
