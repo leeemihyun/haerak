@@ -159,7 +159,7 @@ $(function() {
 <div class="button_area">
 <!-- <hr style="left:-410px;top:-50px;width:1200px;"/> -->
 <input type="button"class="cancel-button"value="취소"onclick="javascript:history.back();">
-<input type="button"class="complete_button" value="작성완료" id="selectCategory" >
+<input type="button"class="complete_button" value="작성하기" id="selectCategory" >
 </div><!-- button_area -->
 <form action="clubRegistrationForm.do" id="categoryFrm" name="categoryFrm">
 <input type="hidden" value="0" name="categoryNum" id="categoryNum">
