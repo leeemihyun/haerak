@@ -157,7 +157,8 @@ function approvalrequest() {
 	
 	if(${not empty lsDomain.userId}){
 		if(${approvalFlag}){
-		window.location.href="approvalrequest.do?club_Num=${clubNum}";				
+		window.location.href="approvalrequest.do?club_Num=${clubNum}";	
+		alert("신청완료했습니다.");
 		}else{
 			alert("이미 신청한 모임입니다.");
 		}
