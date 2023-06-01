@@ -7,6 +7,7 @@
 <head>
 <meta charset="UTF-8">
 <style type="text/css">
+#errOutput{position: relative; width:300px; top:165px; left : 510px; font-weight: bold; font-size: 25px;}
 .wrap{width: 1400px;min-heigh:100px;margin: 0px auto;}
 .header{height: 200px}
 .container{min-heigh:100px; position: relative; padding-bottom: 250px;}
@@ -15,7 +16,6 @@ height: 300px;
 position: relative;
 bottom: 0; 
 }
-.left{left:50px; width: 150px; min-height: 300px;position: relative; background-color: #ff0000; }
 ul li{list-style: none; text-align: center; margin-top: 10px}
 a{ text-decoration: none; color: #333; text-align: center}
 .right{ position: relative; left:450px; width: 400px; height: 150px; top: 100px;  }
@@ -101,11 +101,12 @@ $(function(){
 				console.log(xhr.status);
 			},
 			success : function(jsonObj) {
+				$("#errOutput").html("");
 				output+="<table class='socialring_popular_table'>";
 				if(!jsonObj.resultFlag){
-					output+="<tr><td>문제발생</td></tr>";
+					$("#errOutput").html("에러발생");
 				}else{
-					if(jsonObj.dataSize==0){output+="<tr><td>문제발생</td></tr>";}
+					if(jsonObj.dataSize==0){$("#errOutput").html("") ;}
 					$.each(jsonObj.data, function(idx, ele){
 						if(idx%2==0){
 							output+="<tr>";
@@ -143,11 +144,12 @@ function hostAjax() {
 			console.log(xhr.status);
 		},
 		success : function(jsonObj) {
+			$("#errOutput").html("");
 			output+="<table class='socialring_popular_table'>";
 			if(!jsonObj.resultFlag){
-				output+="<tr><td>문제발생</td></tr>";
+				$("#errOutput").html("에러발생");
 			}else{
-				if(jsonObj.dataSize==0){output+="<tr><td>문제발생</td></tr>";}
+				if(jsonObj.dataSize==0){$("#errOutput").html("주최한 모임이 없습니다!");}
 				$.each(jsonObj.data, function(idx, ele){
 					if(idx%2==0){
 						output+="<tr>";
@@ -192,7 +194,7 @@ function hostAjax() {
 			<button type="button" class="btn btn-secondary" id="hostBtn" style="margin-right: 30px;">주최한 모임</button>
 			<button type="button" class="btn btn-secondary" id="joinBtn">참여한 모임</button>
 		</div><!-- btns  -->
-		
+		<div id="errOutput"></div>
 		<div id="output">
 		
 		</div><!-- output -->
