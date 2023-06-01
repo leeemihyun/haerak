@@ -87,7 +87,7 @@
                
                <c:forEach var="user" items="${club.userInfo}">
                   <a href="othersMypageHost.do?userId=${user.USER_ID }">
-                     <img class="user_profile" src="${user.USER_IMG}" onerror="this.onerror=null; this.src='http://localhost/prj_3/images/a.png';"/>
+                     <img class="user_profile" src="${user.USER_IMG}" onerror="this.onerror=null; this.src='http://localhost/prj_3/images/profile.png';"/>
                   </a>
                </c:forEach>
                <c:out value="${club.USER_COUNT}" />명 / <c:out value="${club.number_People}"/>명
@@ -150,7 +150,7 @@
                
                <c:forEach var="user" items="${club.userInfo}">
                <a href="othersMypageHost.do?userId=${user.USER_ID }">
-                  <img class="user_profile" src="${user.USER_IMG}" onerror="this.onerror=null; this.src='http://localhost/prj_3/images/a.png';"/>
+                  <img class="user_profile" src="${user.USER_IMG}" onerror="this.onerror=null; this.src='http://localhost/prj_3/images/profile.png';"/>
                </a>
                </c:forEach>
                 <c:out value="${club.USER_COUNT}"/>명 /<c:out value="${club.number_People}"/>명
@@ -214,7 +214,7 @@
                
                <c:forEach var="user" items="${club.userInfo}">
                <a href="othersMypageHost.do?userId=${user.USER_ID }">
-                  <img class="user_profile" src="${user.USER_IMG}" onerror="this.onerror=null; this.src='http://localhost/prj_3/images/a.png';"/>
+                  <img class="user_profile" src="${user.USER_IMG}" onerror="this.onerror=null; this.src='http://localhost/prj_3/images/profile.png';"/>
                </a>
                </c:forEach>
                 <c:out value="${club.USER_COUNT}" />명 / <c:out value="${club.number_People}" />명

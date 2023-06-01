@@ -120,7 +120,7 @@ $(function(){
 					
 				    $.each(ele.userInfo, function(i, ele1){
 				   
-				        tbody+="<a href='othersMypageHost.do?userId="+ele1.USER_ID+"'><img class='user_profile' src='"+ele1.USER_IMG+"' onerror='this.onerror=null; this.src='http://localhost/prj_3/images/a.png';'/></a>";
+				        tbody+="<a href='othersMypageHost.do?userId="+ele1.USER_ID+"'><img class='user_profile' src='"+ele1.USER_IMG+"' onerror='this.onerror=null; this.src='http://localhost/prj_3/images/profile.png';'/></a>";
 				    });
 					
 				    
