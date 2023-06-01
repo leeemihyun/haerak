@@ -6,7 +6,7 @@ import java.util.List;
 public class ClubDetailDomain {
 
 	private List<String> clubImg;
-	private String clubName,clubAddr,detailTxt,userId,nickName,userImg,addr,personalIntro,categoryName,latitude,longitude;
+	private String clubTime,clubName,clubAddr,detailTxt,userId,nickName,userImg,addr,personalIntro,categoryName,latitude,longitude;
 	private int reviewCnt,viewCnt,interCnt,price,clubNum,numberPeople;
 	private Date inputDate,clubDate;
 	
@@ -15,6 +15,12 @@ public class ClubDetailDomain {
 	}
 	public void setClubImg(List<String> clubImg) {
 		this.clubImg = clubImg;
+	}
+	public String getClubTime() {
+		return clubTime;
+	}
+	public void setClubTime(String clubTime) {
+		this.clubTime = clubTime;
 	}
 	public String getClubName() {
 		return clubName;
@@ -134,13 +140,16 @@ public class ClubDetailDomain {
 	
 	@Override
 	public String toString() {
-		return "ClubDetailDomain [clubImg=" + clubImg + ", clubName=" + clubName + ", clubAddr=" + clubAddr
-				+ ", detailTxt=" + detailTxt + ", userId=" + userId + ", nickName=" + nickName + ", userImg=" + userImg
-				+ ", addr=" + addr + ", personalIntro=" + personalIntro + ", categoryName=" + categoryName
-				+ ", latitude=" + latitude + ", longitude=" + longitude + ", reviewCnt=" + reviewCnt + ", viewCnt="
-				+ viewCnt + ", interCnt=" + interCnt + ", price=" + price + ", clubNum=" + clubNum + ", numberPeople="
-				+ numberPeople + ", inputDate=" + inputDate + ", clubDate=" + clubDate + "]";
+		return "ClubDetailDomain [clubImg=" + clubImg + ", clubTime=" + clubTime + ", clubName=" + clubName
+				+ ", clubAddr=" + clubAddr + ", detailTxt=" + detailTxt + ", userId=" + userId + ", nickName="
+				+ nickName + ", userImg=" + userImg + ", addr=" + addr + ", personalIntro=" + personalIntro
+				+ ", categoryName=" + categoryName + ", latitude=" + latitude + ", longitude=" + longitude
+				+ ", reviewCnt=" + reviewCnt + ", viewCnt=" + viewCnt + ", interCnt=" + interCnt + ", price=" + price
+				+ ", clubNum=" + clubNum + ", numberPeople=" + numberPeople + ", inputDate=" + inputDate + ", clubDate="
+				+ clubDate + "]";
 	}
+	
+
 	
 	
 	

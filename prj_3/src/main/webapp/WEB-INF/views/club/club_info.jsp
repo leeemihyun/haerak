@@ -196,14 +196,14 @@ function interCallAjax(flagcnt) {
 $(function() {
 var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
     mapOption = { 
-        center: new kakao.maps.LatLng(${clubInfo.longitude},${clubInfo.latitude}), // 지도의 중심좌표
+        center: new kakao.maps.LatLng(${clubInfo.latitude},${clubInfo.longitude}), // 지도의 중심좌표
         level: 3 // 지도의 확대 레벨
     };
 
 var map = new kakao.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
 
 // 마커가 표시될 위치입니다 
-var markerPosition  = new kakao.maps.LatLng(${clubInfo.longitude},${clubInfo.latitude}); 
+var markerPosition  = new kakao.maps.LatLng(${clubInfo.latitude},${clubInfo.longitude}); 
 
 // 마커를 생성합니다
 var marker = new kakao.maps.Marker({
@@ -305,7 +305,7 @@ marker.setMap(map);
 	<div id="club_date_info">
 	<div id="club_date_info_text1" style="font-weight: bold; font-size: 25px; ">만나는 날짜&시간</div>
 	<div id="club_date_info_text2" style="font-weight: bold; font-size: 15px; ">언제까지 모일까요? <fmt:formatDate value="${clubInfo.clubDate}" pattern="yyyy년 MM월 dd일"/></div>
-	<div id="club_date_info_text3" style="font-weight: bold; font-size: 15px; ">몇시까지 모일까요? <fmt:formatDate value="${clubInfo.clubDate}" pattern="a hh시 mm분"/></div>
+	<div id="club_date_info_text3" style="font-weight: bold; font-size: 15px; ">몇시까지 모일까요? ${clubInfo.clubTime}</div>
 	</div><!-- club_date_info -->
 	<div id="hr5"><hr></div>
 	<div id="club_place">

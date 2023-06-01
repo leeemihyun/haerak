@@ -6,7 +6,7 @@
 	
 	<!-- 모임 상세페이지 정보를 가져오는 SQL  -->
   <select id="selectClubInfoDetail" resultType="kr.co.haerak.domain.club.ClubDetailDomain" parameterType="Integer">	
-	select club_name as clubName,input_date as inputDate,view_cnt as viewCnt,
+	select CLUB_TIME as clubTime,club_name as clubName,input_date as inputDate,view_cnt as viewCnt,
 				(	select count(*)
 					from INTEREST_LIST il
 					where il.club_num=p.club_num) as interCnt,
