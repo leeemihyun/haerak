@@ -23,7 +23,12 @@ ul li{list-style: none; text-align: center; margin-top: 5px}
 <link rel="stylesheet" type="text/css" href="http://localhost/prj_3/css/headerFooter.css">
 <script type="text/javascript">
 $(function(){
-
+	$("#approve").click(function() {
+		alert("승인하셨습니다.");
+	});//click
+	$("#rufuse").click(function() {
+		alert("거절하셨습니다.");
+	});//click
 });//ready
 </script>
 
@@ -69,8 +74,8 @@ $(function(){
 						<td>${ list.clubNum }</td>
 						<td><a href="club_info.do?club_Num=${list.clubNum }">${ list.clubName }</a></td>
 						<td><a href="othersMypageHost.do?userId=${list.userId}">${list.userId }</a></td>
-						<td><a href="approve.do?clubNum=${list.clubNum }&userId=${list.userId}">승인</a></td>
-						<td><a href="decline.do?clubNum=${list.clubNum }&userId=${list.userId}">거절</a></td>
+						<td><a href="approve.do?clubNum=${list.clubNum }&userId=${list.userId}" id="approve">승인</a></td>
+						<td><a href="decline.do?clubNum=${list.clubNum }&userId=${list.userId}" id="refuse">거절</a></td>
 						<td>${ list.approvalStatus }</td>
 					</tr>
 				</c:forEach>
