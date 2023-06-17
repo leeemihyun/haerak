@@ -23,3 +23,6 @@
 - **Database** : Oracle DB(19.3.0.0.0)
 - **ORM** : Mybatis
 
+### 📌 DB구성- ERD
+![prj3_haerak](https://github.com/ahshdhfh/prj_3/assets/51796947/55be4ea3-bd8d-4191-baae-9592b2c0990d)
+
