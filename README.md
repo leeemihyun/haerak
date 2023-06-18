@@ -27,4 +27,13 @@
 ![prj3_haerak](https://github.com/ahshdhfh/prj_3/assets/51796947/55be4ea3-bd8d-4191-baae-9592b2c0990d)
 
 ### 📌 화면구성
+![3차_1](https://github.com/ahshdhfh/prj_3/assets/51796947/cd417cda-685c-41ac-93c8-686473c5782d)
+![3차_2](https://github.com/ahshdhfh/prj_3/assets/51796947/6f1f77f4-0820-48c6-838e-dfd653135159)
+![3차_3](https://github.com/ahshdhfh/prj_3/assets/51796947/6093125d-761c-4c34-ad85-d14a63e5ade0)
+![3차_4](https://github.com/ahshdhfh/prj_3/assets/51796947/1e74e586-a75b-4053-81f0-1e0e797398c5)
+![3차_5](https://github.com/ahshdhfh/prj_3/assets/51796947/00c59606-c503-4224-afe7-ee155d4c4eb9)
+
+
+
+
 
